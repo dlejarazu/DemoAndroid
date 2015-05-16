@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CivPocket</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="txtMapa">Mapa escenario 1</string>
+    <string name="txtBotonPopulationAdd">+ Pop</string>
+    <string name="buttonPopulationRem">- Pop</string>
+    <string name="borrar">- Pop</string>
+    <string name="popIni">0</string>
+    <string name="txtBotonCiudad">Ciudad</string>
+    <string-array name="listaRegiones">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+        <string name="txtBtnGranja">Granja</string>
+  </resources>

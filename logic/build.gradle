@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    //TODO: Especificar codigo de testeo del de produccion y poner las librerias de testeo solo en testCompile
+    testCompile 'org.mockito:mockito-core:2.+'
+    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+}

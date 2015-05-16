@@ -1,0 +1,27 @@
+Starting Build
+Settings evaluated using settings file 'C:\Users\diego\AndroidStudioProjects\CivPocket\settings.gradle'.
+Projects loaded. Root project using build file 'C:\Users\diego\AndroidStudioProjects\CivPocket\build.gradle'.
+Included projects: [root project 'CivPocket', project ':app', project ':logic']
+Evaluating root project 'CivPocket' using build file 'C:\Users\diego\AndroidStudioProjects\CivPocket\build.gradle'.
+Evaluating project ':app' using build file 'C:\Users\diego\AndroidStudioProjects\CivPocket\app\build.gradle'.
+Evaluating project ':logic' using build file 'C:\Users\diego\AndroidStudioProjects\CivPocket\logic\build.gradle'.
+Compiling build file 'C:\Users\diego\AndroidStudioProjects\CivPocket\logic\build.gradle' using StatementExtractingScriptTransformer.
+Compiling build file 'C:\Users\diego\AndroidStudioProjects\CivPocket\logic\build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+Selected primary task 'logic:test' from project :logic
+Tasks to be executed: [task ':logic:compileJava', task ':logic:processResources', task ':logic:classes', task ':logic:compileTestJava', task ':logic:processTestResources', task ':logic:testClasses', task ':logic:test']
+:logic:compileJava (Thread[main,5,main]) started.
+:logic:compileJava
+Executing task ':logic:compileJava' (up-to-date check took 0.09 secs) due to:
+  Output file C:\Users\diego\AndroidStudioProjects\CivPocket\logic\build\classes\main has changed.
+  Output file C:\Users\diego\AndroidStudioProjects\CivPocket\logic\build\dependency-cache has changed.
+  Output file C:\Users\diego\AndroidStudioProjects\CivPocket\logic\build\classes\main\com\diego\civpocket\logic\Imperio.class has been removed.
+All input files are considered out-of-date for incremental task ':logic:compileJava'.
+Compiling with JDK Java compiler API.
+:logic:compileJava FAILED
+:logic:compileJava (Thread[main,5,main]) completed. Took 1.141 secs.
+
+BUILD FAILED
+
+Total time: 10.438 secs
+Stopped 0 compiler daemon(s).
