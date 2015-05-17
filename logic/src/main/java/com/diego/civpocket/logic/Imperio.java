@@ -31,11 +31,11 @@ public class Imperio {
 
 	public boolean puedeGranjaEn(Region region ) {
 
-		return !region.hasFarm() && region.hasForest();
+		return !region.has(Biomes.Farm) && region.has(Biomes.Forest);
 	}
 
 	public void ConstruirGranja(Region seleccionada) throws accionIlegalException {
-		seleccionada.addGranja();
+		seleccionada.add(Biomes.Farm );
         seleccionada.decimate(Biomes.Forest);
 	}
 }

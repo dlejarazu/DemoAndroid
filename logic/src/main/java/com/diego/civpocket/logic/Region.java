@@ -69,26 +69,18 @@ public class Region implements IColonizable{
         return _nivelCiudad;
     }
 
-	public boolean hasFarm() {
-		// TODO Auto-generated method stub
-		return _biomesInRegion.contains(Biomes.Farm);
+	public boolean has(Biomes biome) {
+		return _biomesInRegion.contains(biome);
 	}
 
-	public void addGranja() throws accionIlegalException {
-		// TODO Auto-generated method stub
-		if (!hasFarm())  {
-			_biomesInRegion.add(Biomes.Farm);
-		}
-		else throw new accionIlegalException();
-	}
-
-    public boolean hasForest() {
-        return _biomesInRegion.contains(Biomes.Forest);
+    public void add(Biomes biome) throws accionIlegalException {
+        if (_biomesInRegion.contains(biome)){
+            throw new accionIlegalException();
+        }
+        _biomesInRegion.add(Biomes.Farm);
     }
 
     public void decimate(Biomes decimatedBiome) {
         _biomesInRegion.remove(decimatedBiome);
     }
-
-    public void growForest() { _biomesInRegion.add(Biomes.Forest); }
 }

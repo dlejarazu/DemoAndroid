@@ -23,16 +23,16 @@ public class ImperioTest {
 	@Test
 	public void testConstruirGranja() throws accionIlegalException {
 		//Given
-		Mockito.doReturn(true).when(testRegion).hasForest();
+		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
 		//When
 		sut.ConstruirGranja(testRegion);
 		//Then
-		Mockito.verify(testRegion).addGranja();
+		Mockito.verify(testRegion).add(Biomes.Farm);
 	}
 	@Test
 	public void testBuildingFarmDecimatesForest() throws accionIlegalException {
 		//Given
-		Mockito.doReturn(true).when(testRegion).hasForest();
+		Mockito.doReturn(true).when(testRegion).has(Biomes.Forest);
 		//When
 		sut.ConstruirGranja(testRegion);
 		//Then
@@ -42,7 +42,7 @@ public class ImperioTest {
 	@Test
 	public void testSinBosqueNoSePuedeConstruir() throws accionIlegalException {
 		//Given
-		Mockito.doReturn(false).when(testRegion).hasFarm();
+		Mockito.doReturn(false).when(testRegion).has(Biomes.Farm);
 		//When
 		boolean resultado = sut.puedeGranjaEn(testRegion);
 		//Then
@@ -52,7 +52,7 @@ public class ImperioTest {
 	@Test
 	public void testSiYaHayGranjaNoSePuedeConstruir(){
 		//Given
-		Mockito.doReturn(true).when(testRegion).hasFarm();
+		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
 		//When
 		boolean resultado = sut.puedeGranjaEn(testRegion);
 		//Then

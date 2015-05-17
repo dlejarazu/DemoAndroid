@@ -44,12 +44,11 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 		faseActual(FaseJuego.Avances);
 		Region seleccionada = mockSelectRegion();
 		String statusPrevio = sut.regionStatusToString(seleccionada.getNombre());
-		seleccionada.addGranja();
+		seleccionada.add(Biomes.Farm);
 		//When
 		String statusDespues = sut.regionStatusToString(seleccionada.getNombre());
 		//Then
-		//boolean sonDistintas = !statusPrevio.equals(statusDespues);
-		assertThat(statusPrevio,not(equalTo(statusDespues)));		
+		assertThat(statusPrevio,not(equalTo(statusDespues)));
 	}
 		
 	@Test

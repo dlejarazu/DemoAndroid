@@ -130,7 +130,7 @@ public class MapPresenter {
         if (region.getNivelCiudad() > 0) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getNivelCiudad());
         }
-        if (region.hasFarm()) {
+        if (region.has(Biomes.Farm)) {
             status = status + "\n" + emoji(0x1F33D);
         }
         return status;

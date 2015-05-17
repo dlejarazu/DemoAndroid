@@ -11,48 +11,36 @@ import com.diego.civpocket.logic.Region.accionIlegalException;
 public class RegionTest {
 
 	@Test
-	public void testPlantarGranja() throws accionIlegalException {
+	public void testAddBiome() throws accionIlegalException {
 		//Given
 		Region sut = new Region("");
 		//When
-		sut.addGranja();
+		sut.add(Biomes.Farm);
 		//Then
-		boolean resultado = sut.hasFarm();
+		boolean resultado = sut.has(Biomes.Farm);
 		assertTrue(resultado);
 	}
-	
-	@Test (expected = accionIlegalException.class)
-	public void testExcepcionAlReplantarGranja() throws accionIlegalException {
-		//Given 
-		Region sut = new Region("");
-		sut.addGranja();
-		//When
-		sut.addGranja();
-		//Then exception raises
-	}
 
 	@Test
-	public void testGrowthForest()
-	{
+	public void testDecimate() throws accionIlegalException {
 		//Given
 		Region sut = new Region("");
+		sut.add(Biomes.Farm);
 		//When
-		sut.growForest();
+		sut.decimate(Biomes.Farm);
 		//Then
-		boolean result = sut.hasForest();
-		assertTrue(result);
-	}
-
-	@Test
-	public void testDecimate()
-	{
-		//Given
-		Region sut = new Region("");
-		sut.growForest();
-		//When
-		sut.decimate(Biomes.Forest);
-		//Then
-		boolean result = sut.hasForest();
+		boolean result = sut.has(Biomes.Farm);
 		assertFalse(result);
 	}
+
+	@Test (expected = accionIlegalException.class)
+	public void testNoDuplicateBiomes() throws accionIlegalException {
+		//Given
+		Region sut = new Region("");
+		sut.add(Biomes.Farm);
+		//When
+		sut.add(Biomes.Farm);
+		//Then Exception thrown
+	}
+
 }
