@@ -10,6 +10,15 @@ import java.util.List;
 public class Region implements IColonizable{
 
 
+    public int support() {
+        int totalSupport = 0;
+        for(Biomes b : _biomesInRegion)
+        {
+            if (b != Biomes.Dessert) totalSupport++;
+        }
+        return totalSupport;
+    }
+
     public class accionIlegalException extends Exception {
 		private static final long serialVersionUID = -5044052553914379459L; }
 	
@@ -77,7 +86,7 @@ public class Region implements IColonizable{
         if (_biomesInRegion.contains(biome)){
             throw new accionIlegalException();
         }
-        _biomesInRegion.add(Biomes.Farm);
+        _biomesInRegion.add(biome);
     }
 
     public void decimate(Biomes decimatedBiome) {

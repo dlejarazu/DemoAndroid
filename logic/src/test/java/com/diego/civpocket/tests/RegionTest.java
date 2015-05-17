@@ -3,21 +3,45 @@ package com.diego.civpocket.tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Region.accionIlegalException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
 public class RegionTest {
+
+	@Parameterized.Parameters
+	public static Collection<Object[]> supportValues() {
+		return Arrays.asList(new Object[][] {
+						{Biomes.Farm,1},
+						{Biomes.Forest,1},
+						{Biomes.Mountain,1},
+						{Biomes.Volcano,1},
+						{Biomes.Dessert,0}
+				}
+		);
+	}
+
+	@Parameterized.Parameter(value = 0)
+	public Biomes biomeTested;
+	@Parameterized.Parameter(value = 1)
+	public int supportProvided;
 
 	@Test
 	public void testAddBiome() throws accionIlegalException {
 		//Given
 		Region sut = new Region("");
 		//When
-		sut.add(Biomes.Farm);
+		sut.add(biomeTested);
 		//Then
-		boolean resultado = sut.has(Biomes.Farm);
+		boolean resultado = sut.has(biomeTested);
 		assertTrue(resultado);
 	}
 
@@ -25,11 +49,11 @@ public class RegionTest {
 	public void testDecimate() throws accionIlegalException {
 		//Given
 		Region sut = new Region("");
-		sut.add(Biomes.Farm);
+		sut.add(biomeTested);
 		//When
-		sut.decimate(Biomes.Farm);
+		sut.decimate(biomeTested);
 		//Then
-		boolean result = sut.has(Biomes.Farm);
+		boolean result = sut.has(biomeTested);
 		assertFalse(result);
 	}
 
@@ -37,10 +61,20 @@ public class RegionTest {
 	public void testNoDuplicateBiomes() throws accionIlegalException {
 		//Given
 		Region sut = new Region("");
-		sut.add(Biomes.Farm);
+		sut.add(biomeTested);
 		//When
-		sut.add(Biomes.Farm);
+		sut.add(biomeTested);
 		//Then Exception thrown
 	}
 
+	@Test
+	public void testSupportNumberBiomes() throws accionIlegalException {
+		//Given
+		Region sut = new Region("");
+		//When
+		sut.add(biomeTested);
+		//Then
+		int support = sut.support();
+		assertEquals(supportProvided, support);
+	}
 }
