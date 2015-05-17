@@ -125,13 +125,12 @@ public class MapPresenter {
     }
 
     public String regionStatusToString(String nombreRegion){
-        String status = "";
         Region region =_escenarioActual.getRegionByName(nombreRegion);
-        status = emoji(0x1F603) + Integer.toString(region.getPoblacion());
+        String status = emoji(0x1F603) + Integer.toString(region.getPoblacion());
         if (region.getNivelCiudad() > 0) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getNivelCiudad());
         }
-        if (region.tieneGranja()) {
+        if (region.hasFarm()) {
             status = status + "\n" + emoji(0x1F33D);
         }
         return status;

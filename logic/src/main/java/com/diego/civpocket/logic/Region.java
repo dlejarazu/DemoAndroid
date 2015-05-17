@@ -8,7 +8,9 @@ import java.util.List;
  */
 
 public class Region implements IColonizable{
-	public class accionIlegalException extends Exception {
+
+
+    public class accionIlegalException extends Exception {
 		private static final long serialVersionUID = -5044052553914379459L; }
 	
     private int _poblacion = 0;
@@ -67,18 +69,26 @@ public class Region implements IColonizable{
         return _nivelCiudad;
     }
 
-	public boolean tieneGranja() {
+	public boolean hasFarm() {
 		// TODO Auto-generated method stub
 		return _biomesInRegion.contains(Biomes.Farm);
 	}
 
 	public void addGranja() throws accionIlegalException {
 		// TODO Auto-generated method stub
-		if (!tieneGranja())  {
+		if (!hasFarm())  {
 			_biomesInRegion.add(Biomes.Farm);
 		}
 		else throw new accionIlegalException();
 	}
 
+    public boolean hasForest() {
+        return _biomesInRegion.contains(Biomes.Forest);
+    }
 
+    public void decimate(Biomes decimatedBiome) {
+        _biomesInRegion.remove(decimatedBiome);
+    }
+
+    public void growForest() { _biomesInRegion.add(Biomes.Forest); }
 }
