@@ -2,19 +2,21 @@ package com.diego.civpocket.logic;
 
 import com.diego.civpocket.logic.Region.accionIlegalException;
 
-/**
- * Created by diego on 13/10/2014.
- */
+
 public class Imperio {
- 
+
+    int _totalPopulation;
+
     public void EnviarColono(IColonizable destino)
     {
         destino.AddPoblacion();
+        _totalPopulation++;
     }
 
     public void ReclamarColono(IColonizable destino)
     {
         destino.EliminaPoblacion();
+        _totalPopulation--;
     }
 
     public boolean puedeCiudadEn(IColonizable region){
@@ -38,4 +40,8 @@ public class Imperio {
 		seleccionada.add(Biomes.Farm );
         seleccionada.decimate(Biomes.Forest);
 	}
+
+    public int totalPopulation() {
+        return _totalPopulation;
+    }
 }
