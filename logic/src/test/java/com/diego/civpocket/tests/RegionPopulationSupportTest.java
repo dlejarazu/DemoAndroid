@@ -17,8 +17,9 @@ public class RegionPopulationSupportTest {
         Region sut = new Region("");
         sut.ConstruirCiudad();
         //When
-        sut.support();
-
+        int support = sut.support();
+        //Then
+        assertEquals(1,support);
     }
 
 }

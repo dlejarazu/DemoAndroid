@@ -16,6 +16,8 @@ public class Region implements IColonizable{
         {
             if (b != Biomes.Dessert) totalSupport++;
         }
+
+        totalSupport += _nivelCiudad;
         return totalSupport;
     }
 
