@@ -3,23 +3,7 @@ package com.diego.civpocket.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by diego on 11/10/2014.
- */
-
 public class Region implements IColonizable{
-
-
-    public int support() {
-        int totalSupport = 0;
-        for(Biomes b : _biomesInRegion)
-        {
-            if (b != Biomes.Dessert) totalSupport++;
-        }
-
-        totalSupport += _nivelCiudad;
-        return totalSupport;
-    }
 
     public class accionIlegalException extends Exception {
 		private static final long serialVersionUID = -5044052553914379459L; }
@@ -93,5 +77,16 @@ public class Region implements IColonizable{
 
     public void decimate(Biomes decimatedBiome) {
         _biomesInRegion.remove(decimatedBiome);
+    }
+
+    public int support() {
+        int totalSupport = 0;
+        for(Biomes b : _biomesInRegion)
+        {
+            if (b != Biomes.Dessert) totalSupport++;
+        }
+
+        totalSupport += _nivelCiudad;
+        return totalSupport;
     }
 }
