@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class RegionTest {
+public class RegionBiomesTest {
 
 	@Parameterized.Parameters
 	public static Collection<Object[]> supportValues() {
