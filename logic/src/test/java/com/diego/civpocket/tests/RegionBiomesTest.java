@@ -10,7 +10,6 @@ import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Region.accionIlegalException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 

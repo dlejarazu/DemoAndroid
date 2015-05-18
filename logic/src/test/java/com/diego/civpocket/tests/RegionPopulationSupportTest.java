@@ -22,4 +22,13 @@ public class RegionPopulationSupportTest {
         assertEquals(1,support);
     }
 
+    @Test
+    public void testSupportEmptyRegion(){
+        //Given
+        Region sut = new Region("");
+        //When
+        int support = sut.support();
+        //Then
+        assertEquals(0, support);
+    }
 }
