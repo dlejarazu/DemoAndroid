@@ -31,11 +31,11 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 		//When
 		sut.accionConstruirGranja();
 		//Then
-		Mockito.verify(testImperio).ConstruirGranja(seleccionada);
+		Mockito.verify(testImperio).buildFarm(seleccionada);
 	}
 
 	protected void permitirPuedeConstruirGranja() {
-		Mockito.doReturn(true).when(testImperio).puedeGranjaEn(Mockito.any(Region.class));
+		Mockito.doReturn(true).when(testImperio).canBuildFarmAt(Mockito.any(Region.class));
 	}
 
 	@Test

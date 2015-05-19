@@ -25,7 +25,7 @@ public class ImperioTest {
 		//Given
 		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
 		//When
-		sut.ConstruirGranja(testRegion);
+		sut.buildFarm(testRegion);
 		//Then
 		Mockito.verify(testRegion).add(Biomes.Farm);
 	}
@@ -34,7 +34,7 @@ public class ImperioTest {
 		//Given
 		Mockito.doReturn(true).when(testRegion).has(Biomes.Forest);
 		//When
-		sut.ConstruirGranja(testRegion);
+		sut.buildFarm(testRegion);
 		//Then
 		Mockito.verify(testRegion).decimate(Biomes.Forest);
 	}
@@ -44,7 +44,7 @@ public class ImperioTest {
 		//Given
 		Mockito.doReturn(false).when(testRegion).has(Biomes.Farm);
 		//When
-		boolean resultado = sut.puedeGranjaEn(testRegion);
+		boolean resultado = sut.canBuildFarmAt(testRegion);
 		//Then
 		assertFalse(resultado);
 	}
@@ -54,7 +54,7 @@ public class ImperioTest {
 		//Given
 		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
 		//When
-		boolean resultado = sut.puedeGranjaEn(testRegion);
+		boolean resultado = sut.canBuildFarmAt(testRegion);
 		//Then
 		assertFalse(resultado);
 	}

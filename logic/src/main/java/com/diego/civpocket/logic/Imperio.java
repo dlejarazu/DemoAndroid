@@ -2,46 +2,63 @@ package com.diego.civpocket.logic;
 
 import com.diego.civpocket.logic.Region.accionIlegalException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Imperio {
 
-    int _totalPopulation;
+    List<Tribe> _population = new ArrayList<Tribe>();
 
-    public void EnviarColono(IColonizable destino)
+    public void EnviarColono(Region destination)
     {
-        destino.AddPoblacion();
-        _totalPopulation++;
+        Tribe colono = new Tribe();
+        _population.add(colono);
+        colono.moveTo(destination);
+
     }
 
-    public void ReclamarColono(IColonizable destino)
+    public void ReclamarColono(Region destination)
     {
-        destino.EliminaPoblacion();
-        _totalPopulation--;
+        List<Tribe> localPopulation = this.regionPop(destination);
+        _population.remove(localPopulation.get(0));
     }
 
-    public boolean puedeCiudadEn(IColonizable region){
-        return region.getPoblacion()>=4 
+    public List<Tribe> regionPop(Region local) {
+        List<Tribe> localPopulation = new ArrayList<Tribe>();
+        for (Tribe tribe: _population) {
+            if (tribe.get_location() == local) {
+                localPopulation.add(tribe);
+            }
+        }
+        return localPopulation;
+    }
+
+    public boolean canBuildCityAt(Region region){
+        return regionPop(region).size()>=4
         	&& region.getNivelCiudad()==0;
     }
 
-    public void ConstruirCiudad(IColonizable region) {
-        if (puedeCiudadEn(region)) {
+    public void buildCity(Region region) {
+        if (canBuildCityAt(region)) {
             region.ConstruirCiudad();
-            region.EliminaPoblacion(4);
+            for(Tribe builders : regionPop(region).subList(0,3)){
+                _population.remove(builders);
+            }
         }
     }
 
-	public boolean puedeGranjaEn(Region region ) {
+	public boolean canBuildFarmAt(Region region) {
 
 		return !region.has(Biomes.Farm) && region.has(Biomes.Forest);
 	}
 
-	public void ConstruirGranja(Region seleccionada) throws accionIlegalException {
+	public void buildFarm(Region seleccionada) throws accionIlegalException {
 		seleccionada.add(Biomes.Farm );
         seleccionada.decimate(Biomes.Forest);
 	}
 
     public int totalPopulation() {
-        return _totalPopulation;
+        return _population.size();
     }
 }
