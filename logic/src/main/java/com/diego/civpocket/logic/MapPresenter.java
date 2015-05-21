@@ -125,7 +125,7 @@ public class MapPresenter {
 
     public String regionStatusToString(String nombreRegion){
         Region region =_escenarioActual.getRegionByName(nombreRegion);
-        int localPop = _jugador.regionPop(region).size();
+        int localPop = _jugador.populationAt(region).size();
         String status = emoji(0x1F603) + Integer.toString(localPop);
         if (region.getNivelCiudad() > 0) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getNivelCiudad());

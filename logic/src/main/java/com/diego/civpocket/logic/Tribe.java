@@ -5,13 +5,15 @@ package com.diego.civpocket.logic;
  * Manage individuals of an empire
  */
 public class Tribe {
-    Region _location;
+    Region _location = null;
 
     public void moveTo(Region destination){
         _location = destination;
     }
 
-    public Region get_location(){
+    public Region getLocation(){
         return _location;
     }
+
+    public boolean isAtPool() {return (_location==null);}
 }

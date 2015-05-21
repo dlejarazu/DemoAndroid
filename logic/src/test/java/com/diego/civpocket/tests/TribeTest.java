@@ -41,7 +41,7 @@ public void testMoveTo() throws Exception {
     //Give
     sut.moveTo(testRegion);
     //When
-    Region destination = sut.get_location();
+    Region destination = sut.getLocation();
     //then
     assertEquals(testRegion,destination);
 }
