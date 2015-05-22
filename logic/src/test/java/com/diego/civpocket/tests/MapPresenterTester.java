@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Escenario;
-import com.diego.civpocket.logic.Imperio;
+import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
 import com.diego.civpocket.logic.Region;
@@ -18,7 +18,7 @@ public class MapPresenterTester {
 	@Mock
 	protected Escenario testEscenario;
 	@Mock
-	protected Imperio testImperio;
+	protected Empire testEmpire;
 	@Mock
 	protected MapUpdater testView;
 	@Mock

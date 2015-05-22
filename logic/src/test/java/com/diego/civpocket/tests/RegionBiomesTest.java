@@ -8,7 +8,7 @@ import org.junit.runners.Parameterized;
 
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.Region;
-import com.diego.civpocket.logic.Region.accionIlegalException;
+import com.diego.civpocket.logic.Region.IllegalActionException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,7 +34,7 @@ public class RegionBiomesTest {
 	public int supportProvided;
 
 	@Test
-	public void testAddBiome() throws accionIlegalException {
+	public void testAddBiome() throws IllegalActionException {
 		//Given
 		Region sut = new Region("");
 		//When
@@ -45,7 +45,7 @@ public class RegionBiomesTest {
 	}
 
 	@Test
-	public void testDecimate() throws accionIlegalException {
+	public void testDecimate() throws IllegalActionException {
 		//Given
 		Region sut = new Region("");
 		sut.add(biomeTested);
@@ -56,8 +56,8 @@ public class RegionBiomesTest {
 		assertFalse(result);
 	}
 
-	@Test (expected = accionIlegalException.class)
-	public void testNoDuplicateBiomes() throws accionIlegalException {
+	@Test (expected = IllegalActionException.class)
+	public void testNoDuplicateBiomes() throws IllegalActionException {
 		//Given
 		Region sut = new Region("");
 		sut.add(biomeTested);
@@ -67,7 +67,7 @@ public class RegionBiomesTest {
 	}
 
 	@Test
-	public void testSupportNumberBiomes() throws accionIlegalException {
+	public void testSupportNumberBiomes() throws IllegalActionException {
 		//Given
 		Region sut = new Region("");
 		//When

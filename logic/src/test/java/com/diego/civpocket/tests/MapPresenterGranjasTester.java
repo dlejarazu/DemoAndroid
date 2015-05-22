@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import com.diego.civpocket.logic.*;
 import com.diego.civpocket.logic.CivPocketGame.FaseJuego;
-import com.diego.civpocket.logic.Region.accionIlegalException;
+import com.diego.civpocket.logic.Region.IllegalActionException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MapPresenterGranjasTester extends MapPresenterTester {
@@ -23,7 +23,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	}
 	
 	@Test
-	public void testConstruirGranjaEnLaFaseDeAvances() throws accionIlegalException {
+	public void testConstruirGranjaEnLaFaseDeAvances() throws IllegalActionException {
 		//Given
 		faseActual(FaseJuego.Avances);
 		permitirPuedeConstruirGranja();
@@ -31,22 +31,22 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 		//When
 		sut.accionConstruirGranja();
 		//Then
-		Mockito.verify(testImperio).buildFarm(seleccionada);
+		Mockito.verify(testEmpire).buildFarm(seleccionada);
 	}
 
 	protected void permitirPuedeConstruirGranja() {
-		Mockito.doReturn(true).when(testImperio).canBuildFarmAt(Mockito.any(Region.class));
+		Mockito.doReturn(true).when(testEmpire).canBuildFarmAt(Mockito.any(Region.class));
 	}
 
 	@Test
-	public void testStatusRegionCambiaAlConstruirGranja() throws accionIlegalException {
+	public void testStatusRegionCambiaAlConstruirGranja() throws IllegalActionException {
 		//Given
 		faseActual(FaseJuego.Avances);
 		Region seleccionada = mockSelectRegion();
-		String statusPrevio = sut.regionStatusToString(seleccionada.getNombre());
+		String statusPrevio = sut.regionStatusToString(seleccionada.getName());
 		seleccionada.add(Biomes.Farm);
 		//When
-		String statusDespues = sut.regionStatusToString(seleccionada.getNombre());
+		String statusDespues = sut.regionStatusToString(seleccionada.getName());
 		//Then
 		assertThat(statusPrevio,not(equalTo(statusDespues)));
 	}
@@ -57,7 +57,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 		faseActual(FaseJuego.Avances);
 		permitirPuedeConstruirGranja();
 		Region seleccionada = mockSelectRegion();
-		sut.accionSelectRegion(seleccionada.getNombre());
+		sut.accionSelectRegion(seleccionada.getName());
 		//Then
 		boolean isBtnGranjaActivo = sut.isGranjasActivo();
 		assertTrue(isBtnGranjaActivo);

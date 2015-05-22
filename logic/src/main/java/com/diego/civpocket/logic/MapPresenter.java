@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diego.civpocket.logic.CivPocketGame.FaseJuego;
-import com.diego.civpocket.logic.Region.accionIlegalException;
+import com.diego.civpocket.logic.Region.IllegalActionException;
 
 /**
  * Model Presenter View for CivPocket
  */
 public class MapPresenter {
     private final CivPocketGame _juego;
-    private final Imperio _jugador;
+    private final Empire _jugador;
     private final  Escenario _escenarioActual;
     private final MapUpdater _updater;
 
     private Region _selectedRegion = null;
 
-    public MapPresenter( CivPocketGame newJuego, Escenario newEscenario, Imperio newJugador, MapUpdater newUpdater)
+    public MapPresenter( CivPocketGame newJuego, Escenario newEscenario, Empire newJugador, MapUpdater newUpdater)
     {
         _jugador = newJugador;
         _juego = newJuego;
@@ -51,7 +51,7 @@ public class MapPresenter {
     public void accionAddPoblacion()
     {
         if (_selectedRegion!= null) {
-            _jugador.EnviarColono(_selectedRegion);
+            _jugador.sendSettler(_selectedRegion);
             synchView();
         }
     }
@@ -59,7 +59,7 @@ public class MapPresenter {
     public void accionRemPoblacion()
     {
         if (_selectedRegion!= null) {
-            _jugador.ReclamarColono(_selectedRegion);
+            _jugador.decimateSettler(_selectedRegion);
             synchView();
         }
 
@@ -73,7 +73,7 @@ public class MapPresenter {
     }
     
 
-	public void accionConstruirGranja() throws accionIlegalException {
+	public void accionConstruirGranja() throws IllegalActionException {
 		// TODO Auto-generated method stub
 		if (_selectedRegion!= null && _juego.getFaseActual() == FaseJuego.Avances) {
             _jugador.buildFarm(_selectedRegion);
@@ -107,16 +107,16 @@ public class MapPresenter {
 	}
 
     public List<String> getNombresRegiones() {
-        List<String> regionesArray =  new ArrayList<String>();
+        List<String> regionesArray =  new ArrayList<>();
         for (Region regActual : _escenarioActual.regionesMapa) {
-            regionesArray.add(regActual.getNombre());
+            regionesArray.add(regActual.getName());
         }
         return regionesArray;
     }
 
     public boolean isSelected(String nombreCheck) {
         return _selectedRegion != null &&
-               _selectedRegion.getNombre().equals(nombreCheck);
+               _selectedRegion.getName().equals(nombreCheck);
     }
 
     public String emoji(int hexcode)  {
@@ -127,8 +127,8 @@ public class MapPresenter {
         Region region =_escenarioActual.getRegionByName(nombreRegion);
         int localPop = _jugador.populationAt(region).size();
         String status = emoji(0x1F603) + Integer.toString(localPop);
-        if (region.getNivelCiudad() > 0) {
-            status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getNivelCiudad());
+        if (region.getCityLevel() > 0) {
+            status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getCityLevel());
         }
         if (region.has(Biomes.Farm)) {
             status = status + "\n" + emoji(0x1F33D);

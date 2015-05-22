@@ -5,43 +5,42 @@ import java.util.List;
 
 public class Region {
 
-    public class accionIlegalException extends Exception {
+    public class IllegalActionException extends Exception {
 		private static final long serialVersionUID = -5044052553914379459L; }
-	
-    private int _poblacion = 0;
+
     List<Biomes> _biomesInRegion;
-    private String Nombre;
-    private int _nivelCiudad = 0;
+    private String _name;
+    private int _cityLevel = 0;
 
-    public Region(String nuevaRegion)
+    public Region(String newRegion)
     {
-        _biomesInRegion = new ArrayList<Biomes>();
-        setNombre(nuevaRegion);
+        _biomesInRegion = new ArrayList<>();
+        setName(newRegion);
     }
 
-    public String getNombre() {
-        return Nombre;
+    public String getName() {
+        return _name;
     }
 
-    private void setNombre(String nombre) {
-        Nombre = nombre;
+    private void setName(String _name) {
+        this._name = _name;
     }
 
-    public void ConstruirCiudad() {
-        _nivelCiudad = 1;
+    public void buildCity() {
+        _cityLevel = 1;
     }
 
-    public int getNivelCiudad() {
-        return _nivelCiudad;
+    public int getCityLevel() {
+        return _cityLevel;
     }
 
 	public boolean has(Biomes biome) {
 		return _biomesInRegion.contains(biome);
 	}
 
-    public void add(Biomes biome) throws accionIlegalException {
+    public void add(Biomes biome) throws IllegalActionException {
         if (_biomesInRegion.contains(biome)){
-            throw new accionIlegalException();
+            throw new IllegalActionException();
         }
         _biomesInRegion.add(biome);
     }
@@ -57,7 +56,7 @@ public class Region {
             if (b != Biomes.Dessert) totalSupport++;
         }
 
-        totalSupport += _nivelCiudad;
+        totalSupport += _cityLevel;
         return totalSupport;
     }
 }

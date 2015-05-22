@@ -10,18 +10,19 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.diego.civpocket.logic.Biomes;
-import com.diego.civpocket.logic.Imperio;
+import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.Region;
-import com.diego.civpocket.logic.Region.accionIlegalException;
+import com.diego.civpocket.logic.Region.IllegalActionException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ImperioTest {
+public class EmpireTest {
 
-	@InjectMocks Imperio sut;
+	@InjectMocks
+	Empire sut;
 	@Mock Region testRegion;
 	
 	@Test
-	public void testConstruirGranja() throws accionIlegalException {
+	public void testConstruirGranja() throws IllegalActionException {
 		//Given
 		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
 		//When
@@ -30,7 +31,7 @@ public class ImperioTest {
 		Mockito.verify(testRegion).add(Biomes.Farm);
 	}
 	@Test
-	public void testBuildingFarmDecimatesForest() throws accionIlegalException {
+	public void testBuildingFarmDecimatesForest() throws IllegalActionException {
 		//Given
 		Mockito.doReturn(true).when(testRegion).has(Biomes.Forest);
 		//When
@@ -40,7 +41,7 @@ public class ImperioTest {
 	}
 
 	@Test
-	public void testSinBosqueNoSePuedeConstruir() throws accionIlegalException {
+	public void testSinBosqueNoSePuedeConstruir() throws IllegalActionException {
 		//Given
 		Mockito.doReturn(false).when(testRegion).has(Biomes.Farm);
 		//When

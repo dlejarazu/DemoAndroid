@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.diego.civpocket.R;
 import com.diego.civpocket.logic.*;
-import com.diego.civpocket.logic.Region.accionIlegalException;
+import com.diego.civpocket.logic.Region.IllegalActionException;
 
 //prueba
 //TODO: Crear mapa dibujable con canvas extendiendo clase View
@@ -37,9 +36,9 @@ public class MainMapView extends Activity implements MapUpdater {
         regionesMapa[5] = new Region("7");
         regionesMapa[6] = new Region("8");
 
-        presenter = new MapPresenter( new CivPocketGame(), new Escenario(regionesMapa), new Imperio(), this);
+        presenter = new MapPresenter( new CivPocketGame(), new Escenario(regionesMapa), new Empire(), this);
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, presenter.getNombresRegiones());
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getNombresRegiones());
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mapa = (MapDrawView) findViewById(R.id.mapScenarioView);
@@ -84,7 +83,7 @@ public class MainMapView extends Activity implements MapUpdater {
     public void BotonSiguienteFase(View view) {
         presenter.accionPasarSiguienteFase();
     }
-    public void BotonConstruyeGranja(View view) throws accionIlegalException {
+    public void BotonConstruyeGranja(View view) throws IllegalActionException {
     	presenter.accionConstruirGranja();
     }
 
@@ -101,9 +100,7 @@ public class MainMapView extends Activity implements MapUpdater {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings ||
+                super.onOptionsItemSelected(item);
     }
 }

@@ -13,7 +13,7 @@ public class MapPresenterViewUpdatesTest extends MapPresenterTester {
 
 	@Before
 	public void setUp() throws Exception {
-		sut = new MapPresenter(testGame, testEscenario, testImperio, testView);		
+		sut = new MapPresenter(testGame, testEscenario, testEmpire, testView);
 	}
 	
 	private void verifyUpdatesEnLaVista()

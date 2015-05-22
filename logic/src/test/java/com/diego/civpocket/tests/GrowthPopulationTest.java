@@ -1,6 +1,6 @@
 package com.diego.civpocket.tests;
 
-import com.diego.civpocket.logic.Imperio;
+import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.Region;
 
 import static org.junit.Assert.*;
@@ -8,21 +8,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class GrowthPopulationTest {
 
-    @InjectMocks Imperio sut;
+    @InjectMocks
+    Empire sut;
     @Mock Region testRegion;
     @Mock Region testRegion2;
 
     @Test
     public void testEmpireTotalPopulation() {
         //Given
-        sut.EnviarColono(testRegion);
+        sut.sendSettler(testRegion);
         //When
         int population = sut.totalPopulation();
         //Then
@@ -41,9 +41,9 @@ public class GrowthPopulationTest {
     @Test
     public void testEmpireReducePopulation() {
         //Given
-        sut.EnviarColono(testRegion);
-        sut.EnviarColono(testRegion);
-        sut.ReclamarColono(testRegion);
+        sut.sendSettler(testRegion);
+        sut.sendSettler(testRegion);
+        sut.decimateSettler(testRegion);
         //When
         int population = sut.totalPopulation();
         //Then
@@ -54,7 +54,7 @@ public class GrowthPopulationTest {
     public void testEmpireGrowthInOneRegion(){
         //Given
         int initialPop = 3;
-        for(int i = 0; i < initialPop; i++) sut.EnviarColono(testRegion);
+        for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
         //When
         sut.populationGrowth();
         //Then
@@ -66,8 +66,8 @@ public class GrowthPopulationTest {
         //Given
         int initialPopReg1 = 1;
         int initialPopReg2 = 4;
-        for (int i = 0; i < initialPopReg1; i++) sut.EnviarColono(testRegion);
-        for (int i = 0; i < initialPopReg2; i++) sut.EnviarColono(testRegion2);
+        for (int i = 0; i < initialPopReg1; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < initialPopReg2; i++) sut.sendSettler(testRegion2);
         //When
         sut.populationGrowth();
         //Then
@@ -91,6 +91,13 @@ public class GrowthPopulationTest {
 
     @Test
     public void testEEnforceMinimumPopWhenGrowth() {
-
+        //Given
+        int initialPop = 1;
+        for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
+        //When
+        sut.populationGrowth();
+        //Then
+        int newPopulation = sut.populationAt(testRegion).size();
+        assertEquals(initialPop+1,newPopulation);
     }
 }

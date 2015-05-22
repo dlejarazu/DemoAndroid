@@ -1,6 +1,6 @@
 package com.diego.civpocket.logic;
 
-import com.diego.civpocket.logic.Region.accionIlegalException;
+import com.diego.civpocket.logic.Region.IllegalActionException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,25 +8,25 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Imperio {
+public class Empire {
 
-    List<Tribe> _population = new ArrayList<Tribe>();
+    List<Tribe> _population = new ArrayList<>();
 
-    public void EnviarColono(Region destination)
+    public void sendSettler(Region destination)
     {
-        Tribe colono = new Tribe();
-        _population.add(colono);
-        colono.moveTo(destination);
+        Tribe settler = new Tribe();
+        _population.add(settler);
+        settler.moveTo(destination);
     }
 
-    public void ReclamarColono(Region destination)
+    public void decimateSettler(Region destination)
     {
         List<Tribe> localPopulation = this.populationAt(destination);
         _population.remove(localPopulation.get(0));
     }
 
     public List<Tribe> populationAt(Region local) {
-        List<Tribe> localPopulation = new ArrayList<Tribe>();
+        List<Tribe> localPopulation = new ArrayList<>();
         for (Tribe tribe: _population) {
             if (tribe.getLocation() == local) {
                 localPopulation.add(tribe);
@@ -37,12 +37,12 @@ public class Imperio {
 
     public boolean canBuildCityAt(Region region){
         return populationAt(region).size()>=4
-        	&& region.getNivelCiudad()==0;
+        	&& region.getCityLevel()==0;
     }
 
     public void buildCity(Region region) {
         if (canBuildCityAt(region)) {
-            region.ConstruirCiudad();
+            region.buildCity();
             for(Tribe builders : populationAt(region).subList(0, 3)){
                 _population.remove(builders);
             }
@@ -54,7 +54,7 @@ public class Imperio {
 		return !region.has(Biomes.Farm) && region.has(Biomes.Forest);
 	}
 
-	public void buildFarm(Region seleccionada) throws accionIlegalException {
+	public void buildFarm(Region seleccionada) throws IllegalActionException {
 		seleccionada.add(Biomes.Farm );
         seleccionada.decimate(Biomes.Forest);
 	}
@@ -67,14 +67,14 @@ public class Imperio {
         Map<Region, Integer> census = getEmpireCensus();
 
         for (Region populated : census.keySet()){
-            this.EnviarColono(populated);
+            this.sendSettler(populated);
         }
 
         enforceMinimumPop();
     }
 
     private Map<Region, Integer> getEmpireCensus() {
-        Map<Region,Integer> countPop = new HashMap<Region,Integer>();
+        Map<Region,Integer> countPop = new HashMap<>();
         for(Tribe tribe : _population){
             Region tribeLoc = tribe.getLocation();
             int oldValue = 0;
@@ -87,7 +87,7 @@ public class Imperio {
     }
 
     public List<Tribe> poolPopulation() {
-        List<Tribe> localPopulation = new ArrayList<Tribe>();
+        List<Tribe> localPopulation = new ArrayList<>();
         for (Tribe tribe: _population) {
             if (tribe.isAtPool()) {
                 localPopulation.add(tribe);
