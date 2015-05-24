@@ -59,4 +59,26 @@ public class EmpireTest {
 		//Then
 		assertFalse(resultado);
 	}
+
+	@Test
+	public void testDecimateRegionWithNoTribe(){
+		//Given
+		//Emtpy region
+		//When
+		boolean success = sut.decimateSettler(testRegion);
+		//Then
+		assertFalse(success);
+	}
+
+	@Test
+	public void testBuildCity(){
+		//Given
+		int popReg = 4;
+		for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+		//When
+		sut.buildCity(testRegion);
+		//Then
+		int newPop = sut.populationAt(testRegion).size();
+		assertEquals(0,newPop);
+	}
 }

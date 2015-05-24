@@ -19,10 +19,15 @@ public class Empire {
         settler.moveTo(destination);
     }
 
-    public void decimateSettler(Region destination)
+    public boolean decimateSettler(Region destination)
     {
         List<Tribe> localPopulation = this.populationAt(destination);
-        _population.remove(localPopulation.get(0));
+        if (localPopulation.isEmpty())
+            return false;
+        else {
+            _population.remove(localPopulation.get(0));
+            return true;
+        }
     }
 
     public List<Tribe> populationAt(Region local) {
@@ -43,7 +48,7 @@ public class Empire {
     public void buildCity(Region region) {
         if (canBuildCityAt(region)) {
             region.buildCity();
-            for(Tribe builders : populationAt(region).subList(0, 3)){
+            for(Tribe builders : populationAt(region).subList(0, 4)){
                 _population.remove(builders);
             }
         }
