@@ -3,7 +3,7 @@ package com.diego.civpocket.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.diego.civpocket.logic.CivPocketGame.FaseJuego;
+import com.diego.civpocket.logic.CivPocketGame.GamePhase;
 import com.diego.civpocket.logic.Region.IllegalActionException;
 
 /**
@@ -35,7 +35,7 @@ public class MapPresenter {
      ********/
 
     public void accionPasarSiguienteFase() {
-        _juego.SiguienteFase();
+        _juego.nextPhase();
         synchView();
     }
 
@@ -59,7 +59,7 @@ public class MapPresenter {
     public void accionRemPoblacion()
     {
         if (_selectedRegion!= null) {
-            _jugador.decimateSettler(_selectedRegion);
+            _jugador.reduceSettler(_selectedRegion);
             synchView();
         }
 
@@ -75,7 +75,7 @@ public class MapPresenter {
 
 	public void accionConstruirGranja() throws IllegalActionException {
 		// TODO Auto-generated method stub
-		if (_selectedRegion!= null && _juego.getFaseActual() == FaseJuego.Avances) {
+		if (_selectedRegion!= null && _juego.getActualPhase() == GamePhase.Advances) {
             _jugador.buildFarm(_selectedRegion);
             synchView();
         }
@@ -87,14 +87,14 @@ public class MapPresenter {
 
     public boolean isConstruirCiudaPossible() {
         return  _selectedRegion!=null &&
-                _juego.getFaseActual()== CivPocketGame.FaseJuego.Avances &&
+                _juego.getActualPhase()== GamePhase.Advances &&
                 _jugador.canBuildCityAt(_selectedRegion);
     }
     public boolean isAddPoblacionActivo() {
-        return  _juego.getFaseActual()!=CivPocketGame.FaseJuego.Evento;
+        return  _juego.getActualPhase()!= GamePhase.Events;
     }
     public boolean isRemPoblacionActivo() {
-    	return  _juego.getFaseActual()!=CivPocketGame.FaseJuego.Evento;
+    	return  _juego.getActualPhase()!= GamePhase.Events;
     }
     public boolean isSiguienteFaseActivo() {
         return  true;
@@ -102,7 +102,7 @@ public class MapPresenter {
     
 	public boolean isGranjasActivo() {
 		return _selectedRegion!=null &&
-			   _juego.getFaseActual()== CivPocketGame.FaseJuego.Avances &&
+			   _juego.getActualPhase()== GamePhase.Advances &&
                _jugador.canBuildFarmAt(_selectedRegion);
 	}
 
@@ -137,15 +137,15 @@ public class MapPresenter {
     }
 
     public String getFaseActual() {
-        switch (_juego.getFaseActual()) {
-            case Crecimiento:
-                return "Crecimiento";
-            case Evento:
-                return "Eventos";
-            case Avances:
-                return "Avances";
-            case Mantenimiento:
-                return "Mantenimiento";
+        switch (_juego.getActualPhase()) {
+            case Growth:
+                return "Growth";
+            case Events:
+                return "Events";
+            case Advances:
+                return "Advances";
+            case Upkeep:
+                return "Upkeep";
         }
         return "";
     }
