@@ -19,7 +19,7 @@ public class Empire {
         settler.moveTo(destination);
     }
 
-    public boolean decimateSettler(Region destination)
+    public boolean reduceSettler(Region destination)
     {
         List<Tribe> localPopulation = this.populationAt(destination);
         if (localPopulation.isEmpty())
@@ -86,7 +86,7 @@ public class Empire {
             if (countPop.containsKey(tribeLoc)){
                 oldValue = countPop.get(tribeLoc);
             }
-            countPop.put(tribeLoc,oldValue + 1);
+            countPop.put(tribeLoc, oldValue + 1);
         }
         return countPop;
     }
@@ -104,6 +104,14 @@ public class Empire {
     private void enforceMinimumPop() {
         while(totalPopulation() < 3){
             _population.add(new Tribe());
+        }
+    }
+
+    public void adjustPopulation() {
+        Map<Region, Integer>  census = this.getEmpireCensus();
+        for (Region regSettled : census.keySet()){
+            int tribesToReduce = census.get(regSettled) - regSettled.support();
+            for (int i = 0;i < tribesToReduce; i++) this.reduceSettler(regSettled);
         }
     }
 }
