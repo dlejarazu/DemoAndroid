@@ -59,4 +59,8 @@ public class Region {
         totalSupport += _cityLevel;
         return totalSupport;
     }
+
+    public void supportCity() {
+        if (!this.has(Biomes.Farm)) _cityLevel = 0;
+    }
 }

@@ -9,10 +9,11 @@ import com.diego.civpocket.logic.Region;
 
 public class RegionPopulationSupportTest {
 
+    private final Region sut = new Region("");
+
     @Test
-    public void testCitySupport(){
+    public void testSupportFromCityLevel(){
         //Given
-        Region sut = new Region("");
         sut.buildCity();
         //When
         int support = sut.support();
@@ -23,7 +24,7 @@ public class RegionPopulationSupportTest {
     @Test
     public void testSupportEmptyRegion(){
         //Given
-        Region sut = new Region("");
+        //Empty Region
         //When
         int support = sut.support();
         //Then
@@ -33,12 +34,34 @@ public class RegionPopulationSupportTest {
     @Test
     public void testSupportBiomesPlusCity() throws Region.IllegalActionException {
         //Given
-        Region sut = new Region("");
         sut.buildCity();
         sut.add(Biomes.Farm);
         //When
         int support = sut.support();
         //Then
         assertEquals(2,support);
+    }
+
+    @Test
+    public void testNoCitySupport(){
+        //Given
+        sut.buildCity();
+        //When
+        sut.supportCity();
+        //Then
+        boolean hasCity = (sut.getCityLevel() > 0);
+        assertFalse(hasCity);
+    }
+
+    @Test
+    public void testCitySupport() throws Region.IllegalActionException{
+        //Given
+        sut.buildCity();
+        sut.add(Biomes.Farm);
+        //When
+        sut.supportCity();
+        //Then
+        boolean hasCity = (sut.getCityLevel() > 0);
+        assertTrue(hasCity);
     }
 }
