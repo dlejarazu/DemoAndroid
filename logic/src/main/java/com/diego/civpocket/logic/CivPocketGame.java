@@ -8,11 +8,18 @@ package com.diego.civpocket.logic;
 
 public class CivPocketGame {
 
-    public enum GamePhase {
-        Growth, Events, Advances, Upkeep;
-        public GamePhase getNext() {
-            return values()[(ordinal() + 1) % values().length];
-        }
+    private int _era;
+
+    public void setEra(int era) {
+        this._era = era;
+    }
+
+    public int getEra() {
+        return _era;
+    }
+
+    public EventCard drawEventCard() {
+        return new EventCard();
     }
 
     GamePhase _gamePhase = GamePhase.Growth;
@@ -23,5 +30,12 @@ public class CivPocketGame {
 
     public void nextPhase(){
         _gamePhase = _gamePhase.getNext();
+    }
+
+    public enum GamePhase {
+        Growth, Events, Advances, Upkeep;
+        public GamePhase getNext() {
+            return values()[(ordinal() + 1) % values().length];
+        }
     }
 }

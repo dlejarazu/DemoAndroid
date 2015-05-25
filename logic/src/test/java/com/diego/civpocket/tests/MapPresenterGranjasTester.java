@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 import com.diego.civpocket.logic.*;
-import com.diego.civpocket.logic.CivPocketGame.FaseJuego;
+import com.diego.civpocket.logic.CivPocketGame.GamePhase;
 import com.diego.civpocket.logic.Region.IllegalActionException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -25,7 +25,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	@Test
 	public void testConstruirGranjaEnLaFaseDeAvances() throws IllegalActionException {
 		//Given
-		faseActual(FaseJuego.Avances);
+		faseActual(GamePhase.Advances);
 		permitirPuedeConstruirGranja();
 		Region seleccionada = mockSelectRegion();
 		//When
@@ -41,7 +41,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	@Test
 	public void testStatusRegionCambiaAlConstruirGranja() throws IllegalActionException {
 		//Given
-		faseActual(FaseJuego.Avances);
+		faseActual(GamePhase.Advances);
 		Region seleccionada = mockSelectRegion();
 		String statusPrevio = sut.regionStatusToString(seleccionada.getName());
 		seleccionada.add(Biomes.Farm);
@@ -54,7 +54,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	@Test
 	public void testBtnPlantarActivoEnLaFaseAvances(){
 		//Given
-		faseActual(FaseJuego.Avances);
+		faseActual(GamePhase.Advances);
 		permitirPuedeConstruirGranja();
 		Region seleccionada = mockSelectRegion();
 		sut.accionSelectRegion(seleccionada.getName());

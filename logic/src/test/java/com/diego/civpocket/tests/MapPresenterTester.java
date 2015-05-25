@@ -35,8 +35,8 @@ public class MapPresenterTester {
 		return regSeleccionada;
 	}
 
-	protected void faseActual(CivPocketGame.FaseJuego fase) {
-		Mockito.doReturn(fase).when(testGame).getFaseActual();
+	protected void faseActual(CivPocketGame.GamePhase fase) {
+		Mockito.doReturn(fase).when(testGame).getActualPhase();
 	}
 
 }

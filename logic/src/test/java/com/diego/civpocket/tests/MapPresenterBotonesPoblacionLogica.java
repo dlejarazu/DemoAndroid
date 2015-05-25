@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import com.diego.civpocket.logic.CivPocketGame.FaseJuego;
+import com.diego.civpocket.logic.CivPocketGame.GamePhase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
@@ -19,7 +19,7 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 	@Test
 	public void testBtnsAddPoblacionActivoEnFaseCrecimiento() {
 		//Given
-		faseActual(FaseJuego.Crecimiento);
+		faseActual(GamePhase.Growth);
 		//Then
 		boolean isBtnAddPopActivo = sut.isAddPoblacionActivo();
 		assertTrue(isBtnAddPopActivo);
@@ -27,7 +27,7 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 	@Test
 	public void testBtnsRemPoblacionActivoEnFaseCrecimiento() {
 		//Given
-		faseActual(FaseJuego.Crecimiento);
+		faseActual(GamePhase.Growth);
 		//Then
 		boolean isBtnRemPopActivo = sut.isAddPoblacionActivo();
 		assertTrue(isBtnRemPopActivo);
@@ -35,7 +35,7 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 	@Test
 	public void testBtnsAddPoblacionInactivoEnFaseEventos() {
 		//Given
-		faseActual(FaseJuego.Evento);
+		faseActual(GamePhase.Events);
 		//Then
 		boolean isBtnAddPopActivo = sut.isAddPoblacionActivo();
 		assertFalse(isBtnAddPopActivo);
@@ -43,7 +43,7 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 	@Test
 	public void testBtnsRemPoblacionInactivoEnFaseEventos() {
 		//Given
-		faseActual(FaseJuego.Evento);
+		faseActual(GamePhase.Events);
 		//Then
 		boolean isBtnRemPopActivo = sut.isRemPoblacionActivo();
 		assertFalse(isBtnRemPopActivo);

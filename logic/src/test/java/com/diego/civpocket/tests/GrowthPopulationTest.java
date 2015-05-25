@@ -43,7 +43,7 @@ public class GrowthPopulationTest {
         //Given
         sut.sendSettler(testRegion);
         sut.sendSettler(testRegion);
-        sut.decimateSettler(testRegion);
+        sut.reduceSettler(testRegion);
         //When
         int population = sut.totalPopulation();
         //Then
