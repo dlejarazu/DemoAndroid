@@ -27,7 +27,7 @@ public class MapPresenterTester {
 	public void setUp()  {
 		MockitoAnnotations.initMocks(this);
 		given(testGame.getPlayer()).willReturn(testEmpire);
-		sut = new MapPresenter(testGame, testEscenario, null, testView);
+		sut = new MapPresenter(testGame, testEscenario, testView);
 	}
 
 	protected Region mockSelectRegion() {

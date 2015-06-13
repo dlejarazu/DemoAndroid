@@ -23,7 +23,7 @@ public class IntegrationTests {
     CivPocketGame game = new CivPocketGame(player);
 
     MapPresenter sut = new MapPresenter(
-            game,scenario,player, mockUpdater);
+            game,scenario, mockUpdater);
 
     @Test
     public void testAdvanceSeveralTurnsEmptyEmpire()

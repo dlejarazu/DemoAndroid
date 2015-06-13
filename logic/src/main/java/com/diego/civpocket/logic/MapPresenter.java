@@ -17,7 +17,7 @@ public class MapPresenter {
 
     private Region _selectedRegion = null;
 
-    public MapPresenter( CivPocketGame newGame, Escenario newScenario, Empire newPlayer, MapUpdater newUpdater)
+    public MapPresenter( CivPocketGame newGame, Escenario newScenario, MapUpdater newUpdater)
     {
         _game = newGame;
         _player = _game.getPlayer();
