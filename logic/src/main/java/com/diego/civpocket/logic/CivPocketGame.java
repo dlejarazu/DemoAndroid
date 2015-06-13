@@ -37,6 +37,10 @@ public class CivPocketGame {
         else  if (_gamePhase == GamePhase.Upkeep) _player.adjustPopulation();
     }
 
+    public Empire getPlayer() {
+        return _player;
+    }
+
     public enum GamePhase {
         Growth, Events, Advances, Upkeep;
         public GamePhase getNext() {

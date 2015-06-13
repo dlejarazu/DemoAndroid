@@ -10,11 +10,6 @@ import com.diego.civpocket.logic.CivPocketGame.GamePhase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
-	
-	@Before
-	public void setUp() throws Exception {
-		//sut = new MapPresenter(testGame, testEscenario, testEmpire, testView);
-	}
 
 	@Test
 	public void testBtnsAddPoblacionActivoEnFaseCrecimiento() {

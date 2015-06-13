@@ -2,21 +2,12 @@ package com.diego.civpocket.tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import com.diego.civpocket.logic.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class MapPresenterInformersTest extends MapPresenterTester {
-
-	@Before
-	public void setUp() throws Exception {
-		
-	}
 
 	@Test
 	public void testIsSelectedCorrectoDevuelveTrue() {

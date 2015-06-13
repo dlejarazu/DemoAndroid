@@ -1,21 +1,10 @@
 package com.diego.civpocket.tests;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
-import com.diego.civpocket.logic.*;
-
-@RunWith(MockitoJUnitRunner.class)
 public class MapPresenterViewUpdatesTest extends MapPresenterTester {
 
-	@Before
-	public void setUp() throws Exception {
-		sut = new MapPresenter(testGame, testEscenario, testEmpire, testView);
-	}
-	
 	private void verifyUpdatesEnLaVista()
 	{
 		Mockito.verify(testView,Mockito.atLeastOnce()).UpdateControls();

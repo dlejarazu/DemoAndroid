@@ -1,8 +1,10 @@
 package com.diego.civpocket.tests;
 
+import org.junit.Before;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Escenario;
@@ -11,21 +13,21 @@ import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
 import com.diego.civpocket.logic.Region;
 
+import static org.mockito.BDDMockito.*;
+
 public class MapPresenterTester {
 
-	@InjectMocks
+	@Mock protected Escenario testEscenario;
+	@Mock protected Empire testEmpire;
+	@Mock protected MapUpdater testView;
+	@Mock protected CivPocketGame testGame;
 	protected MapPresenter sut;
-	@Mock
-	protected Escenario testEscenario;
-	@Mock
-	protected Empire testEmpire;
-	@Mock
-	protected MapUpdater testView;
-	@Mock
-	protected CivPocketGame testGame;
 
-	public MapPresenterTester() {
-		
+	@Before
+	public void setUp()  {
+		MockitoAnnotations.initMocks(this);
+		given(testGame.getPlayer()).willReturn(testEmpire);
+		sut = new MapPresenter(testGame, testEscenario, null, testView);
 	}
 
 	protected Region mockSelectRegion() {
@@ -36,7 +38,7 @@ public class MapPresenterTester {
 	}
 
 	protected void faseActual(CivPocketGame.GamePhase fase) {
-		Mockito.doReturn(fase).when(testGame).getActualPhase();
+		given(testGame.getActualPhase()).willReturn(fase);
 	}
 
 }

@@ -20,7 +20,7 @@ public class MapPresenter {
     public MapPresenter( CivPocketGame newGame, Escenario newScenario, Empire newPlayer, MapUpdater newUpdater)
     {
         _game = newGame;
-        _player = newPlayer;
+        _player = _game.getPlayer();
         _actualScenario = newScenario;
         _updater = newUpdater;
     }
