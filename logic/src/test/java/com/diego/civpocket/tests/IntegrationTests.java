@@ -12,9 +12,7 @@ import org.junit.Assert;
 import org.mockito.Mockito;
 
 
-/**
- * Created by diego on 13/06/2015.
- */
+/*
 public class IntegrationTests {
     MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
 
@@ -28,10 +26,11 @@ public class IntegrationTests {
     @Test
     public void testAdvanceSeveralTurnsEmptyEmpire()
     {
-        int numPhasesToAdvance = 3;
+        int numPhasesToAdvance = 4;
         for(int i = 0; i < numPhasesToAdvance; i++) {
             sut.accionPasarSiguienteFase();
         }
         Assert.assertEquals(0, player.totalPopulation());
     }
 }
+*/

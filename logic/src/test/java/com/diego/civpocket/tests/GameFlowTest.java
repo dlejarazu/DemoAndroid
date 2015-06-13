@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 import  static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameFlowTest  {
@@ -24,22 +25,23 @@ public class GameFlowTest  {
 
     @Test
     public void testIncreasePopulationWhenEnteringGrowth() {
-        assertEquals(CivPocketGame.GamePhase.Growth,sut.getActualPhase());
-         sut.nextPhase();   //Events
-         sut.nextPhase();   //Advances
-         sut.nextPhase();   //Upkeep
-         Mockito.verify(testEmpire,never()).populationGrowth();
-         sut.nextPhase();   //Growth
-         Mockito.verify(testEmpire,times(1)).populationGrowth();
+        assertEquals(CivPocketGame.GamePhase.StartGame, sut.getActualPhase());
+        sut.nextPhase();   //Growth
+        then(testEmpire).should(times(1)).populationGrowth();
+        sut.nextPhase();   //Events
+        sut.nextPhase();   //Advances
+        sut.nextPhase();   //Upkeep
+        then(testEmpire).should(times(1)).populationGrowth();
      }
 
     @Test
     public void testEnforcePopulationSupportWhenEnteringUpkeep() {
-        assertEquals(CivPocketGame.GamePhase.Growth,sut.getActualPhase());
+        assertEquals(CivPocketGame.GamePhase.StartGame,sut.getActualPhase());
+        sut.nextPhase();   //Growth
         sut.nextPhase();   //Events
         sut.nextPhase();   //Advances
-        Mockito.verify(testEmpire,never()).adjustPopulation();
+        then(testEmpire).should(never()).adjustPopulation();
         sut.nextPhase();   //Upkeep
-        verify(testEmpire,times(1)).adjustPopulation();
+        then(testEmpire).should(times(1)).adjustPopulation();
     }
 }

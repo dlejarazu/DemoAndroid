@@ -8,28 +8,21 @@ package com.diego.civpocket.logic;
 
 public class CivPocketGame {
 
-    private int _era;
     Empire _player;
+    GamePhase _gamePhase = GamePhase.StartGame;
 
     public CivPocketGame(Empire newEmpire)
     {
         _player = newEmpire;
     }
 
-    public void setEra(int era) {
-        this._era = era;
-    }
-
     public EventCard drawEventCard() {
         return new EventCard();
     }
 
-    GamePhase _gamePhase = GamePhase.Growth;
-
     public GamePhase getActualPhase(){
         return _gamePhase;
     }
-    public void setActualPhase(GamePhase newPhase) {}
 
     public void nextPhase(){
         _gamePhase = _gamePhase.getNext();
@@ -42,7 +35,7 @@ public class CivPocketGame {
     }
 
     public enum GamePhase {
-        Growth, Events, Advances, Upkeep;
+        StartGame,Growth, Events, Advances, Upkeep;
         public GamePhase getNext() {
             return values()[(ordinal() + 1) % values().length];
         }
