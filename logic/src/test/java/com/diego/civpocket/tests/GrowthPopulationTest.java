@@ -1,5 +1,6 @@
 package com.diego.civpocket.tests;
 
+import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.Region;
 
@@ -8,8 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class GrowthPopulationTest {
@@ -100,4 +101,6 @@ public class GrowthPopulationTest {
         int newPopulation = sut.populationAt(testRegion).size();
         assertEquals(initialPop+1,newPopulation);
     }
+
+
 }

@@ -16,17 +16,9 @@ import org.junit.After;
 * @since <pre>May 24, 2015</pre> 
 * @version 1.0 
 */ 
-public class CivPocketGameTest { 
+public class eventsTest {
 
     CivPocketGame sut = new CivPocketGame();
-
-    @Before
-    public void before() throws Exception {
-    }
-
-    @After
-    public void after() throws Exception {
-    }
 
     @Test
     public void testDrawEvent(){

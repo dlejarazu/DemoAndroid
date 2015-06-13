@@ -36,6 +36,7 @@ public class MapPresenter {
 
     public void accionPasarSiguienteFase() {
         _juego.nextPhase();
+        if ( _juego.getActualPhase() == GamePhase.Growth) _jugador.populationGrowth();
         synchView();
     }
 
@@ -74,7 +75,6 @@ public class MapPresenter {
     
 
 	public void accionConstruirGranja() throws IllegalActionException {
-		// TODO Auto-generated method stub
 		if (_selectedRegion!= null && _juego.getActualPhase() == GamePhase.Advances) {
             _jugador.buildFarm(_selectedRegion);
             synchView();
