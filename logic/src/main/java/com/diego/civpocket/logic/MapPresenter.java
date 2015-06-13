@@ -37,6 +37,7 @@ public class MapPresenter {
     public void accionPasarSiguienteFase() {
         _juego.nextPhase();
         if ( _juego.getActualPhase() == GamePhase.Growth) _jugador.populationGrowth();
+        else  if ( _juego.getActualPhase() == GamePhase.Upkeep) _jugador.adjustPopulation();
         synchView();
     }
 

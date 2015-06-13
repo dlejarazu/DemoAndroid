@@ -81,12 +81,14 @@ public class Empire {
     private Map<Region, Integer> getEmpireCensus() {
         Map<Region,Integer> countPop = new HashMap<>();
         for(Tribe tribe : _population){
-            Region tribeLoc = tribe.getLocation();
-            int oldValue = 0;
-            if (countPop.containsKey(tribeLoc)){
-                oldValue = countPop.get(tribeLoc);
+            if (!tribe.isAtPool()) {
+                Region tribeLoc = tribe.getLocation();
+                int oldValue = 0;
+                if (countPop.containsKey(tribeLoc)) {
+                    oldValue = countPop.get(tribeLoc);
+                }
+                countPop.put(tribeLoc, oldValue + 1);
             }
-            countPop.put(tribeLoc, oldValue + 1);
         }
         return countPop;
     }

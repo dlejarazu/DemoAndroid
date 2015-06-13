@@ -41,4 +41,28 @@ public class MapPresenterGameFlowTest extends MapPresenterTester {
         //then
         verify(testEmpire, Mockito.never()).populationGrowth();
     }
+
+    @Test
+    public void testPopulationSupportDuringUpkeep()
+    {
+        //Given
+        for(CivPocketGame.GamePhase phase : CivPocketGame.GamePhase.values()) {
+            Mockito.doReturn(phase).when(testGame).getActualPhase();
+            sut.accionPasarSiguienteFase();
+        }
+        //then
+        verify(testEmpire, Mockito.times(1)).adjustPopulation();
+    }
+
+    @Test
+    public void testPopulationSupportOnlyDuringUpkeep()
+    {
+        for(CivPocketGame.GamePhase phase : CivPocketGame.GamePhase.values()) {
+            Mockito.doReturn(phase).when(testGame).getActualPhase();
+            sut.accionPasarSiguienteFase();
+        }
+        //then
+        verify(testEmpire, Mockito.times(1)).adjustPopulation();
+    }
+
 }
