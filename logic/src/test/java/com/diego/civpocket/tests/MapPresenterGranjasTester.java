@@ -23,15 +23,15 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	}
 	
 	@Test
-	public void testConstruirGranjaEnLaFaseDeAvances() throws IllegalActionException {
+	public void testBuildFarmDuringAdvancePhase() throws IllegalActionException {
 		//Given
 		faseActual(GamePhase.Advances);
 		permitirPuedeConstruirGranja();
-		Region seleccionada = mockSelectRegion();
+		Region selected = mockSelectRegion();
 		//When
 		sut.accionConstruirGranja();
 		//Then
-		Mockito.verify(testEmpire).buildFarm(seleccionada);
+		Mockito.verify(testEmpire).buildFarm(selected);
 	}
 
 	protected void permitirPuedeConstruirGranja() {

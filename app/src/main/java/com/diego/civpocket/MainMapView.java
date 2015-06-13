@@ -36,7 +36,9 @@ public class MainMapView extends Activity implements MapUpdater {
         regionesMapa[5] = new Region("7");
         regionesMapa[6] = new Region("8");
 
-        presenter = new MapPresenter( new CivPocketGame(), new Escenario(regionesMapa), new Empire(), this);
+        Empire player = new Empire();
+
+        presenter = new MapPresenter( new CivPocketGame(player), new Escenario(regionesMapa), player , this);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getNombresRegiones());
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

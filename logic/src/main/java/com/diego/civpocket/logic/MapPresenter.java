@@ -10,18 +10,18 @@ import com.diego.civpocket.logic.Region.IllegalActionException;
  * Model Presenter View for CivPocket
  */
 public class MapPresenter {
-    private final CivPocketGame _juego;
-    private final Empire _jugador;
-    private final  Escenario _escenarioActual;
+    private final CivPocketGame _game;
+    private final Empire _player;
+    private final  Escenario _actualScenario;
     private final MapUpdater _updater;
 
     private Region _selectedRegion = null;
 
-    public MapPresenter( CivPocketGame newJuego, Escenario newEscenario, Empire newJugador, MapUpdater newUpdater)
+    public MapPresenter( CivPocketGame newGame, Escenario newScenario, Empire newPlayer, MapUpdater newUpdater)
     {
-        _jugador = newJugador;
-        _juego = newJuego;
-        _escenarioActual = newEscenario;
+        _game = newGame;
+        _player = newPlayer;
+        _actualScenario = newScenario;
         _updater = newUpdater;
     }
     
@@ -35,9 +35,7 @@ public class MapPresenter {
      ********/
 
     public void accionPasarSiguienteFase() {
-        _juego.nextPhase();
-        if ( _juego.getActualPhase() == GamePhase.Growth) _jugador.populationGrowth();
-        else  if ( _juego.getActualPhase() == GamePhase.Upkeep) _jugador.adjustPopulation();
+        _game.nextPhase();
         synchView();
     }
 
@@ -45,7 +43,7 @@ public class MapPresenter {
     {
         _selectedRegion = null;
         if (nombre!=null) {
-            _selectedRegion = _escenarioActual.getRegionByName(nombre);
+            _selectedRegion = _actualScenario.getRegionByName(nombre);
         }
         synchView();
     }
@@ -53,7 +51,7 @@ public class MapPresenter {
     public void accionAddPoblacion()
     {
         if (_selectedRegion!= null) {
-            _jugador.sendSettler(_selectedRegion);
+            _player.sendSettler(_selectedRegion);
             synchView();
         }
     }
@@ -61,7 +59,7 @@ public class MapPresenter {
     public void accionRemPoblacion()
     {
         if (_selectedRegion!= null) {
-            _jugador.reduceSettler(_selectedRegion);
+            _player.reduceSettler(_selectedRegion);
             synchView();
         }
 
@@ -69,15 +67,15 @@ public class MapPresenter {
 
     public void accionConstruirCiudad() {
         if (_selectedRegion!= null) {
-            _jugador.buildCity(_selectedRegion);
+            _player.buildCity(_selectedRegion);
             synchView();
         }
     }
     
 
 	public void accionConstruirGranja() throws IllegalActionException {
-		if (_selectedRegion!= null && _juego.getActualPhase() == GamePhase.Advances) {
-            _jugador.buildFarm(_selectedRegion);
+		if (_selectedRegion!= null && _game.getActualPhase() == GamePhase.Advances) {
+            _player.buildFarm(_selectedRegion);
             synchView();
         }
 	}
@@ -88,14 +86,14 @@ public class MapPresenter {
 
     public boolean isConstruirCiudaPossible() {
         return  _selectedRegion!=null &&
-                _juego.getActualPhase()== GamePhase.Advances &&
-                _jugador.canBuildCityAt(_selectedRegion);
+                _game.getActualPhase()== GamePhase.Advances &&
+                _player.canBuildCityAt(_selectedRegion);
     }
     public boolean isAddPoblacionActivo() {
-        return  _juego.getActualPhase()!= GamePhase.Events;
+        return  _game.getActualPhase()!= GamePhase.Events;
     }
     public boolean isRemPoblacionActivo() {
-    	return  _juego.getActualPhase()!= GamePhase.Events;
+    	return  _game.getActualPhase()!= GamePhase.Events;
     }
     public boolean isSiguienteFaseActivo() {
         return  true;
@@ -103,13 +101,13 @@ public class MapPresenter {
     
 	public boolean isGranjasActivo() {
 		return _selectedRegion!=null &&
-			   _juego.getActualPhase()== GamePhase.Advances &&
-               _jugador.canBuildFarmAt(_selectedRegion);
+			   _game.getActualPhase()== GamePhase.Advances &&
+               _player.canBuildFarmAt(_selectedRegion);
 	}
 
     public List<String> getNombresRegiones() {
         List<String> regionesArray =  new ArrayList<>();
-        for (Region regActual : _escenarioActual.regionesMapa) {
+        for (Region regActual : _actualScenario.regionesMapa) {
             regionesArray.add(regActual.getName());
         }
         return regionesArray;
@@ -125,8 +123,8 @@ public class MapPresenter {
     }
 
     public String regionStatusToString(String nombreRegion){
-        Region region =_escenarioActual.getRegionByName(nombreRegion);
-        int localPop = _jugador.populationAt(region).size();
+        Region region = _actualScenario.getRegionByName(nombreRegion);
+        int localPop = _player.populationAt(region).size();
         String status = emoji(0x1F603) + Integer.toString(localPop);
         if (region.getCityLevel() > 0) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getCityLevel());
@@ -138,7 +136,7 @@ public class MapPresenter {
     }
 
     public String getFaseActual() {
-        switch (_juego.getActualPhase()) {
+        switch (_game.getActualPhase()) {
             case Growth:
                 return "Growth";
             case Events:

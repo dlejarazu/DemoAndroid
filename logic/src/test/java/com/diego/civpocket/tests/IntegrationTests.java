@@ -17,9 +17,10 @@ import org.mockito.Mockito;
  */
 public class IntegrationTests {
     MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
-    CivPocketGame game = new CivPocketGame();
+
     Escenario scenario =  new Escenario(null);
     Empire player = new Empire();
+    CivPocketGame game = new CivPocketGame(player);
 
     MapPresenter sut = new MapPresenter(
             game,scenario,player, mockUpdater);
@@ -27,7 +28,7 @@ public class IntegrationTests {
     @Test
     public void testAdvanceSeveralTurnsEmptyEmpire()
     {
-        int numPhasesToAdvance = 20;
+        int numPhasesToAdvance = 3;
         for(int i = 0; i < numPhasesToAdvance; i++) {
             sut.accionPasarSiguienteFase();
         }

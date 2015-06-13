@@ -9,13 +9,15 @@ package com.diego.civpocket.logic;
 public class CivPocketGame {
 
     private int _era;
+    Empire _player;
+
+    public CivPocketGame(Empire newEmpire)
+    {
+        _player = newEmpire;
+    }
 
     public void setEra(int era) {
         this._era = era;
-    }
-
-    public int getEra() {
-        return _era;
     }
 
     public EventCard drawEventCard() {
@@ -27,9 +29,12 @@ public class CivPocketGame {
     public GamePhase getActualPhase(){
         return _gamePhase;
     }
+    public void setActualPhase(GamePhase newPhase) {}
 
     public void nextPhase(){
         _gamePhase = _gamePhase.getNext();
+        if ( _gamePhase == GamePhase.Growth) _player.populationGrowth();
+        else  if (_gamePhase == GamePhase.Upkeep) _player.adjustPopulation();
     }
 
     public enum GamePhase {
