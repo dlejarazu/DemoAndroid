@@ -102,12 +102,18 @@ public class MapPresenter {
                 _game.getActualPhase()== GamePhase.Advances &&
                 _player.canBuildCityAt(_selectedRegion);
     }
-    public boolean isAddPoblacionActivo() {
-        return  _game.getActualPhase()!= GamePhase.Events;
+
+    private boolean populationButtonStatus() {
+        return  _game.getActualPhase()== GamePhase.Growth;
     }
-    public boolean isRemPoblacionActivo() {
-    	return  _game.getActualPhase()!= GamePhase.Events;
+
+    public boolean isAddTribeActive() {
+        return populationButtonStatus();
     }
+    public boolean isRemTribeActive() {
+        return populationButtonStatus();
+    }
+
     public boolean isSiguienteFaseActivo() {
         return  true;
     }
