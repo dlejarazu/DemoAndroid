@@ -15,9 +15,10 @@ public class MapPresenter {
     private final MapUpdater _updater;
 
     private Region _selectedRegion = null;
-    private String _nameSelectedRegion;
+    //private String _nameSelectedRegion;
     private boolean _moveMode =false;
-    private String _nameDestination;
+    //private String _nameDestination;
+    private Region _destination = null;
 
     public MapPresenter( CivPocketGame newGame, Scenario newScenario, MapUpdater newUpdater)
     {
@@ -50,13 +51,9 @@ public class MapPresenter {
     public void actionSelectRegion(String name)
     {
         if(_moveMode){
-            _nameDestination = name;
+            _destination = _actualScenario.getRegionByName(name);
         }
         else {
-            _nameSelectedRegion = name;
-        }
-        _selectedRegion = null;
-        if (name!=null) {
             _selectedRegion = _actualScenario.getRegionByName(name);
         }
         synchView();
@@ -65,9 +62,8 @@ public class MapPresenter {
     public void accionAddPoblacion()
     {
         if(_moveMode) _moveMode = false;
-        Region destination = _actualScenario.getRegionByName(_nameDestination);
-        if (destination!= null) {
-            _player.sendSettler(destination);
+        if (_destination!= null) {
+            _player.sendSettler(_destination);
             synchView();
         }
     }
@@ -180,10 +176,12 @@ public class MapPresenter {
     }
 
     public boolean isSelectedAsDestination(String nameCheck) {
-        return nameCheck.equals(_nameDestination);
+        if (_destination==null) return false;
+        else return nameCheck.equals(_destination.getName());
     }
 
     public boolean isSelected(String nameCheck) {
-        return nameCheck.equals(_nameSelectedRegion);
+        if (_selectedRegion == null) return false;
+        else return nameCheck.equals(_selectedRegion.getName());
     }
 }
