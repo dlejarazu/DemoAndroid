@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 public class EmpirePopulationTest {
     Empire sut = new Empire();
     @Mock Region testRegion;
+    @Mock Region testRegion2;
 
     @Test
     public void testCreateAndDestriyTribes() throws IllegalActionException {
@@ -46,6 +47,15 @@ public class EmpirePopulationTest {
         sut.adjustPopulation();
         //Then
         assertPopulation(0,testRegion);
+    }
+
+    @Test
+    public void testEmpireZeroInitialPop() {
+        //Given
+        //When
+        int population = sut.totalPopulation();
+        //Then
+        assertEquals(0, population);
     }
 
     private void assertPopulation(int expectedPop,Region asserted) {

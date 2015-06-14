@@ -20,37 +20,6 @@ public class GrowthPopulationTest {
     @Mock Region testRegion2;
 
     @Test
-    public void testEmpireTotalPopulation() {
-        //Given
-        sut.sendSettler(testRegion);
-        //When
-        int population = sut.totalPopulation();
-        //Then
-        assertEquals(1,population);
-    }
-
-    @Test
-    public void testEmpireZeroInitialPop() {
-        //Given
-        //When
-        int population = sut.totalPopulation();
-        //Then
-        assertEquals(0,population);
-    }
-
-    @Test
-    public void testEmpireReducePopulation() throws IllegalActionException {
-        //Given
-        sut.sendSettler(testRegion);
-        sut.sendSettler(testRegion);
-        sut.reduceSettler(testRegion);
-        //When
-        int population = sut.totalPopulation();
-        //Then
-        assertEquals(1,population);
-    }
-
-    @Test
     public void testEmpireGrowthInOneRegion(){
         //Given
         int initialPop = 3;
