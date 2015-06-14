@@ -28,11 +28,10 @@ public class MapPresenterTester {
 		sut = new MapPresenter(testGame, testEscenario, testView);
 	}
 
-	protected Region mockSelectRegion() {
-		Region regSeleccionada = new Region("test");
-		Mockito.doReturn(regSeleccionada).when(testEscenario).getRegionByName("test");
-		sut.actionSelectRegion("test");
-		return regSeleccionada;
+	protected Region addMockRegionToScenario(String name) {
+		Region regionSelected = new Region(name);
+		Mockito.doReturn(regionSelected).when(testEscenario).getRegionByName(name);
+		return regionSelected;
 	}
 
 	protected void faseActual(CivPocketGame.GamePhase fase) {

@@ -2,6 +2,7 @@ package com.diego.civpocket.tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -14,16 +15,23 @@ import com.diego.civpocket.logic.IllegalActionException;
 
 public class MapPresenterGranjasTester extends MapPresenterTester {
 
+	Region testRegion;
+	@Before
+	public void setup()
+	{
+		testRegion = addMockRegionToScenario("testRegion");
+	}
+
 	@Test
 	public void testBuildFarmDuringAdvancePhase() throws IllegalActionException {
 		//Given
 		faseActual(GamePhase.Advances);
 		allowBuldingFarms();
-		Region selected = mockSelectRegion();
+		sut.actionSelectRegion(testRegion.getName());
 		//When
 		sut.accionConstruirGranja();
 		//Then
-		Mockito.verify(testEmpire).buildFarm(selected);
+		Mockito.verify(testEmpire).buildFarm(testRegion);
 	}
 
 	protected void allowBuldingFarms() {
@@ -34,11 +42,10 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	public void testStatusRegionCambiaAlConstruirGranja() throws IllegalActionException {
 		//Given
 		faseActual(GamePhase.Advances);
-		Region seleccionada = mockSelectRegion();
-		String statusPrevio = sut.regionStatusToString(seleccionada.getName());
-		seleccionada.add(Biomes.Farm);
+		String statusPrevio = sut.regionStatusToString(testRegion.getName());
+		testRegion.add(Biomes.Farm);
 		//When
-		String statusDespues = sut.regionStatusToString(seleccionada.getName());
+		String statusDespues = sut.regionStatusToString(testRegion.getName());
 		//Then
 		assertThat(statusPrevio,not(equalTo(statusDespues)));
 	}
@@ -48,8 +55,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 		//Given
 		faseActual(GamePhase.Advances);
 		allowBuldingFarms();
-		Region seleccionada = mockSelectRegion();
-		sut.actionSelectRegion(seleccionada.getName());
+		sut.actionSelectRegion(testRegion.getName());
 		//Then
 		boolean isBtnGranjaActivo = sut.isGranjasActivo();
 		assertTrue(isBtnGranjaActivo);
