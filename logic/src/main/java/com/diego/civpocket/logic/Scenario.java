@@ -6,13 +6,16 @@ package com.diego.civpocket.logic;
  */
 public class Scenario {
 
-   protected Region[] _map = null;
+    protected Region[] _map = null;
+    protected String _name = "";
 
     public Scenario(Region[] nuevoMapa){
         _map = nuevoMapa;
     }
 
     public Scenario(String scenarioName) {
+
+        _name = scenarioName;
 
         _map = new Region[7];
         _map[0] = new Region("1");
@@ -52,6 +55,8 @@ public class Scenario {
     }
 
     public void setUp(Empire player) {
-        player.sendSettler(getRegionByName("5"));
+        if (_name.length() > 0) {
+            player.sendSettler(getRegionByName("5"));
+        }
     }
 }

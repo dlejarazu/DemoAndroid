@@ -23,6 +23,8 @@ public class MapPresenter {
         _player = _game.getPlayer();
         _actualScenario = newScenario;
         _updater = newUpdater;
+
+        _actualScenario.setUp(_player);
     }
     
     void synchView() {
@@ -124,7 +126,7 @@ public class MapPresenter {
 
     public String regionStatusToString(String nombreRegion){
         Region region = _actualScenario.getRegionByName(nombreRegion);
-        int localPop = _player.populationAt(region).size();
+        int localPop = _player.tribesAt(region).size();
         String status = emoji(0x1F603) + Integer.toString(localPop);
         if (region.getCityLevel() > 0) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getCityLevel());
@@ -136,17 +138,7 @@ public class MapPresenter {
     }
 
     public String getFaseActual() {
-        switch (_game.getActualPhase()) {
-            case Growth:
-                return "Growth";
-            case Events:
-                return "Events";
-            case Advances:
-                return "Advances";
-            case Upkeep:
-                return "Upkeep";
-        }
-        return "";
+        return _game.getActualPhase().name();
     }
 
 

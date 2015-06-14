@@ -92,7 +92,7 @@ public class EmpireTest {
 	}
 
     private void assertPopulation(int expectedPop,Region asserted) {
-        int newPop = sut.populationAt(asserted).size();
+        int newPop = sut.tribesAt(asserted).size();
         assertEquals(expectedPop, newPop);
     }
 

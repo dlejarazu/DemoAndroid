@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.BDDMockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GrowthPopulationTest {
@@ -58,7 +57,7 @@ public class GrowthPopulationTest {
         //When
         sut.populationGrowth();
         //Then
-        int newPopulation = sut.populationAt(testRegion).size();
+        int newPopulation = sut.tribesAt(testRegion).size();
         assertEquals(initialPop+1,newPopulation);
     }
     @Test
@@ -71,8 +70,8 @@ public class GrowthPopulationTest {
         //When
         sut.populationGrowth();
         //Then
-        int newPopulationReg1 = sut.populationAt(testRegion).size();
-        int newPopulationReg2 = sut.populationAt(testRegion2).size();
+        int newPopulationReg1 = sut.tribesAt(testRegion).size();
+        int newPopulationReg2 = sut.tribesAt(testRegion2).size();
         assertEquals(initialPopReg1 + 1, newPopulationReg1);
         assertEquals(initialPopReg2 + 1, newPopulationReg2);
     }
@@ -85,7 +84,7 @@ public class GrowthPopulationTest {
         //When
         sut.populationGrowth();
         //Then
-        int newPopulation = sut.populationAt(testRegion).size();
+        int newPopulation = sut.tribesAt(testRegion).size();
         assertEquals(initialPop+1,newPopulation);
         assertEquals(initialPop+1,sut.totalPopulation());
     }

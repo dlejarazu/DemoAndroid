@@ -21,7 +21,7 @@ public class Empire {
 
     public boolean reduceSettler(Region destination)
     {
-        List<Tribe> localPopulation = this.populationAt(destination);
+        List<Tribe> localPopulation = this.tribesAt(destination);
         if (localPopulation.isEmpty())
             return false;
         else {
@@ -30,7 +30,7 @@ public class Empire {
         }
     }
 
-    public List<Tribe> populationAt(Region local) {
+    public List<Tribe> tribesAt(Region local) {
         List<Tribe> localPopulation = new ArrayList<>();
         for (Tribe tribe: _population) {
             if (tribe.getLocation() == local) {
@@ -41,14 +41,14 @@ public class Empire {
     }
 
     public boolean canBuildCityAt(Region region){
-        return populationAt(region).size()>=4
+        return tribesAt(region).size()>=4
         	&& region.getCityLevel()==0;
     }
 
     public void buildCity(Region region) {
         if (canBuildCityAt(region)) {
             region.buildCity();
-            for(Tribe builders : populationAt(region).subList(0, 4)){
+            for(Tribe builders : tribesAt(region).subList(0, 4)){
                 _population.remove(builders);
             }
         }
