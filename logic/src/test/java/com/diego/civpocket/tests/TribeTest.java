@@ -21,15 +21,13 @@ public class TribeTest {
     @Mock Region testRegion;
     Tribe sut = new Tribe();
 
-@Test
-public void testMoveTo() throws Exception {
-    //Give
-    sut.moveTo(testRegion);
-    //When
-    Region destination = sut.getLocation();
-    //then
-    assertEquals(testRegion,destination);
+    @Test
+    public void testMoveTo() throws Exception {
+        //Give
+        sut.moveTo(testRegion);
+        //When
+        Region destination = sut.getLocation();
+        //then
+        assertEquals(testRegion,destination);
+    }
 }
-
-
-} 
