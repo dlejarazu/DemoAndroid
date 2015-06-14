@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.BDDMockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GrowthPopulationTest {
@@ -77,19 +78,7 @@ public class GrowthPopulationTest {
     }
 
     @Test
-    public void testEmpireGrowthNoPopulation() {
-        //Given
-        //Emtpy empire
-        int minimumPopRule = 3;
-        //When
-        sut.populationGrowth();
-        //Then
-        int newPoolPop = sut.poolPopulation().size();
-        assertEquals(minimumPopRule,newPoolPop);
-    }
-
-    @Test
-    public void testEEnforceMinimumPopWhenGrowth() {
+    public void testEnforceMinimumPopWhenGrowth() {
         //Given
         int initialPop = 1;
         for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
@@ -98,7 +87,6 @@ public class GrowthPopulationTest {
         //Then
         int newPopulation = sut.populationAt(testRegion).size();
         assertEquals(initialPop+1,newPopulation);
+        assertEquals(initialPop+1,sut.totalPopulation());
     }
-
-
 }

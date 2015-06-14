@@ -71,11 +71,10 @@ public class Empire {
     public void populationGrowth() {
         Map<Region, Integer> census = getEmpireCensus();
 
-        for (Region populated : census.keySet()){
+        for (Region populated : census.keySet()) {
             this.sendSettler(populated);
         }
-
-        enforceMinimumPop();
+//      enforceMinimumPop();
     }
 
     private Map<Region, Integer> getEmpireCensus() {

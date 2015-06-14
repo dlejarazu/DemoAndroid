@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.Assert;
 import org.mockito.Mockito;
 
-
+//TODO: basic test for first turn should end with 1 pop in region with 1 support
 /*
 public class IntegrationTests {
     MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
