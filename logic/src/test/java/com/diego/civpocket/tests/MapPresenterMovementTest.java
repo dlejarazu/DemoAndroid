@@ -10,43 +10,50 @@ import static org.mockito.BDDMockito.*;
 
 public class MapPresenterMovementTest extends MapPresenterTester{
 
+    Region origin;
+
     @Before
     public void setup(){
         //Given
+        origin = addMockRegionToScenario("origin");
         faseActual(CivPocketGame.GamePhase.Growth);
-        sut.actionSelectRegion("origin");
+        sut.actionSelectRegion(origin.getName());
         sut.accionRemPoblacion();
     }
 
     @Test
     public void testSelectDestination(){
         //When
-        sut.actionSelectRegion("destination");
+        Region destination = addMockRegionToScenario("destination");
+        sut.actionSelectRegion(destination.getName());
         //Then
-        Assert.assertTrue(sut.isSelected("origin"));
-        Assert.assertTrue(sut.isSelectedAsDestination("destination"));
+        Assert.assertTrue(sut.isSelected(origin.getName()));
+        Assert.assertTrue(sut.isSelectedAsDestination(destination.getName()));
     }
 
     @Test
     public void testSelectingOriginAsTargetToReturnTribes(){
         //Given
-        sut.actionSelectRegion("destination");
-        sut.actionSelectRegion("origin");
+        Region destination = addMockRegionToScenario("destination");
+        sut.actionSelectRegion(destination.getName());
+        sut.actionSelectRegion(origin.getName());
         //When
         sut.accionAddPoblacion();
         //Then
-        Assert.assertTrue(sut.isSelected("origin"));
-        Assert.assertTrue(sut.isSelectedAsDestination("origin"));
+        Assert.assertTrue(sut.isSelected(origin.getName()));
+        Assert.assertTrue(sut.isSelectedAsDestination(origin.getName()));
     }
 
     @Test
     public void testReturnFromMoveMode(){
+        //Given
+        Region another = addMockRegionToScenario("another");
         //When
         sut.accionAddPoblacion();
-        sut.actionSelectRegion("another");
+        sut.actionSelectRegion(another.getName());
         //Then
-        Assert.assertTrue(sut.isSelected("another"));
-        Assert.assertFalse(sut.isSelectedAsDestination("origin"));
-        Assert.assertFalse(sut.isSelectedAsDestination("another"));
+        Assert.assertTrue(sut.isSelected(another.getName()));
+        Assert.assertFalse(sut.isSelectedAsDestination(origin.getName()));
+        Assert.assertFalse(sut.isSelectedAsDestination(another.getName()));
     }
 }
