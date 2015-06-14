@@ -64,8 +64,10 @@ public class MapPresenter {
 
     public void accionAddPoblacion()
     {
-        if (_selectedRegion!= null) {
-            _player.sendSettler(_selectedRegion);
+        if(_moveMode) _moveMode = false;
+        Region destination = _actualScenario.getRegionByName(_nameDestination);
+        if (destination!= null) {
+            _player.sendSettler(destination);
             synchView();
         }
     }

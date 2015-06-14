@@ -22,8 +22,7 @@ public class MapPresenterTester {
 	@Mock protected CivPocketGame testGame;
 	protected MapPresenter sut;
 
-	@Before
-	public void setUp()  {
+	public MapPresenterTester(){
 		MockitoAnnotations.initMocks(this);
 		given(testGame.getPlayer()).willReturn(testEmpire);
 		sut = new MapPresenter(testGame, testEscenario, testView);
