@@ -44,4 +44,19 @@ public class GameFlowTest  {
         sut.nextPhase();   //Upkeep
         then(testEmpire).should(times(1)).adjustPopulation();
     }
+
+    @Test
+    public void testGamePhasesSequence(){
+        assertEquals(CivPocketGame.GamePhase.StartGame,sut.getActualPhase());
+        sut.nextPhase();
+        assertEquals(CivPocketGame.GamePhase.Growth, sut.getActualPhase());
+        sut.nextPhase();
+        assertEquals(CivPocketGame.GamePhase.Events, sut.getActualPhase());
+        sut.nextPhase();
+        assertEquals(CivPocketGame.GamePhase.Advances, sut.getActualPhase());
+        sut.nextPhase();
+        assertEquals(CivPocketGame.GamePhase.Upkeep, sut.getActualPhase());
+        sut.nextPhase();
+        assertEquals(CivPocketGame.GamePhase.Growth, sut.getActualPhase());
+    }
 }

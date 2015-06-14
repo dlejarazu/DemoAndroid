@@ -37,7 +37,11 @@ public class CivPocketGame {
     public enum GamePhase {
         StartGame,Growth, Events, Advances, Upkeep;
         public GamePhase getNext() {
-            return values()[(ordinal() + 1) % values().length];
+            GamePhase nextPhase = values()[(ordinal() + 1) % values().length];
+
+            if (nextPhase == StartGame) nextPhase = Growth;
+
+            return nextPhase;
         }
     }
 }

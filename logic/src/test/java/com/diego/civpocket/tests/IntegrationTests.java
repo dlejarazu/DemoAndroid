@@ -27,12 +27,13 @@ public class IntegrationTests {
 
     @Test
     public void testAdvanceSeveralTurnsEmptyEmpire() throws Region.IllegalActionException {
-        lilliput.add(Biomes.Forest);
+        //lilliput.add(Biomes.Forest);
         player.sendSettler(lilliput);
-        int numPhasesToAdvance = 4;
+        int numPhasesToAdvance = 5;
         for(int i = 0; i < numPhasesToAdvance; i++) {
             sut.accionPasarSiguienteFase();
         }
-        Assert.assertEquals(1, player.totalPopulation());
+        Assert.assertEquals(0, player.totalPopulation());
+        Assert.assertEquals("Growth",sut.getFaseActual());
     }
 }
