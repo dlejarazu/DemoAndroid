@@ -1,6 +1,7 @@
 package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.CivPocketGame;
+import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 
 import org.junit.Assert;
@@ -17,12 +18,14 @@ public class MapPresenterMovementTest extends MapPresenterTester{
         //Given
         origin = addMockRegionToScenario("origin");
         faseActual(CivPocketGame.GamePhase.Growth);
-        sut.actionSelectRegion(origin.getName());
-        sut.accionRemPoblacion();
+
     }
 
     @Test
     public void testSelectDestination(){
+        //Given
+        sut.actionSelectRegion(origin.getName());
+        sut.accionRemPoblacion();
         //When
         Region destination = addMockRegionToScenario("destination");
         sut.actionSelectRegion(destination.getName());
@@ -34,6 +37,8 @@ public class MapPresenterMovementTest extends MapPresenterTester{
     @Test
     public void testSelectingOriginAsTargetToReturnTribes(){
         //Given
+        sut.actionSelectRegion(origin.getName());
+        sut.accionRemPoblacion();
         Region destination = addMockRegionToScenario("destination");
         sut.actionSelectRegion(destination.getName());
         sut.actionSelectRegion(origin.getName());
@@ -47,6 +52,8 @@ public class MapPresenterMovementTest extends MapPresenterTester{
     @Test
     public void testReturnFromMoveMode(){
         //Given
+        sut.actionSelectRegion(origin.getName());
+        sut.accionRemPoblacion();
         Region another = addMockRegionToScenario("another");
         //When
         sut.accionAddPoblacion();
@@ -55,5 +62,18 @@ public class MapPresenterMovementTest extends MapPresenterTester{
         Assert.assertTrue(sut.isSelected(another.getName()));
         Assert.assertFalse(sut.isSelectedAsDestination(origin.getName()));
         Assert.assertFalse(sut.isSelectedAsDestination(another.getName()));
+    }
+
+    @Test
+    public void testMoveTribeFromOneRegionToAnother() throws IllegalActionException {
+        //Given
+        sut.actionSelectRegion(origin.getName());
+        sut.accionRemPoblacion();
+        Region destination = addMockRegionToScenario("destination");
+        sut.actionSelectRegion(destination.getName());
+        //When
+        sut.accionAddPoblacion();
+        then(testEmpire).should(times(1)).sendSettler(destination);
+        then(testEmpire).should(times(1)).reduceSettler(origin);
     }
 }
