@@ -32,7 +32,7 @@ public class MapPresenterTester {
 	protected Region mockSelectRegion() {
 		Region regSeleccionada = new Region("test");
 		Mockito.doReturn(regSeleccionada).when(testEscenario).getRegionByName("test");
-		sut.accionSelectRegion("test");
+		sut.actionSelectRegion("test");
 		return regSeleccionada;
 	}
 

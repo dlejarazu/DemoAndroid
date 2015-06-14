@@ -49,7 +49,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 		faseActual(GamePhase.Advances);
 		allowBuldingFarms();
 		Region seleccionada = mockSelectRegion();
-		sut.accionSelectRegion(seleccionada.getName());
+		sut.actionSelectRegion(seleccionada.getName());
 		//Then
 		boolean isBtnGranjaActivo = sut.isGranjasActivo();
 		assertTrue(isBtnGranjaActivo);

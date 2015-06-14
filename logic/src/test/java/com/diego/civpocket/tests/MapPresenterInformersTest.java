@@ -14,7 +14,7 @@ public class MapPresenterInformersTest extends MapPresenterTester {
 		//Given
 		Region testRegion = new Region("test");
 		Mockito.doReturn(testRegion).when(testEscenario).getRegionByName("test");
-		sut.accionSelectRegion("test");
+		sut.actionSelectRegion("test");
 		//When
 		boolean resultado = sut.isSelected("test");
 		assertTrue(resultado);
@@ -25,7 +25,7 @@ public class MapPresenterInformersTest extends MapPresenterTester {
 		//Given
 		Region testRegion = new Region("test");
 		Mockito.doReturn(testRegion).when(testEscenario).getRegionByName("test");
-		sut.accionSelectRegion("test");
+		sut.actionSelectRegion("test");
 		//When
 		boolean resultado = sut.isSelected("other");
 		assertFalse(resultado);

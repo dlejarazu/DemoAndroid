@@ -15,6 +15,9 @@ public class MapPresenter {
     private final MapUpdater _updater;
 
     private Region _selectedRegion = null;
+    private String _nameSelectedRegion;
+    private boolean _moveMode =false;
+    private String _nameDestination;
 
     public MapPresenter( CivPocketGame newGame, Scenario newScenario, MapUpdater newUpdater)
     {
@@ -44,11 +47,17 @@ public class MapPresenter {
         synchView();
     }
 
-    public void accionSelectRegion(String nombre)
+    public void actionSelectRegion(String name)
     {
+        if(_moveMode){
+            _nameDestination = name;
+        }
+        else {
+            _nameSelectedRegion = name;
+        }
         _selectedRegion = null;
-        if (nombre!=null) {
-            _selectedRegion = _actualScenario.getRegionByName(nombre);
+        if (name!=null) {
+            _selectedRegion = _actualScenario.getRegionByName(name);
         }
         synchView();
     }
@@ -63,6 +72,9 @@ public class MapPresenter {
 
     public void accionRemPoblacion()
     {
+        if (_game.getActualPhase()==GamePhase.Growth){
+            _moveMode = true;
+        }
         if (_selectedRegion!= null) {
             try {
                 _player.reduceSettler(_selectedRegion);
@@ -71,7 +83,6 @@ public class MapPresenter {
             }
             synchView();
         }
-
     }
 
     public void accionConstruirCiudad() {
@@ -80,7 +91,6 @@ public class MapPresenter {
             synchView();
         }
     }
-    
 
 	public void accionConstruirGranja() {
 		if (_selectedRegion!= null && _game.getActualPhase() == GamePhase.Advances) {
@@ -132,11 +142,6 @@ public class MapPresenter {
         return regionesArray;
     }
 
-    public boolean isSelected(String nombreCheck) {
-        return _selectedRegion != null &&
-               _selectedRegion.getName().equals(nombreCheck);
-    }
-
     public String emoji(int hexcode)  {
         return new String(new int[] { hexcode }, 0, 1);
     }
@@ -172,6 +177,11 @@ public class MapPresenter {
         return _game.getActualPhase().name();
     }
 
+    public boolean isSelectedAsDestination(String nameCheck) {
+        return nameCheck.equals(_nameDestination);
+    }
 
-
+    public boolean isSelected(String nameCheck) {
+        return nameCheck.equals(_nameSelectedRegion);
+    }
 }

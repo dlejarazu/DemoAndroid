@@ -34,7 +34,7 @@ public class MapDrawView extends ImageView implements View.OnTouchListener {
                                      Math.pow(reg.getY() - y,2));
                 if (newDistance < minDistance) {
                     minDistance = newDistance;
-                    mapPModel.accionSelectRegion(reg.getId());
+                    mapPModel.actionSelectRegion(reg.getId());
                 }
             }
         }
