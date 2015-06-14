@@ -21,21 +21,6 @@ public class TribeTest {
     @Mock Region testRegion;
     Tribe sut = new Tribe();
 
-@Before
-public void before() throws Exception {
-} 
-
-@After
-public void after() throws Exception { 
-}
-
-
-
-/** 
-* 
-* Method: moveTo(Region destination) 
-* 
-*/ 
 @Test
 public void testMoveTo() throws Exception {
     //Give

@@ -56,12 +56,21 @@ public class Empire {
 
 	public boolean canBuildFarmAt(Region region) {
 
-		return !region.has(Biomes.Farm) && region.has(Biomes.Forest);
+		return !region.has(Biomes.Farm) &&
+                region.has(Biomes.Forest) &&
+                tribesAt(region).size() >= 2;
 	}
 
-	public void buildFarm(Region seleccionada) throws IllegalActionException {
-		seleccionada.add(Biomes.Farm );
-        seleccionada.decimate(Biomes.Forest);
+	public boolean buildFarm(Region selected) throws IllegalActionException {
+        if(canBuildFarmAt(selected)) {
+            selected.add(Biomes.Farm);
+            selected.decimate(Biomes.Forest);
+            reduceSettler(selected);
+            reduceSettler(selected);
+            return true;
+        }
+        else
+            return false;
 	}
 
     public int totalPopulation() {

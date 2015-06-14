@@ -2,6 +2,8 @@ package com.diego.civpocket.tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,49 +16,49 @@ import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Region.IllegalActionException;
 
+import org.junit.rules.ExpectedException;
+
+import static org.mockito.BDDMockito.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class EmpireTest {
 
-	@InjectMocks Empire sut;
+	Empire sut = new Empire();
 	@Mock Region testRegion;
 	
 	@Test
-	public void testConstruirGranja() throws IllegalActionException {
-		//Given
-		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
+	public void testEmpireBuildsFarm_If_ItHasForestAndTwoTribes() throws IllegalActionException {
+		given(testRegion.has(Biomes.Farm)).willReturn(false);
+		given(testRegion.has(Biomes.Forest)).willReturn(true);
+
+		sut.sendSettler(testRegion);
+		sut.sendSettler(testRegion);
+
 		//When
-		sut.buildFarm(testRegion);
-		//Then
-		Mockito.verify(testRegion).add(Biomes.Farm);
+		boolean success = sut.buildFarm(testRegion);
+
+        assertTrue(success);
+		then(testRegion).should(times(1)).add(Biomes.Farm);
+		then(testRegion).should(times(1)).decimate(Biomes.Forest);
+        assertEquals(0,sut.tribesAt(testRegion).size());
 	}
-	@Test
-	public void testBuildingFarmDecimatesForest() throws IllegalActionException {
-		//Given
-		Mockito.doReturn(true).when(testRegion).has(Biomes.Forest);
-		//When
-		sut.buildFarm(testRegion);
-		//Then
-		Mockito.verify(testRegion).decimate(Biomes.Forest);
-	}
+
+    @Test
+    public void testEmpireCannotBuildFarmByDefault() throws IllegalActionException
+    {
+        boolean success = sut.buildFarm(testRegion);
+        assertFalse(success);
+        then(testRegion).should(never()).add(Biomes.Farm);
+    }
 
 	@Test
 	public void testSinBosqueNoSePuedeConstruir() throws IllegalActionException {
 		//Given
-		Mockito.doReturn(false).when(testRegion).has(Biomes.Farm);
+		given(testRegion.has(Biomes.Forest)).willReturn(false);
 		//When
-		boolean resultado = sut.canBuildFarmAt(testRegion);
+		boolean result = sut.canBuildFarmAt(testRegion);
 		//Then
-		assertFalse(resultado);
-	}
-
-	@Test
-	public void testSiYaHayGranjaNoSePuedeConstruir(){
-		//Given
-		Mockito.doReturn(true).when(testRegion).has(Biomes.Farm);
-		//When
-		boolean resultado = sut.canBuildFarmAt(testRegion);
-		//Then
-		assertFalse(resultado);
+		assertFalse(result);
 	}
 
 	@Test

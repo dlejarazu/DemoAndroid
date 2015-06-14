@@ -131,8 +131,22 @@ public class MapPresenter {
         if (region.getCityLevel() > 0) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getCityLevel());
         }
+
+        status += "\n";
         if (region.has(Biomes.Farm)) {
-            status = status + "\n" + emoji(0x1F33D);
+            status = status + emoji(0x1F33D);
+        }
+        if (region.has(Biomes.Forest)) {
+            status = status + emoji(0x1F332);
+        }
+        if (region.has(Biomes.Dessert)) {
+            status = status + emoji(0x1F335);
+        }
+        if (region.has(Biomes.Mountain)) {
+            status = status + emoji(0x1F48E);
+        }
+        if (region.has(Biomes.Volcano)) {
+            status = status + emoji(0x1F30B);
         }
         return status;
     }

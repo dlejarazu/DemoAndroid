@@ -66,6 +66,15 @@ public class RegionBiomesTest {
 		//Then Exception thrown
 	}
 
+	@Test (expected = IllegalActionException.class)
+	public void testThrowExceptionWhenDecimatingUnexistingBiome() throws IllegalActionException {
+		//Given
+		Region sut = new Region("");
+		//When
+		sut.decimate(biomeTested);
+		//Then Exception thrown
+	}
+
 	@Test
 	public void testSupportNumberBiomes() throws IllegalActionException {
 		//Given

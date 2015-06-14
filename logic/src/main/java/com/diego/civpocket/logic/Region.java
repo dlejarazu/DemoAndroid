@@ -6,7 +6,12 @@ import java.util.List;
 public class Region {
 
     public class IllegalActionException extends Exception {
-		private static final long serialVersionUID = -5044052553914379459L; }
+		private static final long serialVersionUID = -5044052553914379459L;
+
+        public IllegalActionException(String s) {
+           super(s);
+        }
+    }
 
     List<Biomes> _biomesInRegion;
     private String _name;
@@ -40,12 +45,15 @@ public class Region {
 
     public void add(Biomes biome) throws IllegalActionException {
         if (_biomesInRegion.contains(biome)){
-            throw new IllegalActionException();
+            throw new IllegalActionException("Tried to add same Biome twice");
         }
         _biomesInRegion.add(biome);
     }
 
-    public void decimate(Biomes decimatedBiome) {
+    public void decimate(Biomes decimatedBiome) throws IllegalActionException {
+        if (!_biomesInRegion.contains(decimatedBiome)){
+            throw new IllegalActionException("Tried to decimate unexisting Biome");
+        }
         _biomesInRegion.remove(decimatedBiome);
     }
 
