@@ -50,4 +50,8 @@ public class Scenario {
         }
         return null;
     }
+
+    public void setUp(Empire player) {
+        player.sendSettler(getRegionByName("5"));
+    }
 }
