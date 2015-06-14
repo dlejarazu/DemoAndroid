@@ -4,18 +4,18 @@ package com.diego.civpocket.logic;
  * Created by diego on 13/10/2014.
  * several info related with the scenario
  */
-public class Escenario {
+public class Scenario {
 
-   protected Region[] regionesMapa = null;
+   protected Region[] _map = null;
 
-    public Escenario(Region[] nuevoMapa){
-        regionesMapa = nuevoMapa;
+    public Scenario(Region[] nuevoMapa){
+        _map = nuevoMapa;
     }
 
     public Region getRegionByName(String name)
     {
-        if (regionesMapa != null){
-            for(Region reg : regionesMapa){
+        if (_map != null){
+            for(Region reg : _map){
                 if (reg.getName().equals(name)) return reg;
              }
         }

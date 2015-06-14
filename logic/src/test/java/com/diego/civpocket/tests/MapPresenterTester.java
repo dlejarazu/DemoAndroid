@@ -1,13 +1,12 @@
 package com.diego.civpocket.tests;
 
 import org.junit.Before;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.diego.civpocket.logic.CivPocketGame;
-import com.diego.civpocket.logic.Escenario;
+import com.diego.civpocket.logic.Scenario;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
@@ -17,7 +16,7 @@ import static org.mockito.BDDMockito.*;
 
 public class MapPresenterTester {
 
-	@Mock protected Escenario testEscenario;
+	@Mock protected Scenario testEscenario;
 	@Mock protected Empire testEmpire;
 	@Mock protected MapUpdater testView;
 	@Mock protected CivPocketGame testGame;

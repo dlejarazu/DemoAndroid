@@ -2,7 +2,7 @@ package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
-import com.diego.civpocket.logic.Escenario;
+import com.diego.civpocket.logic.Scenario;
 
 
 import org.junit.Test;
@@ -19,7 +19,8 @@ import static org.mockito.BDDMockito.*;
 public class GameFlowTest  {
 
     @Mock Empire testEmpire;
-    @Mock Escenario testScenario;
+    @Mock
+    Scenario testScenario;
     @InjectMocks  CivPocketGame sut;
 
     @Test

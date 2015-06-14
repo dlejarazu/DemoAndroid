@@ -1,8 +1,10 @@
 package com.diego.civpocket.tests;
 
+import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
-import com.diego.civpocket.logic.Escenario;
+import com.diego.civpocket.logic.Region;
+import com.diego.civpocket.logic.Scenario;
 import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
 
@@ -11,26 +13,26 @@ import org.junit.Test;
 import org.junit.Assert;
 import org.mockito.Mockito;
 
-//TODO: basic test for first turn should end with 1 pop in region with 1 support
-/*
 public class IntegrationTests {
     MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
 
-    Escenario scenario =  new Escenario(null);
+    Region lilliput = new Region("Lilliput");
+    Region[] tinyEmpire = new Region[]{ lilliput };
+    Scenario scenario =  new Scenario(tinyEmpire);
     Empire player = new Empire();
     CivPocketGame game = new CivPocketGame(player);
 
-    MapPresenter sut = new MapPresenter(
-            game,scenario, mockUpdater);
+    MapPresenter sut =
+            new MapPresenter(game,scenario, mockUpdater);
 
     @Test
-    public void testAdvanceSeveralTurnsEmptyEmpire()
-    {
+    public void testAdvanceSeveralTurnsEmptyEmpire() throws Region.IllegalActionException {
+        lilliput.add(Biomes.Forest);
+        player.sendSettler(lilliput);
         int numPhasesToAdvance = 4;
         for(int i = 0; i < numPhasesToAdvance; i++) {
             sut.accionPasarSiguienteFase();
         }
-        Assert.assertEquals(0, player.totalPopulation());
+        Assert.assertEquals(1, player.totalPopulation());
     }
 }
-*/

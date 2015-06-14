@@ -12,12 +12,12 @@ import com.diego.civpocket.logic.Region.IllegalActionException;
 public class MapPresenter {
     private final CivPocketGame _game;
     private final Empire _player;
-    private final  Escenario _actualScenario;
+    private final Scenario _actualScenario;
     private final MapUpdater _updater;
 
     private Region _selectedRegion = null;
 
-    public MapPresenter( CivPocketGame newGame, Escenario newScenario, MapUpdater newUpdater)
+    public MapPresenter( CivPocketGame newGame, Scenario newScenario, MapUpdater newUpdater)
     {
         _game = newGame;
         _player = _game.getPlayer();
@@ -107,7 +107,7 @@ public class MapPresenter {
 
     public List<String> getNombresRegiones() {
         List<String> regionesArray =  new ArrayList<>();
-        for (Region regActual : _actualScenario.regionesMapa) {
+        for (Region regActual : _actualScenario._map) {
             regionesArray.add(regActual.getName());
         }
         return regionesArray;
