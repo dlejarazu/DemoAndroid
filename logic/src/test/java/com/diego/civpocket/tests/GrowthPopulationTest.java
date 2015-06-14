@@ -1,6 +1,7 @@
 package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 
 import static org.junit.Assert.*;
@@ -38,7 +39,7 @@ public class GrowthPopulationTest {
     }
 
     @Test
-    public void testEmpireReducePopulation() {
+    public void testEmpireReducePopulation() throws IllegalActionException {
         //Given
         sut.sendSettler(testRegion);
         sut.sendSettler(testRegion);

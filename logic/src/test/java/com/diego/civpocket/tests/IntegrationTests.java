@@ -2,6 +2,7 @@ package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Scenario;
 import com.diego.civpocket.logic.MapPresenter;
@@ -18,7 +19,7 @@ public class IntegrationTests {
 
 
     @Test
-    public void testAdvanceSeveralTurnsEmptyEmpire() throws Region.IllegalActionException {
+    public void testAdvanceSeveralTurnsEmptyEmpire() throws IllegalActionException {
         Region lilliput = new Region("Lilliput");
         Region[] tinyEmpire = new Region[]{ lilliput };
         Scenario scenario =  new Scenario(tinyEmpire);

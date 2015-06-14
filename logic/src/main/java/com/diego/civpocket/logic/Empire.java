@@ -1,12 +1,9 @@
 package com.diego.civpocket.logic;
 
-import com.diego.civpocket.logic.Region.IllegalActionException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class Empire {
 
@@ -19,14 +16,12 @@ public class Empire {
         settler.moveTo(destination);
     }
 
-    public boolean reduceSettler(Region destination)
-    {
+    public void reduceSettler(Region destination) throws IllegalActionException {
         List<Tribe> localPopulation = this.tribesAt(destination);
         if (localPopulation.isEmpty())
-            return false;
+            throw new IllegalActionException("No tribes to decimate at destination");
         else {
             _population.remove(localPopulation.get(0));
-            return true;
         }
     }
 
@@ -117,7 +112,7 @@ public class Empire {
         }
     }
 
-    public void adjustPopulation() {
+    public void adjustPopulation() throws IllegalActionException {
         Map<Region, Integer>  census = this.getEmpireCensus();
         for (Region regSettled : census.keySet()){
             int tribesToReduce = census.get(regSettled) - regSettled.support();

@@ -36,7 +36,7 @@ public class Scenario {
             getRegionByName("8").add(Biomes.Mountain);//        Region 8: 1 Mountain, 1 Forest
             getRegionByName("8").add(Biomes.Forest);
         }
-        catch (Region.IllegalActionException e) {
+        catch (IllegalActionException e) {
                 throw new RuntimeException("Wrong coding of the scenario!!!! Review the constructor for FirstSCenario!!!");
         }
     }

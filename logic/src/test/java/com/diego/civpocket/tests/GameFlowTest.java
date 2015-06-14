@@ -2,6 +2,7 @@ package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Scenario;
 
 
@@ -24,7 +25,7 @@ public class GameFlowTest  {
     @InjectMocks  CivPocketGame sut;
 
     @Test
-    public void testIncreasePopulationWhenEnteringGrowth() {
+    public void testIncreasePopulationWhenEnteringGrowth() throws IllegalActionException {
         assertEquals(CivPocketGame.GamePhase.StartGame, sut.getActualPhase());
         sut.nextPhase();   //Growth
         then(testEmpire).should(times(1)).populationGrowth();
@@ -35,7 +36,7 @@ public class GameFlowTest  {
      }
 
     @Test
-    public void testEnforcePopulationSupportWhenEnteringUpkeep() {
+    public void testEnforcePopulationSupportWhenEnteringUpkeep() throws IllegalActionException {
         assertEquals(CivPocketGame.GamePhase.StartGame,sut.getActualPhase());
         sut.nextPhase();   //Growth
         sut.nextPhase();   //Events
@@ -46,7 +47,7 @@ public class GameFlowTest  {
     }
 
     @Test
-    public void testGamePhasesSequence(){
+    public void testGamePhasesSequence() throws IllegalActionException {
         assertEquals(CivPocketGame.GamePhase.StartGame,sut.getActualPhase());
         sut.nextPhase();
         assertEquals(CivPocketGame.GamePhase.Growth, sut.getActualPhase());

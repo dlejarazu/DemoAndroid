@@ -7,10 +7,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.Region;
-import com.diego.civpocket.logic.Region.IllegalActionException;
+import com.diego.civpocket.logic.IllegalActionException;
 
 import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmpirePopulationTest {
@@ -18,8 +17,7 @@ public class EmpirePopulationTest {
     @Mock Region testRegion;
 
     @Test
-    public void testCreateAndDestriyTribes()
-    {
+    public void testCreateAndDestriyTribes() throws IllegalActionException {
         assertPopulation(0,testRegion);
         sut.sendSettler(testRegion);
         assertPopulation(1,testRegion);
@@ -30,18 +28,17 @@ public class EmpirePopulationTest {
     }
 
 
-    @Test
-    public void testDecimateRegionWithNoTribe(){
+    @Test (expected = IllegalActionException.class)
+    public void testDecimateRegionWithNoTribe() throws IllegalActionException{
         //Given
         //Emtpy region
         //When
-        boolean success = sut.reduceSettler(testRegion);
-        //Then
-        assertFalse(success);
+       sut.reduceSettler(testRegion);
+        //Then throws exception
     }
 
     @Test
-    public void testAdjustPopulationNoSupport(){
+    public void testAdjustPopulationNoSupport() throws IllegalActionException {
         //Given
         //empty region
         sut.sendSettler(testRegion);

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.diego.civpocket.logic.Biomes;
+import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 
 public class RegionPopulationSupportTest {
@@ -32,7 +33,7 @@ public class RegionPopulationSupportTest {
     }
 
     @Test
-    public void testSupportBiomesPlusCity() throws Region.IllegalActionException {
+    public void testSupportBiomesPlusCity() throws IllegalActionException {
         //Given
         sut.buildCity();
         sut.add(Biomes.Farm);
@@ -54,7 +55,7 @@ public class RegionPopulationSupportTest {
     }
 
     @Test
-    public void testCitySupport() throws Region.IllegalActionException{
+    public void testCitySupport() throws IllegalActionException {
         //Given
         sut.buildCity();
         sut.add(Biomes.Farm);

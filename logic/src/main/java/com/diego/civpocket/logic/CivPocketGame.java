@@ -24,7 +24,7 @@ public class CivPocketGame {
         return _gamePhase;
     }
 
-    public void nextPhase(){
+    public void nextPhase() throws IllegalActionException {
         _gamePhase = _gamePhase.getNext();
         if ( _gamePhase == GamePhase.Growth) _player.populationGrowth();
         else  if (_gamePhase == GamePhase.Upkeep) _player.adjustPopulation();

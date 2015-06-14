@@ -8,7 +8,7 @@ import org.junit.runners.Parameterized;
 
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.Region;
-import com.diego.civpocket.logic.Region.IllegalActionException;
+import com.diego.civpocket.logic.IllegalActionException;
 
 import java.util.Arrays;
 import java.util.Collection;

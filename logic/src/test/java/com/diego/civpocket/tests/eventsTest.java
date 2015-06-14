@@ -3,6 +3,7 @@ package com.diego.civpocket.tests;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.EventCard;
+import com.diego.civpocket.logic.IllegalActionException;
 
 import static org.junit.Assert.*;
 
@@ -28,7 +29,7 @@ public class eventsTest {
     CivPocketGame sut;
 
     @Test
-    public void testDrawEvent(){
+    public void testDrawEvent() throws IllegalActionException {
         //Given
         while(sut.getActualPhase() != CivPocketGame.GamePhase.Events) sut.nextPhase();
         //When

@@ -5,14 +5,6 @@ import java.util.List;
 
 public class Region {
 
-    public class IllegalActionException extends Exception {
-		private static final long serialVersionUID = -5044052553914379459L;
-
-        public IllegalActionException(String s) {
-           super(s);
-        }
-    }
-
     List<Biomes> _biomesInRegion;
     private String _name;
     private int _cityLevel = 0;

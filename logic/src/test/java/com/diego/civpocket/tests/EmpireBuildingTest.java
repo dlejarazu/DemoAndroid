@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.Region;
-import com.diego.civpocket.logic.Region.IllegalActionException;
+import com.diego.civpocket.logic.IllegalActionException;
 
 import static org.mockito.BDDMockito.*;
 
@@ -34,7 +34,7 @@ public class EmpireBuildingTest {
         assertTrue(success);
 		then(testRegion).should(times(1)).add(Biomes.Farm);
 		then(testRegion).should(times(1)).decimate(Biomes.Forest);
-        assertEquals(0,sut.tribesAt(testRegion).size());
+        assertEquals(0, sut.tribesAt(testRegion).size());
 	}
 
     @Test

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diego.civpocket.logic.CivPocketGame.GamePhase;
-import com.diego.civpocket.logic.Region.IllegalActionException;
 
 /**
  * Model Presenter View for CivPocket
@@ -37,7 +36,11 @@ public class MapPresenter {
      ********/
 
     public void accionPasarSiguienteFase() {
-        _game.nextPhase();
+        try {
+            _game.nextPhase();
+        } catch (IllegalActionException e) {
+            throw new RuntimeException(e);
+        }
         synchView();
     }
 
@@ -61,7 +64,11 @@ public class MapPresenter {
     public void accionRemPoblacion()
     {
         if (_selectedRegion!= null) {
-            _player.reduceSettler(_selectedRegion);
+            try {
+                _player.reduceSettler(_selectedRegion);
+            } catch (IllegalActionException e) {
+                throw new RuntimeException(e);
+            }
             synchView();
         }
 
@@ -75,9 +82,13 @@ public class MapPresenter {
     }
     
 
-	public void accionConstruirGranja() throws IllegalActionException {
+	public void accionConstruirGranja() {
 		if (_selectedRegion!= null && _game.getActualPhase() == GamePhase.Advances) {
-            _player.buildFarm(_selectedRegion);
+            try {
+                _player.buildFarm(_selectedRegion);
+            } catch (IllegalActionException e) {
+                throw new RuntimeException(e);
+            }
             synchView();
         }
 	}

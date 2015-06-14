@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.diego.civpocket.logic.*;
-import com.diego.civpocket.logic.Region.IllegalActionException;
+import com.diego.civpocket.logic.IllegalActionException;
 
 //prueba
 //TODO: Crear mapa dibujable con canvas extendiendo clase View
