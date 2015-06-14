@@ -24,23 +24,12 @@ public class MainMapView extends Activity implements MapUpdater {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_map);
 
-        Region[] regionesMapa;
-
-        //TODO las regiones se deberian leer de mappresenter
-        regionesMapa = new Region[7];
-        regionesMapa[0] = new Region("1");
-        regionesMapa[1] = new Region("2");
-        regionesMapa[2] = new Region("3");
-        regionesMapa[3] = new Region("4");
-        regionesMapa[4] = new Region("5");
-        regionesMapa[5] = new Region("7");
-        regionesMapa[6] = new Region("8");
-
-        presenter = new MapPresenter( new CivPocketGame( new Empire()), new Scenario(regionesMapa), this);
+        presenter = new MapPresenter( new CivPocketGame( new Empire()), new Scenario("A New World"), this);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getNombresRegiones());
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        //TODO: Duplication. There is no connection between how the view draws the scenario and the scenario itself
         mapa = (MapDrawView) findViewById(R.id.mapScenarioView);
         mapa.mapPModel = presenter;
         mapa.AddRegion("1",235,309);
