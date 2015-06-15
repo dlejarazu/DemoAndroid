@@ -3,10 +3,17 @@ package com.diego.civpocket.tests;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
+import com.diego.civpocket.logic.Tribe;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.mockito.BDDMockito.*;
 
 public class MapPresenterMovementTest extends MapPresenterTester{
@@ -18,62 +25,70 @@ public class MapPresenterMovementTest extends MapPresenterTester{
         //Given
         origin = addMockRegionToScenario("origin");
         faseActual(CivPocketGame.GamePhase.Growth);
-
     }
 
     @Test
-    public void testSelectDestination(){
+    public void testMoveTribe() throws IllegalActionException {
         //Given
+        Tribe nomad = new Tribe();
+        given(testEmpire.tribesAt(origin)).willReturn(Arrays.asList(nomad));
         sut.actionSelectRegion(origin.getName());
-        sut.accionRemPoblacion();
+        sut.actionMoveTribe();
         //When
         Region destination = addMockRegionToScenario("destination");
         sut.actionSelectRegion(destination.getName());
         //Then
         Assert.assertTrue(sut.isSelected(origin.getName()));
+        Assert.assertEquals(destination, nomad.getLocation());
         Assert.assertTrue(sut.isSelectedAsDestination(destination.getName()));
     }
 
     @Test
-    public void testSelectingOriginAsTargetToReturnTribes(){
+    public void testDisableButtonsWithNoRegionSelected()
+    {
+        Assert.assertFalse(sut.isAddTribeActive());
+        Assert.assertFalse(sut.isMoveTribeActive());
+    }
+    @Test
+    public void testCancelMoveTribe() throws IllegalActionException {
         //Given
         sut.actionSelectRegion(origin.getName());
-        sut.accionRemPoblacion();
-        Region destination = addMockRegionToScenario("destination");
-        sut.actionSelectRegion(destination.getName());
-        sut.actionSelectRegion(origin.getName());
+        sut.actionMoveTribe();
         //When
-        sut.accionAddPoblacion();
+        sut.actionCancelMove();
         //Then
         Assert.assertTrue(sut.isSelected(origin.getName()));
-        Assert.assertTrue(sut.isSelectedAsDestination(origin.getName()));
-    }
+        then(testEmpire).should(never()).reduceSettler(origin);
 
-    @Test
-    public void testReturnFromMoveMode(){
-        //Given
-        sut.actionSelectRegion(origin.getName());
-        sut.accionRemPoblacion();
         Region another = addMockRegionToScenario("another");
-        //When
-        sut.accionAddPoblacion();
         sut.actionSelectRegion(another.getName());
-        //Then
         Assert.assertTrue(sut.isSelected(another.getName()));
-        Assert.assertFalse(sut.isSelectedAsDestination(origin.getName()));
-        Assert.assertFalse(sut.isSelectedAsDestination(another.getName()));
     }
 
+/*
     @Test
-    public void testMoveTribeFromOneRegionToAnother() throws IllegalActionException {
-        //Given
-        sut.actionSelectRegion(origin.getName());
-        sut.accionRemPoblacion();
+    public void testEnableRemPopButtonWhenSelectingRegion() {
         Region destination = addMockRegionToScenario("destination");
+
+        sut.actionSelectRegion(origin.getName());
+
+        Assert.assertFalse(sut.isAddTribeActive());
+        Assert.assertTrue(sut.isMoveTribeActive());
+
+        sut.actionMoveTribe();
+
+        Assert.assertFalse(sut.isAddTribeActive());
+        Assert.assertFalse(sut.isMoveTribeActive());
+
         sut.actionSelectRegion(destination.getName());
-        //When
-        sut.accionAddPoblacion();
-        then(testEmpire).should(times(1)).sendSettler(destination);
-        then(testEmpire).should(times(1)).reduceSettler(origin);
+
+        Assert.assertTrue(sut.isAddTribeActive());
+        Assert.assertFalse(sut.isMoveTribeActive());
+
+        sut.actionCancelMove();
+
+        Assert.assertFalse(sut.isAddTribeActive());
+        Assert.assertTrue(sut.isMoveTribeActive());
     }
+*/
 }

@@ -27,7 +27,7 @@ public class MapPresenterViewUpdatesTest extends MapPresenterTester {
 		//Given
 		sut.actionSelectRegion(testRegion.getName());
 		//When
-		sut.accionAddPoblacion();
+		sut.actionCancelMove();
 		//Then
 		verifyUpdatesEnLaVista();
 	}
@@ -36,7 +36,7 @@ public class MapPresenterViewUpdatesTest extends MapPresenterTester {
 		//Given
 		sut.actionSelectRegion(testRegion.getName());
 		//When
-		sut.accionRemPoblacion();
+		sut.actionMoveTribe();
 		//Then
 		verifyUpdatesEnLaVista();
 	}
@@ -46,7 +46,7 @@ public class MapPresenterViewUpdatesTest extends MapPresenterTester {
 		//Given
 		sut.actionSelectRegion(testRegion.getName());
 		//When
-		sut.accionRemPoblacion();
+		sut.actionMoveTribe();
 		//Then
 		verifyUpdatesEnLaVista();
 	}

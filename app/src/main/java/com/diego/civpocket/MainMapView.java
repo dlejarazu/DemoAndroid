@@ -53,7 +53,7 @@ public class MainMapView extends Activity implements MapUpdater {
     @Override
     public void UpdateControls(){
         (findViewById(R.id.buttonAddPop)).setEnabled(presenter.isAddTribeActive());
-        (findViewById(R.id.buttonRemPop)).setEnabled(presenter.isRemTribeActive());
+        (findViewById(R.id.buttonRemPop)).setEnabled(presenter.isMoveTribeActive());
         (findViewById(R.id.buttonConstruirCiudad)).setEnabled(presenter.isConstruirCiudaPossible());
         (findViewById(R.id.nextFaseButton)).setEnabled(presenter.isSiguienteFaseActivo());
         (findViewById(R.id.buttonConstruirGranja)).setEnabled(presenter.isGranjasActivo());
@@ -61,10 +61,10 @@ public class MainMapView extends Activity implements MapUpdater {
     }
 
     public void BotonAddPoblacion(View view) {
-        presenter.accionAddPoblacion();
+        presenter.actionCancelMove();
     }
     public void BotonSubPoblacion(View view) {
-        presenter.accionRemPoblacion();
+        presenter.actionMoveTribe();
     }
     public void BotonConstruyeCiudad(View view) {
         presenter.accionConstruirCiudad();

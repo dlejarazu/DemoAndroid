@@ -59,13 +59,18 @@ public class MapDrawView extends ImageView implements View.OnTouchListener {
             _TextPaint.setTextSize(sizeText);
         }
 
-        public void selected(boolean isSelected)
-        {
-           if (isSelected) _TextPaint.setColor(Color.RED);
-           else _TextPaint.setColor(Color.BLUE);
+        public void selected() {
+           _TextPaint.setColor(Color.RED);
         }
 
-        void set_textToShow(String nuevoTexto) { _textToShow = nuevoTexto; }
+        public void destination() {
+            _TextPaint.setColor(Color.YELLOW);
+        }
+
+        void set_textToShow(String nuevoTexto) {
+            _textToShow = nuevoTexto;
+            _TextPaint.setColor(Color.BLUE);
+        }
         void setPos(int nuevaX, int nuevaY) {
             _coordX = nuevaX;
             _coordY = nuevaY;
@@ -75,6 +80,7 @@ public class MapDrawView extends ImageView implements View.OnTouchListener {
         public void draw(Canvas c){
             c.drawText(_textToShow,getX(),getY(),_TextPaint);
         }
+
     }
 
     List<RegionWidget> regiones = new ArrayList<RegionWidget>();
@@ -140,7 +146,12 @@ public class MapDrawView extends ImageView implements View.OnTouchListener {
         if (mapPModel != null) {
             for (RegionWidget reg : regiones) {
                 reg.set_textToShow(mapPModel.regionStatusToString(reg.getId()));
-                reg.selected(mapPModel.isSelected(reg.getId()));
+                if (mapPModel.isSelected(reg.getId())){
+                    reg.selected();
+                }
+                else if (mapPModel.isSelectedAsDestination(reg.getId())) {
+                    reg.destination();
+                }
                 reg.draw(canvas);
             }
         }

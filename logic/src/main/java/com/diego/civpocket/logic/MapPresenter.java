@@ -52,6 +52,9 @@ public class MapPresenter {
     {
         if(_moveMode){
             _destination = _actualScenario.getRegionByName(name);
+            List<Tribe> group = _player.tribesAt(_selectedRegion);
+            if(group.size() > 0) group.get(0).moveTo(_destination);
+            actionCancelMove();
         }
         else {
             _selectedRegion = _actualScenario.getRegionByName(name);
@@ -59,28 +62,20 @@ public class MapPresenter {
         synchView();
     }
 
-    public void accionAddPoblacion()
+    public void actionCancelMove()
     {
-        if(_moveMode) _moveMode = false;
-        if (_destination!= null) {
-            _player.sendSettler(_destination);
-            synchView();
+        if(_moveMode){
+            _moveMode = false;
         }
+        synchView();
     }
 
-    public void accionRemPoblacion()
+    public void actionMoveTribe()
     {
         if (_game.getActualPhase()==GamePhase.Growth){
             _moveMode = true;
         }
-        if (_selectedRegion!= null) {
-            try {
-                _player.reduceSettler(_selectedRegion);
-            } catch (IllegalActionException e) {
-                throw new RuntimeException(e);
-            }
-            synchView();
-        }
+        synchView();
     }
 
     public void accionConstruirCiudad() {
@@ -112,14 +107,14 @@ public class MapPresenter {
     }
 
     private boolean populationButtonStatus() {
-        return  _game.getActualPhase()== GamePhase.Growth;
+        return  _game.getActualPhase()== GamePhase.Growth && _selectedRegion != null;
     }
 
     public boolean isAddTribeActive() {
-        return populationButtonStatus();
+        return populationButtonStatus() && _destination != null;
     }
-    public boolean isRemTribeActive() {
-        return populationButtonStatus();
+    public boolean isMoveTribeActive() {
+        return populationButtonStatus() && !_moveMode;
     }
 
     public boolean isSiguienteFaseActivo() {

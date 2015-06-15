@@ -18,7 +18,6 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 	@Parameterized.Parameters (name = "{index}: button during phase {0} active - {1}")
 	public static Collection<Object[]> supportValues() {
 		return Arrays.asList(new Object[][]{
-						{GamePhase.Growth, true},
 						{GamePhase.Events, false},
 						{GamePhase.Advances, false},
 						{GamePhase.Upkeep, false}
@@ -35,7 +34,7 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 		//Then
 		boolean isBtnAddPopActivo = sut.isAddTribeActive();
 		assertEquals(shouldPopButtonsBeActive, isBtnAddPopActivo);
-		boolean isBtnRemPopActivo = sut.isRemTribeActive();
+		boolean isBtnRemPopActivo = sut.isMoveTribeActive();
 		assertEquals(shouldPopButtonsBeActive, isBtnRemPopActivo);
 	}
 }
