@@ -119,4 +119,11 @@ public class Empire {
             for (int i = 0;i < tribesToReduce; i++) this.reduceSettler(regSettled);
         }
     }
+
+    public void supportCities() {
+        Map<Region, Integer>  census = this.getEmpireCensus();
+        for (Region regSettled : census.keySet()){
+            regSettled.supportCity();
+        }
+    }
 }

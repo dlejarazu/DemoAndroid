@@ -43,26 +43,4 @@ public class RegionPopulationSupportTest {
         assertEquals(2,support);
     }
 
-    @Test
-    public void testNoCitySupport(){
-        //Given
-        sut.buildCity();
-        //When
-        sut.supportCity();
-        //Then
-        boolean hasCity = (sut.getCityLevel() > 0);
-        assertFalse(hasCity);
-    }
-
-    @Test
-    public void testCitySupport() throws IllegalActionException {
-        //Given
-        sut.buildCity();
-        sut.add(Biomes.Farm);
-        //When
-        sut.supportCity();
-        //Then
-        boolean hasCity = (sut.getCityLevel() > 0);
-        assertTrue(hasCity);
-    }
 }

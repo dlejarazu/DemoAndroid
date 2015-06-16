@@ -55,7 +55,7 @@ public class MainMapView extends Activity implements MapUpdater {
         (findViewById(R.id.buttonAddPop)).setEnabled(presenter.isAddTribeActive());
         (findViewById(R.id.buttonRemPop)).setEnabled(presenter.isMoveTribeActive());
         (findViewById(R.id.buttonConstruirCiudad)).setEnabled(presenter.isConstruirCiudaPossible());
-        (findViewById(R.id.nextFaseButton)).setEnabled(presenter.isSiguienteFaseActivo());
+        (findViewById(R.id.nextFaseButton)).setEnabled(presenter.isNextPhaseActive());
         (findViewById(R.id.buttonConstruirGranja)).setEnabled(presenter.isGranjasActivo());
         ((TextView) findViewById(R.id.textViewFaseActual)).setText(presenter.getFaseActual());
     }

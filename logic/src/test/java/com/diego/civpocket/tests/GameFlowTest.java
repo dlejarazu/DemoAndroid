@@ -20,9 +20,12 @@ import static org.mockito.BDDMockito.*;
 public class GameFlowTest  {
 
     @Mock Empire testEmpire;
-    @Mock
-    Scenario testScenario;
+    @Mock Scenario testScenario;
     @InjectMocks  CivPocketGame sut;
+
+    private void goToPhase(CivPocketGame.GamePhase phase) throws IllegalActionException {
+        while(sut.getActualPhase() != phase) sut.nextPhase();
+    }
 
     @Test
     public void testIncreasePopulationWhenEnteringGrowth() throws IllegalActionException {

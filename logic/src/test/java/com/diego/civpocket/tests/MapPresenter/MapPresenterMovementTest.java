@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.tests.MapPresenter;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.IllegalActionException;
@@ -9,10 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.mockito.BDDMockito.*;
 
@@ -65,30 +62,14 @@ public class MapPresenterMovementTest extends MapPresenterTester{
         Assert.assertTrue(sut.isSelected(another.getName()));
     }
 
-/*
     @Test
-    public void testEnableRemPopButtonWhenSelectingRegion() {
-        Region destination = addMockRegionToScenario("destination");
-
+    public void testDisableNextPhaseWhenMoving() /*throws IllegalActionException*/ {
+        //Given
         sut.actionSelectRegion(origin.getName());
-
-        Assert.assertFalse(sut.isAddTribeActive());
-        Assert.assertTrue(sut.isMoveTribeActive());
-
         sut.actionMoveTribe();
-
-        Assert.assertFalse(sut.isAddTribeActive());
-        Assert.assertFalse(sut.isMoveTribeActive());
-
-        sut.actionSelectRegion(destination.getName());
-
-        Assert.assertTrue(sut.isAddTribeActive());
-        Assert.assertFalse(sut.isMoveTribeActive());
-
-        sut.actionCancelMove();
-
-        Assert.assertFalse(sut.isAddTribeActive());
-        Assert.assertTrue(sut.isMoveTribeActive());
+        //When
+        boolean isActive = sut.isNextPhaseActive();
+        //Then
+        Assert.assertFalse(isActive);
     }
-*/
 }

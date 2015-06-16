@@ -55,15 +55,5 @@ public class EmpireBuildingTest {
 		assertFalse(result);
 	}
 
-	@Test
-	public void testBuildCity(){
-		//Given
-		int popReg = 4;
-		for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
-		//When
-		sut.buildCity(testRegion);
-		//Then
-        assertEquals(0, sut.tribesAt(testRegion).size());
-	}
 
 }

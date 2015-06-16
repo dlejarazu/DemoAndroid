@@ -20,14 +20,12 @@ public class MapPresenter {
     //private String _nameDestination;
     private Region _destination = null;
 
-    public MapPresenter( CivPocketGame newGame, Scenario newScenario, MapUpdater newUpdater)
+    public MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater)
     {
         _game = newGame;
         _player = _game.getPlayer();
-        _actualScenario = newScenario;
+        _actualScenario = _game.getScenario();
         _updater = newUpdater;
-
-        _actualScenario.setUp(_player);
     }
     
     void synchView() {
@@ -117,8 +115,8 @@ public class MapPresenter {
         return populationButtonStatus() && !_moveMode;
     }
 
-    public boolean isSiguienteFaseActivo() {
-        return  true;
+    public boolean isNextPhaseActive() {
+        return  !_moveMode;
     }
     
 	public boolean isGranjasActivo() {

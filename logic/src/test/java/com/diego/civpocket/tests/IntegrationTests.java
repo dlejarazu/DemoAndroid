@@ -16,7 +16,9 @@ import org.mockito.Mockito;
 public class IntegrationTests {
     MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
 
-
+    private void goToPhase(CivPocketGame game, CivPocketGame.GamePhase phase) throws IllegalActionException {
+        while(game.getActualPhase() != phase) game.nextPhase();
+    }
 
     @Test
     public void testAdvanceSeveralTurnsEmptyEmpire() throws IllegalActionException {
@@ -24,10 +26,10 @@ public class IntegrationTests {
         Region[] tinyEmpire = new Region[]{ lilliput };
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player);
+        CivPocketGame game = new CivPocketGame(player,scenario);
 
         MapPresenter sut =
-                new MapPresenter(game,scenario, mockUpdater);
+                new MapPresenter(game, mockUpdater);
 
         Assert.assertEquals("StartGame",sut.getFaseActual());
         player.sendSettler(lilliput);
@@ -44,10 +46,10 @@ public class IntegrationTests {
     {
         Scenario scenario =  new Scenario("A New World");
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player);
+        CivPocketGame game = new CivPocketGame(player,scenario);
 
         MapPresenter sut =
-                new MapPresenter(game,scenario, mockUpdater);
+                new MapPresenter(game, mockUpdater);
 
         Region startRegion = scenario.getRegionByName("5");
         Assert.assertEquals(1, player.tribesAt(startRegion).size());
@@ -58,5 +60,22 @@ public class IntegrationTests {
         sut.accionPasarSiguienteFase();
         Assert.assertEquals("Upkeep", sut.getFaseActual());
         Assert.assertEquals(1, player.tribesAt(startRegion).size());
+    }
+
+    @Test
+    public void testEnforceSupportDuringUpkeep() throws IllegalActionException {
+        Region lilliput = new Region("Lilliput");
+        Region[] tinyEmpire = new Region[]{ lilliput };
+        Scenario scenario =  new Scenario(tinyEmpire);
+        Empire player = new Empire();
+        CivPocketGame game = new CivPocketGame(player,scenario);
+        //Given
+        player.sendSettler(lilliput);
+        lilliput.buildCity();
+        game.setPhase(CivPocketGame.GamePhase.Advances);
+        //When
+        game.nextPhase();
+        //Then
+        Assert.assertEquals(0,lilliput.getCityLevel());
     }
 }

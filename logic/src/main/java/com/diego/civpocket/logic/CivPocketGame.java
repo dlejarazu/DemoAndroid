@@ -8,12 +8,15 @@ package com.diego.civpocket.logic;
 
 public class CivPocketGame {
 
+    Scenario _scenario;
     Empire _player;
     GamePhase _gamePhase = GamePhase.StartGame;
 
-    public CivPocketGame(Empire newEmpire)
+    public CivPocketGame(Empire newEmpire,Scenario scenario)
     {
         _player = newEmpire;
+        _scenario = scenario;
+        _scenario.setUp(_player);
     }
 
     public EventCard drawEventCard() {
@@ -27,11 +30,22 @@ public class CivPocketGame {
     public void nextPhase() throws IllegalActionException {
         _gamePhase = _gamePhase.getNext();
         if ( _gamePhase == GamePhase.Growth) _player.populationGrowth();
-        else  if (_gamePhase == GamePhase.Upkeep) _player.adjustPopulation();
+        else  if (_gamePhase == GamePhase.Upkeep) {
+            _player.adjustPopulation();
+            _player.supportCities();
+        }
     }
 
     public Empire getPlayer() {
         return _player;
+    }
+
+    public void setPhase(GamePhase newPhase) {
+        _gamePhase = newPhase;
+    }
+
+    public Scenario getScenario() {
+        return _scenario;
     }
 
     public enum GamePhase {

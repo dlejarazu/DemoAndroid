@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.tests.MapPresenter;
 
 import com.diego.civpocket.logic.Region;
 

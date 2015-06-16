@@ -4,6 +4,7 @@ import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.EventCard;
 import com.diego.civpocket.logic.IllegalActionException;
+import com.diego.civpocket.logic.Scenario;
 
 import static org.junit.Assert.*;
 
@@ -23,10 +24,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class eventsTest {
 
-    @Mock
-    Empire mockEmpire;
-    @InjectMocks
-    CivPocketGame sut;
+    @Mock Empire mockEmpire;
+    @Mock Scenario mockScenario;
+    @InjectMocks CivPocketGame sut;
 
     @Test
     public void testDrawEvent() throws IllegalActionException {

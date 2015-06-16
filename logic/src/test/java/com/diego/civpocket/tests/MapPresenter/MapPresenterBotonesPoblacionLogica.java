@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.tests.MapPresenter;
 
 import static org.junit.Assert.*;
 
@@ -16,11 +16,13 @@ public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
 
 
 	@Parameterized.Parameters (name = "{index}: button during phase {0} active - {1}")
-	public static Collection<Object[]> supportValues() {
+	public static Collection<Object[]> StatusButtons() {
 		return Arrays.asList(new Object[][]{
+						{GamePhase.StartGame, false},
 						{GamePhase.Events, false},
 						{GamePhase.Advances, false},
-						{GamePhase.Upkeep, false}
+						{GamePhase.Upkeep, false},
+						{GamePhase.Growth, false}
 				}
 		);
 	}

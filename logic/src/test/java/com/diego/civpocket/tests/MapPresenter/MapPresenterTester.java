@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.tests.MapPresenter;
 
 import org.junit.Before;
 import org.mockito.Mock;
@@ -25,7 +25,8 @@ public class MapPresenterTester {
 	public MapPresenterTester(){
 		MockitoAnnotations.initMocks(this);
 		given(testGame.getPlayer()).willReturn(testEmpire);
-		sut = new MapPresenter(testGame, testEscenario, testView);
+		given(testGame.getScenario()).willReturn(testEscenario);
+		sut = new MapPresenter(testGame, testView);
 	}
 
 	protected Region addMockRegionToScenario(String name) {
