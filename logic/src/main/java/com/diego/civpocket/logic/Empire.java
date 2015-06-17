@@ -10,6 +10,7 @@ public class Empire implements CivPocketGame.UpkeepDuties{
 
     List<Tribe> _population = new ArrayList<>();
     private Map<Region,City> _cities = new HashMap<>();
+    private CityBuilder _builder;
 
     public void sendSettler(Region destination)
     {
@@ -47,7 +48,10 @@ public class Empire implements CivPocketGame.UpkeepDuties{
     }
 
     public void buildCity(Region region) throws IllegalActionException {
-        if (canBuildCityAt(region)) {
+        if(_builder != null){
+            _cities.put(region,_builder.buildCity(region));
+        }
+        else if (canBuildCityAt(region)) {
             for(Tribe builders : tribesAt(region).subList(0, 4)){
                 _population.remove(builders);
             }
@@ -157,5 +161,9 @@ public class Empire implements CivPocketGame.UpkeepDuties{
                 _cities.remove(cityLocation);
             }
         }
+    }
+
+    public void setBuilder(CityBuilder builder) {
+        this._builder = builder;
     }
 }

@@ -2,7 +2,9 @@ package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.City;
+import com.diego.civpocket.logic.CityBuilder;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.FakeCityBuilder;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 
@@ -10,9 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Collection;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -78,13 +77,28 @@ public class CitiesTest {
         //Then
         assertThat(sut.cityAt(testRegion), notNullValue());
     }
-/*
+
     @Test
     public void testFakeBuilder() throws IllegalActionException {
         CityBuilder fake = new FakeCityBuilder();
+        City city = fake.buildCity(testRegion);
+        assertThat(city, notNullValue());
+    }
+
+    @Test
+     public void testEmpireUsingBuilder() throws IllegalActionException {
+        CityBuilder fake = mock(CityBuilder.class);
         sut.setBuilder(fake);
         sut.buildCity(testRegion);
-        assertThat(sut.cityAt(testRegion), notNullValue());
+        then(fake).should(times(1)).buildCity(testRegion);
     }
-    */
+
+    @Test
+    public void testFakeBuilderShouldAlwaysBeAbleToBuild() throws IllegalActionException{
+        CityBuilder fake = new FakeCityBuilder();
+        sut.setBuilder(fake);
+        assertThat(fake.canBuildCity(testRegion),is(true));
+        sut.buildCity(testRegion);
+        assertThat(sut.cityAt(testRegion),notNullValue());
+    }
 }
