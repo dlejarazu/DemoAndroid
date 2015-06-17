@@ -1,6 +1,7 @@
 package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.Biomes;
+import com.diego.civpocket.logic.City;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
@@ -10,7 +11,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Collection;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
 
 /**
  * Created by diego on 16/06/2015.
@@ -23,7 +29,19 @@ public class CitiesTest {
     Region testRegion;
 
     @Test
-    public void testBuildCity(){
+    public void testNumberOfCitiesBuilt() throws IllegalActionException
+    {
+        //Given
+        int popReg = 4;
+        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        //When
+        sut.buildCity(testRegion);
+        //Then
+        assertThat(sut.getNumCities(),is(1));
+    }
+
+    @Test
+    public void testBuildCity()throws IllegalActionException {
         //Given
         int popReg = 4;
         for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
@@ -31,31 +49,42 @@ public class CitiesTest {
         sut.buildCity(testRegion);
         //Then
         assertEquals(0, sut.tribesAt(testRegion).size());
+        assertThat(sut.cityAt(testRegion),notNullValue());
     }
 
 
     @Test
-    public void testNoCitySupport(){
+    public void testNoCitySupport() throws IllegalActionException {
         //Given
-         Region sut = new Region("");
-        sut.buildCity();
+        int popReg = 4;
+        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        given(testRegion.has(Biomes.Farm)).willReturn(false);
+        sut.buildCity(testRegion);
         //When
-        sut.supportCity();
+        sut.supportCities();
         //Then
-        boolean hasCity = (sut.getCityLevel() > 0);
-        assertFalse(hasCity);
+        assertThat(sut.cityAt(testRegion), nullValue());
     }
 
     @Test
     public void testCitySupport() throws IllegalActionException {
         //Given
-        Region sut = new Region("");
-        sut.buildCity();
-        sut.add(Biomes.Farm);
+        int popReg = 4;
+        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        sut.buildCity(testRegion);
+        given(testRegion.has(Biomes.Farm)).willReturn(true);
         //When
-        sut.supportCity();
+        sut.supportCities();
         //Then
-        boolean hasCity = (sut.getCityLevel() > 0);
-        assertTrue(hasCity);
+        assertThat(sut.cityAt(testRegion), notNullValue());
     }
+/*
+    @Test
+    public void testFakeBuilder() throws IllegalActionException {
+        CityBuilder fake = new FakeCityBuilder();
+        sut.setBuilder(fake);
+        sut.buildCity(testRegion);
+        assertThat(sut.cityAt(testRegion), notNullValue());
+    }
+    */
 }

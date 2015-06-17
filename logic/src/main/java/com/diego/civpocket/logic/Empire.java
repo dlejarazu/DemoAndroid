@@ -1,6 +1,7 @@
 package com.diego.civpocket.logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 public class Empire implements CivPocketGame.UpkeepDuties{
 
     List<Tribe> _population = new ArrayList<>();
+    private Map<Region,City> _cities = new HashMap<>();
 
     public void sendSettler(Region destination)
     {
@@ -36,16 +38,23 @@ public class Empire implements CivPocketGame.UpkeepDuties{
     }
 
     public boolean canBuildCityAt(Region region){
-        return tribesAt(region).size()>=4
-        	&& region.getCityLevel()==0;
+        return (tribesAt(region).size() >= 4)
+                && (cityAt(region) == null);
     }
 
-    public void buildCity(Region region) {
+    public City cityAt(Region region) {
+        return _cities.get(region);
+    }
+
+    public void buildCity(Region region) throws IllegalActionException {
         if (canBuildCityAt(region)) {
-            region.buildCity();
             for(Tribe builders : tribesAt(region).subList(0, 4)){
                 _population.remove(builders);
             }
+            _cities.put(region,new City(region));
+        }
+        else {
+            throw new IllegalActionException("Requirements for city building not met");
         }
     }
 
@@ -107,15 +116,23 @@ public class Empire implements CivPocketGame.UpkeepDuties{
     }
 
     private void enforceMinimumPop() {
-        while(totalPopulation() < 3){
-            _population.add(new Tribe());
+        if (_cities.size()>0) {
+            while (totalPopulation() < 3) {
+                _population.add(new Tribe());
+            }
         }
     }
 
     public void adjustPopulation() throws IllegalActionException {
         Map<Region, Integer>  census = this.getEmpireCensus();
         for (Region regSettled : census.keySet()){
-            int tribesToReduce = census.get(regSettled) - regSettled.support();
+            int citySupport =
+                    (cityAt(regSettled) != null)
+                    ?_cities.get(regSettled).level()
+                    :0;
+
+            int support = regSettled.support() + citySupport;
+            int tribesToReduce = census.get(regSettled) - support;
             for (int i = 0;i < tribesToReduce; i++) this.reduceSettler(regSettled);
         }
     }
@@ -126,6 +143,19 @@ public class Empire implements CivPocketGame.UpkeepDuties{
             adjustPopulation();
         } catch (IllegalActionException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public int getNumCities(){
+        return _cities.size();
+    }
+
+
+    public void supportCities() {
+        for(Region cityLocation : _cities.keySet()){
+            if (!cityLocation.has(Biomes.Farm)) {
+                _cities.remove(cityLocation);
+            }
         }
     }
 }

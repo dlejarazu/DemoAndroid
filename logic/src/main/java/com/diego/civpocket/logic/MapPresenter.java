@@ -76,7 +76,7 @@ public class MapPresenter {
         synchView();
     }
 
-    public void accionConstruirCiudad() {
+    public void accionConstruirCiudad() throws IllegalActionException {
         if (_selectedRegion!= null) {
             _player.buildCity(_selectedRegion);
             synchView();
@@ -141,8 +141,8 @@ public class MapPresenter {
         Region region = _actualScenario.getRegionByName(nombreRegion);
         int localPop = _player.tribesAt(region).size();
         String status = emoji(0x1F603) + Integer.toString(localPop);
-        if (region.getCityLevel() > 0) {
-            status = status + "\n" + emoji(0x1F3F0) + Integer.toString(region.getCityLevel());
+        if (_player.cityAt(region) !=null ) {
+            status = status + "\n" + emoji(0x1F3F0) + Integer.toString(_player.cityAt(region).level());
         }
 
         status += "\n";

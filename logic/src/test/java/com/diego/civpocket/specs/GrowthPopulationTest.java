@@ -1,5 +1,6 @@
 package com.diego.civpocket.specs;
 
+import com.diego.civpocket.logic.City;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
@@ -60,9 +61,11 @@ public class GrowthPopulationTest {
     }
 
     @Test
-    public void testMinimumPopulationGrowthWithCity() {
+    public void testMinimumPopulationGrowthWithCity() throws IllegalActionException {
         //Given
-        testRegion.buildCity();
+        int initialPop = 4;
+        for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
+        sut.buildCity(testRegion);
         //When
         sut.populationGrowth();
         //Then

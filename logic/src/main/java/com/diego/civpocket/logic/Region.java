@@ -7,7 +7,6 @@ public class Region implements CivPocketGame.UpkeepDuties{
 
     List<Biomes> _biomesInRegion;
     private String _name;
-    private int _cityLevel = 0;
 
     public Region(String newRegion)
     {
@@ -21,14 +20,6 @@ public class Region implements CivPocketGame.UpkeepDuties{
 
     private void setName(String _name) {
         this._name = _name;
-    }
-
-    public void buildCity() {
-        _cityLevel = 1;
-    }
-
-    public int getCityLevel() {
-        return _cityLevel;
     }
 
 	public boolean has(Biomes biome) {
@@ -56,16 +47,11 @@ public class Region implements CivPocketGame.UpkeepDuties{
             if (b != Biomes.Dessert) totalSupport++;
         }
 
-        totalSupport += _cityLevel;
         return totalSupport;
-    }
-
-    public void supportCity() {
-        if (!this.has(Biomes.Farm)) _cityLevel = 0;
     }
 
     @Override
     public void carryOutUpkeep() {
-        supportCity();
+
     }
 }

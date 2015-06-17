@@ -1,6 +1,7 @@
 package com.diego.civpocket.specs;
 
 import com.diego.civpocket.logic.Biomes;
+import com.diego.civpocket.logic.City;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.IllegalActionException;
@@ -11,8 +12,10 @@ import com.diego.civpocket.logic.MapUpdater;
 
 import org.junit.Test;
 
-import org.junit.Assert;
 import org.mockito.Mockito;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 public class IntegrationTests {
     MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
@@ -32,14 +35,14 @@ public class IntegrationTests {
         MapPresenter sut =
                 new MapPresenter(game, mockUpdater);
 
-        Assert.assertEquals("StartGame",sut.getFaseActual());
+        assertEquals("StartGame", sut.getFaseActual());
         player.sendSettler(lilliput);
         int numPhasesToAdvance = 5;
         for(int i = 0; i < numPhasesToAdvance; i++) {
             sut.accionPasarSiguienteFase();
         }
-        Assert.assertEquals(0, player.totalPopulation());
-        Assert.assertEquals("Growth",sut.getFaseActual());
+        assertEquals(0, player.totalPopulation());
+        assertEquals("Growth", sut.getFaseActual());
     }
 
     @Test
@@ -53,14 +56,14 @@ public class IntegrationTests {
                 new MapPresenter(game, mockUpdater);
 
         Region startRegion = scenario.getRegionByName("5");
-        Assert.assertEquals(1, player.tribesAt(startRegion).size());
+        assertEquals(1, player.tribesAt(startRegion).size());
         sut.accionPasarSiguienteFase();
-        Assert.assertEquals(2, player.tribesAt(startRegion).size());
+        assertEquals(2, player.tribesAt(startRegion).size());
         sut.accionPasarSiguienteFase();
         sut.accionPasarSiguienteFase();
         sut.accionPasarSiguienteFase();
-        Assert.assertEquals("Upkeep", sut.getFaseActual());
-        Assert.assertEquals(1, player.tribesAt(startRegion).size());
+        assertEquals("Upkeep", sut.getFaseActual());
+        assertEquals(1, player.tribesAt(startRegion).size());
     }
 
     @Test
@@ -71,12 +74,12 @@ public class IntegrationTests {
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
         //Given
-        lilliput.buildCity();
+        player.buildCity(lilliput);
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When
         game.nextPhase();
         //Then
-        Assert.assertEquals(0,lilliput.getCityLevel());
+        assertThat(player.cityAt(lilliput), nullValue());
     }
 
     @Test
@@ -87,13 +90,13 @@ public class IntegrationTests {
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
         //Given
-        lilliput.buildCity();
+        player.buildCity(lilliput);
         lilliput.add(Biomes.Farm);
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When
         game.nextPhase();
         //Then
-        Assert.assertEquals(1,lilliput.getCityLevel());
+        assertThat(player.cityAt(lilliput),notNullValue());
     }
 
     @Test
@@ -107,13 +110,13 @@ public class IntegrationTests {
         player.sendSettler(lilliput);
         player.sendSettler(lilliput);
         player.sendSettler(lilliput);
-        lilliput.buildCity();
+        player.buildCity(lilliput);
         lilliput.add(Biomes.Mountain);
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When
         game.nextPhase();
         //Then
-        Assert.assertEquals(2,player.tribesAt(lilliput).size());
-        Assert.assertEquals(0,lilliput.getCityLevel());
+        assertThat(player.tribesAt(lilliput).size(),is(2));
+        assertThat(player.cityAt(lilliput), nullValue());
     }
 }
