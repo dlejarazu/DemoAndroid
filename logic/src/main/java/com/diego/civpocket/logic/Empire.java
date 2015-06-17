@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Empire {
+public class Empire implements CivPocketGame.UpkeepDuties{
 
     List<Tribe> _population = new ArrayList<>();
 
@@ -120,10 +120,12 @@ public class Empire {
         }
     }
 
-    public void supportCities() {
-        Map<Region, Integer>  census = this.getEmpireCensus();
-        for (Region regSettled : census.keySet()){
-            regSettled.supportCity();
+    @Override
+    public void carryOutUpkeep() {
+        try {
+            adjustPopulation();
+        } catch (IllegalActionException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

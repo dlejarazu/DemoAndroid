@@ -1,5 +1,8 @@
 package com.diego.civpocket.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by diego on 13/10/2014.
  * Controls the flow of the game
@@ -12,11 +15,30 @@ public class CivPocketGame {
     Empire _player;
     GamePhase _gamePhase = GamePhase.StartGame;
 
+    public interface UpkeepDuties {
+        void carryOutUpkeep();
+    }
+
+    private List<UpkeepDuties> listeners = new ArrayList<UpkeepDuties>();
+    public void addListener(UpkeepDuties listener) { listeners.add(listener);}
+    public void triggerUpkeep()
+    {
+        for (UpkeepDuties upkeepduties : listeners)
+            upkeepduties.carryOutUpkeep();
+    }
+
     public CivPocketGame(Empire newEmpire,Scenario scenario)
     {
         _player = newEmpire;
         _scenario = scenario;
         _scenario.setUp(_player);
+
+        addListener(_player);
+        if (scenario != null && scenario.getMap() != null){
+            for (Region region : _scenario.getMap()) {
+                addListener(region);
+            }
+        }
     }
 
     public EventCard drawEventCard() {
@@ -31,8 +53,7 @@ public class CivPocketGame {
         _gamePhase = _gamePhase.getNext();
         if ( _gamePhase == GamePhase.Growth) _player.populationGrowth();
         else  if (_gamePhase == GamePhase.Upkeep) {
-            _player.adjustPopulation();
-            _player.supportCities();
+            triggerUpkeep();
         }
     }
 

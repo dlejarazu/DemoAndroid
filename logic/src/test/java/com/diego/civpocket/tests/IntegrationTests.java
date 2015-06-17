@@ -1,5 +1,6 @@
 package com.diego.civpocket.tests;
 
+import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.IllegalActionException;
@@ -63,19 +64,35 @@ public class IntegrationTests {
     }
 
     @Test
-    public void testEnforceSupportDuringUpkeep() throws IllegalActionException {
+    public void testEnforceSupportDuringUpkeepWithoutFarmNoCity() throws IllegalActionException {
         Region lilliput = new Region("Lilliput");
         Region[] tinyEmpire = new Region[]{ lilliput };
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
         //Given
-        player.sendSettler(lilliput);
         lilliput.buildCity();
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When
         game.nextPhase();
         //Then
         Assert.assertEquals(0,lilliput.getCityLevel());
+    }
+
+    @Test
+    public void testEnforceSupportDuringUpkeepWithFarm() throws IllegalActionException {
+        Region lilliput = new Region("Lilliput");
+        Region[] tinyEmpire = new Region[]{ lilliput };
+        Scenario scenario =  new Scenario(tinyEmpire);
+        Empire player = new Empire();
+        CivPocketGame game = new CivPocketGame(player,scenario);
+        //Given
+        lilliput.buildCity();
+        lilliput.add(Biomes.Farm);
+        game.setPhase(CivPocketGame.GamePhase.Advances);
+        //When
+        game.nextPhase();
+        //Then
+        Assert.assertEquals(1,lilliput.getCityLevel());
     }
 }

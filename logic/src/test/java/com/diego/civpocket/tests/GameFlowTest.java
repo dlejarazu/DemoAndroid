@@ -39,17 +39,6 @@ public class GameFlowTest  {
      }
 
     @Test
-    public void testEnforcePopulationSupportWhenEnteringUpkeep() throws IllegalActionException {
-        assertEquals(CivPocketGame.GamePhase.StartGame,sut.getActualPhase());
-        sut.nextPhase();   //Growth
-        sut.nextPhase();   //Events
-        sut.nextPhase();   //Advances
-        then(testEmpire).should(never()).adjustPopulation();
-        sut.nextPhase();   //Upkeep
-        then(testEmpire).should(times(1)).adjustPopulation();
-    }
-
-    @Test
     public void testGamePhasesSequence() throws IllegalActionException {
         assertEquals(CivPocketGame.GamePhase.StartGame,sut.getActualPhase());
         sut.nextPhase();

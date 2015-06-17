@@ -3,7 +3,7 @@ package com.diego.civpocket.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Region {
+public class Region implements CivPocketGame.UpkeepDuties{
 
     List<Biomes> _biomesInRegion;
     private String _name;
@@ -62,5 +62,10 @@ public class Region {
 
     public void supportCity() {
         if (!this.has(Biomes.Farm)) _cityLevel = 0;
+    }
+
+    @Override
+    public void carryOutUpkeep() {
+        supportCity();
     }
 }
