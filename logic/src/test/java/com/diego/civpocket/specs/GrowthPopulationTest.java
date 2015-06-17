@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.specs;
 
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.IllegalActionException;
@@ -57,5 +57,16 @@ public class GrowthPopulationTest {
         int newPopulation = sut.tribesAt(testRegion).size();
         assertEquals(initialPop+1,newPopulation);
         assertEquals(initialPop+1,sut.totalPopulation());
+    }
+
+    @Test
+    public void testMinimumPopulationGrowthWithCity() {
+        //Given
+        testRegion.buildCity();
+        //When
+        sut.populationGrowth();
+        //Then
+        assertEquals(3,sut.totalPopulation());
+        assertEquals(3,sut.poolPopulation().size());
     }
 }

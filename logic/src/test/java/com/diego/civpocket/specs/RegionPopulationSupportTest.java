@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.specs;
 
 import static org.junit.Assert.*;
 

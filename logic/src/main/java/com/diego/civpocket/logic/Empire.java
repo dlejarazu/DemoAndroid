@@ -78,7 +78,7 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         for (Region populated : census.keySet()) {
             this.sendSettler(populated);
         }
-//      enforceMinimumPop();
+        enforceMinimumPop();
     }
 
     private Map<Region, Integer> getEmpireCensus() {

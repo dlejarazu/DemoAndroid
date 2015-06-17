@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.specs;
 
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;

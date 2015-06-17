@@ -1,4 +1,4 @@
-package com.diego.civpocket.tests;
+package com.diego.civpocket.specs;
 
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.CivPocketGame;
@@ -94,5 +94,26 @@ public class IntegrationTests {
         game.nextPhase();
         //Then
         Assert.assertEquals(1,lilliput.getCityLevel());
+    }
+
+    @Test
+    public void test_Order_for_Upkeep_first_population_then_city_support() throws IllegalActionException {
+        Region lilliput = new Region("Lilliput");
+        Region[] tinyEmpire = new Region[]{ lilliput };
+        Scenario scenario =  new Scenario(tinyEmpire);
+        Empire player = new Empire();
+        CivPocketGame game = new CivPocketGame(player,scenario);
+        //Given
+        player.sendSettler(lilliput);
+        player.sendSettler(lilliput);
+        player.sendSettler(lilliput);
+        lilliput.buildCity();
+        lilliput.add(Biomes.Mountain);
+        game.setPhase(CivPocketGame.GamePhase.Advances);
+        //When
+        game.nextPhase();
+        //Then
+        Assert.assertEquals(2,player.tribesAt(lilliput).size());
+        Assert.assertEquals(0,lilliput.getCityLevel());
     }
 }
