@@ -4,6 +4,7 @@ import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.City;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.FakeCityBuilder;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Scenario;
@@ -73,6 +74,7 @@ public class IntegrationTests {
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
+        player.setBuilder(new FakeCityBuilder());
         //Given
         player.buildCity(lilliput);
         game.setPhase(CivPocketGame.GamePhase.Advances);
@@ -89,6 +91,7 @@ public class IntegrationTests {
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
+        player.setBuilder(new FakeCityBuilder());
         //Given
         player.buildCity(lilliput);
         lilliput.add(Biomes.Farm);
@@ -106,6 +109,7 @@ public class IntegrationTests {
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
+        player.setBuilder(new FakeCityBuilder());
         //Given
         player.sendSettler(lilliput);
         player.sendSettler(lilliput);
@@ -116,7 +120,31 @@ public class IntegrationTests {
         //When
         game.nextPhase();
         //Then
-        assertThat(player.tribesAt(lilliput).size(),is(2));
+        assertThat(player.tribesAt(lilliput).size(), is(2));
         assertThat(player.cityAt(lilliput), nullValue());
+    }
+
+    @Test
+    public void test_support_city_from_different_region_with_Cartage() throws IllegalActionException {
+        Region urbanites = new Region("urbanites");
+        Region countryside = new Region("countryside");
+        Region[] tinyEmpire = new Region[]{urbanites,countryside};
+        Scenario scenario = new Scenario(tinyEmpire);
+        Empire player = new Empire();
+        CivPocketGame game = new CivPocketGame(player, scenario);
+        player.setBuilder(new FakeCityBuilder());
+
+        MapPresenter sut =
+                new MapPresenter(game, mockUpdater);
+
+        //Given
+        countryside.add(Biomes.Farm);
+        player.buildCity(urbanites);
+        game.setPhase(CivPocketGame.GamePhase.Advances);
+        player.addAdvance("Cartage");
+        //When
+        sut.accionPasarSiguienteFase();
+        //Then
+        assertThat(player.cityAt(urbanites), notNullValue());
     }
 }

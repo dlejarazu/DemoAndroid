@@ -99,6 +99,6 @@ public class CitiesTest {
         sut.setBuilder(fake);
         assertThat(fake.canBuildCity(testRegion),is(true));
         sut.buildCity(testRegion);
-        assertThat(sut.cityAt(testRegion),notNullValue());
+        assertThat(sut.cityAt(testRegion), notNullValue());
     }
 }
