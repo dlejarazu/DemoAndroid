@@ -34,11 +34,6 @@ public class CivPocketGame {
         _scenario.setUp(_player);
 
         addListener(_player);
-        if (scenario != null && scenario.getMap() != null){
-            for (Region region : _scenario.getMap()) {
-                addListener(region);
-            }
-        }
     }
 
     public EventCard drawEventCard() {
