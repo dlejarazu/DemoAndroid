@@ -1,5 +1,7 @@
 package com.diego.civpocket.logic;
 
+import com.google.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +11,6 @@ public class Empire implements CivPocketGame.UpkeepDuties{
 
     List<Tribe> _population = new ArrayList<>();
     private Map<Region,City> _cities = new HashMap<>();
-    private CityBuilder _builder = new DefaultCityBuilder(this);
 
     public void sendSettlerTo(Region destination)
     {
@@ -18,7 +19,7 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         settler.moveTo(destination);
     }
 
-    public void reduceSettler(Region destination) throws IllegalActionException {
+    public void reduceSettler(Region destination){
         List<Tribe> localPopulation = this.tribesAt(destination);
         if (localPopulation.isEmpty())
             throw new IllegalActionException("No tribes to decimate at destination");
@@ -37,36 +38,25 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         return localPopulation;
     }
 
-    public boolean canBuildCityAt(Region region){
-        return (tribesAt(region).size() >= 4)
-                && (cityAt(region) == null);
+    public void add(City newCity)
+    {
+        //TODO: remove duplication. getLocation y Map to cities. Same info in different places
+        _cities.put(newCity.getLocation(),newCity);
     }
 
     public City cityAt(Region region) {
         return _cities.get(region);
     }
 
-    public void buildCity(Region region) throws IllegalActionException {
-        if(_builder != null){
-            _cities.put(region,_builder.buildCity(region));
-        }
-        else if (canBuildCityAt(region)) {
-
-            _cities.put(region,new City(region));
-        }
-        else {
-            throw new IllegalActionException("Requirements for city building not met");
-        }
-    }
-
-	public boolean canBuildFarmAt(Region region) {
+    public boolean canBuildFarmAt(Region region) {
 
 		return !region.has(Biomes.Farm) &&
                 region.has(Biomes.Forest) &&
                 tribesAt(region).size() >= 2;
 	}
 
-	public boolean buildFarm(Region selected) throws IllegalActionException {
+
+	public boolean buildFarm(Region selected){
         if(canBuildFarmAt(selected)) {
             selected.add(Biomes.Farm);
             selected.decimate(Biomes.Forest);
@@ -124,7 +114,7 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         }
     }
 
-    public void adjustPopulation() throws IllegalActionException {
+    public void adjustPopulation(){
         Map<Region, Integer>  census = this.getEmpireCensus();
         for (Region regSettled : census.keySet()){
             int citySupport =
@@ -159,14 +149,6 @@ public class Empire implements CivPocketGame.UpkeepDuties{
                 _cities.remove(cityLocation);
             }
         }
-    }
-
-    public void setBuilder(CityBuilder builder) {
-        this._builder = builder;
-    }
-
-    public void addAdvance(String advance) {
-
     }
 
     public void sendSettlerTo(Region destination, int number) {

@@ -1,6 +1,5 @@
 package com.diego.civpocket.tests.MapPresenter;
 
-import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -24,7 +23,7 @@ public class MapPresenterTester {
 
 	public MapPresenterTester(){
 		MockitoAnnotations.initMocks(this);
-		given(testGame.getPlayer()).willReturn(testEmpire);
+		given(testGame.getEmpire()).willReturn(testEmpire);
 		given(testGame.getScenario()).willReturn(testEscenario);
 		sut = new MapPresenter(testGame, testView);
 	}

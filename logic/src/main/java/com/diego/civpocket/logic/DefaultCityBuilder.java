@@ -2,34 +2,34 @@ package com.diego.civpocket.logic;
 
 /**
  * Created by diego on 18/06/2015.
+ * Start conditions for building cities
  */
 public class DefaultCityBuilder implements CityBuilder {
 
     Empire _owner;
 
-    DefaultCityBuilder(Empire newOwner)  {
+    public DefaultCityBuilder(Empire newOwner)  {
         _owner = newOwner;
     }
 
     @Override
-    public City buildCity(Region region) {
-        try {
+    public void buildCity(Region region) {
+        if (canBuildCityAt(region)){
             _owner.reduceSettler(region);
             _owner.reduceSettler(region);
             _owner.reduceSettler(region);
             _owner.reduceSettler(region);
-            return new City(region);
+            _owner.add(new City(region));
         }
-        catch (IllegalActionException ex){
-            throw new RuntimeException("Requirements for building didn't met",ex);
+        else{
+            throw new IllegalActionException("Requirements for building didn't met");
         }
 
     }
 
     @Override
-    public boolean canBuildCity(Region region) {
-        return !region.has(Biomes.Farm) &&
-                region.has(Biomes.Forest) &&
-                _owner.tribesAt(region).size() >= 2;
+    public boolean canBuildCityAt(Region region) {
+        return _owner.tribesAt(region).size() >= 4 &&
+                _owner.cityAt(region)==null;
     }
 }

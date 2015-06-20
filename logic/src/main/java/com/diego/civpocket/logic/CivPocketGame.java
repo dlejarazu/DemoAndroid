@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CivPocketGame {
 
-    Scenario _scenario;
-    Empire _player;
+    final Scenario _scenario;
+    final Empire _empire;
     GamePhase _gamePhase = GamePhase.StartGame;
 
     public interface UpkeepDuties {
@@ -32,11 +32,11 @@ public class CivPocketGame {
     @Inject
     public CivPocketGame(Empire newEmpire,Scenario scenario)
     {
-        _player = newEmpire;
+        _empire = newEmpire;
         _scenario = scenario;
-        _scenario.setUp(_player);
+        _scenario.setUp(_empire);
 
-        addListener(_player);
+        addListener(_empire);
     }
 
     public EventCard drawEventCard() {
@@ -49,23 +49,21 @@ public class CivPocketGame {
 
     public void nextPhase() throws IllegalActionException {
         _gamePhase = _gamePhase.getNext();
-        if ( _gamePhase == GamePhase.Growth) _player.populationGrowth();
+        if ( _gamePhase == GamePhase.Growth) _empire.populationGrowth();
         else  if (_gamePhase == GamePhase.Upkeep) {
             triggerUpkeep();
         }
     }
-
-    public Empire getPlayer() {
-        return _player;
+    public Scenario getScenario() { return _scenario; }
+    public Empire getEmpire() {
+        return _empire;
     }
 
     public void setPhase(GamePhase newPhase) {
         _gamePhase = newPhase;
     }
 
-    public Scenario getScenario() {
-        return _scenario;
-    }
+
 
     public enum GamePhase {
         StartGame,Growth, Events, Advances, Upkeep;

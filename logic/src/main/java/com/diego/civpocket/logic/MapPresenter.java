@@ -11,25 +11,29 @@ import com.google.inject.Inject;
  */
 public class MapPresenter {
     private final CivPocketGame _game;
-    private final Empire _player;
-    private final Scenario _actualScenario;
     private final MapUpdater _updater;
+    CityBuilder _cityBuilder;
 
     private Region _selectedRegion = null;
-    //private String _nameSelectedRegion;
     private boolean _moveMode =false;
-    //private String _nameDestination;
     private Region _destination = null;
 
-    @Inject
     public MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater)
     {
         _game = newGame;
-        _player = _game.getPlayer();
-        _actualScenario = _game.getScenario();
         _updater = newUpdater;
+        _cityBuilder = new DefaultCityBuilder(_game.getEmpire());
     }
-    
+
+    @Inject MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater, CityBuilder newCityBuilder)
+    {
+        _game = newGame;
+        _updater = newUpdater;
+        _cityBuilder = newCityBuilder;
+    }
+
+
+
     void synchView() {
     	_updater.UpdateControls();
         _updater.UpdateMap();
@@ -51,13 +55,13 @@ public class MapPresenter {
     public void actionSelectRegion(String name)
     {
         if(_moveMode){
-            _destination = _actualScenario.getRegionByName(name);
-            List<Tribe> group = _player.tribesAt(_selectedRegion);
+            _destination = _game.getScenario().getRegionByName(name);
+            List<Tribe> group = _game.getEmpire().tribesAt(_selectedRegion);
             if(group.size() > 0) group.get(0).moveTo(_destination);
             actionCancelMove();
         }
         else {
-            _selectedRegion = _actualScenario.getRegionByName(name);
+            _selectedRegion = _game.getScenario().getRegionByName(name);
         }
         synchView();
     }
@@ -80,7 +84,7 @@ public class MapPresenter {
 
     public void actionBuildCity() throws IllegalActionException {
         if (_selectedRegion!= null) {
-            _player.buildCity(_selectedRegion);
+            _cityBuilder.buildCity(_selectedRegion);
             synchView();
         }
     }
@@ -88,7 +92,7 @@ public class MapPresenter {
 	public void accionConstruirGranja() {
 		if (_selectedRegion!= null && _game.getActualPhase() == GamePhase.Advances) {
             try {
-                _player.buildFarm(_selectedRegion);
+                _game.getEmpire().buildFarm(_selectedRegion);
             } catch (IllegalActionException e) {
                 throw new RuntimeException(e);
             }
@@ -103,7 +107,7 @@ public class MapPresenter {
     public boolean isConstruirCiudaPossible() {
         return  _selectedRegion!=null &&
                 _game.getActualPhase()== GamePhase.Advances &&
-                _player.canBuildCityAt(_selectedRegion);
+                _cityBuilder.canBuildCityAt(_selectedRegion);
     }
 
     private boolean populationButtonStatus() {
@@ -124,12 +128,12 @@ public class MapPresenter {
 	public boolean isGranjasActivo() {
 		return _selectedRegion!=null &&
 			   _game.getActualPhase()== GamePhase.Advances &&
-               _player.canBuildFarmAt(_selectedRegion);
+                _game.getEmpire().canBuildFarmAt(_selectedRegion);
 	}
 
     public List<String> getNombresRegiones() {
         List<String> regionesArray =  new ArrayList<>();
-        for (Region regActual : _actualScenario._map) {
+        for (Region regActual : _game.getScenario()._map) {
             regionesArray.add(regActual.getName());
         }
         return regionesArray;
@@ -140,11 +144,11 @@ public class MapPresenter {
     }
 
     public String regionStatusToString(String nombreRegion){
-        Region region = _actualScenario.getRegionByName(nombreRegion);
-        int localPop = _player.tribesAt(region).size();
+        Region region = _game.getScenario().getRegionByName(nombreRegion);
+        int localPop = _game.getEmpire().tribesAt(region).size();
         String status = emoji(0x1F603) + Integer.toString(localPop);
-        if (_player.cityAt(region) !=null ) {
-            status = status + "\n" + emoji(0x1F3F0) + Integer.toString(_player.cityAt(region).level());
+        if (_game.getEmpire().cityAt(region) !=null ) {
+            status = status + "\n" + emoji(0x1F3F0) + Integer.toString(_game.getEmpire().cityAt(region).level());
         }
 
         status += "\n";
@@ -171,12 +175,12 @@ public class MapPresenter {
     }
 
     public boolean isSelectedAsDestination(String nameCheck) {
-        if (_destination==null) return false;
-        else return nameCheck.equals(_destination.getName());
+        return _destination != null &&
+                nameCheck.equals(_destination.getName());
     }
 
     public boolean isSelected(String nameCheck) {
-        if (_selectedRegion == null) return false;
-        else return nameCheck.equals(_selectedRegion.getName());
+        return _selectedRegion != null &&
+                nameCheck.equals(_selectedRegion.getName());
     }
 }

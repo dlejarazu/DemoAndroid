@@ -11,7 +11,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import com.diego.civpocket.logic.*;
 import com.diego.civpocket.logic.CivPocketGame.GamePhase;
-import com.diego.civpocket.logic.IllegalActionException;
 
 public class MapPresenterGranjasTester extends MapPresenterTester {
 

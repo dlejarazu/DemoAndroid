@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.mockito.BDDMockito.*;
 
@@ -28,7 +29,7 @@ public class MapPresenterMovementTest extends MapPresenterTester{
     public void testMoveTribe() throws IllegalActionException {
         //Given
         Tribe nomad = new Tribe();
-        given(testEmpire.tribesAt(origin)).willReturn(Arrays.asList(nomad));
+        given(testEmpire.tribesAt(origin)).willReturn(Collections.singletonList(nomad));
         sut.actionSelectRegion(origin.getName());
         sut.actionMoveTribe();
         //When

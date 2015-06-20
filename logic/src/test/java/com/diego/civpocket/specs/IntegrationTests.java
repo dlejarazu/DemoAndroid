@@ -3,14 +3,13 @@ package com.diego.civpocket.specs;
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
-import com.diego.civpocket.logic.FakeCityBuilder;
+import com.diego.civpocket.tests.FakeCityBuilder;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Scenario;
 import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -74,9 +73,8 @@ public class IntegrationTests {
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
-        player.setBuilder(new FakeCityBuilder());
         //Given
-        player.buildCity(lilliput);
+        (new FakeCityBuilder(player)).buildCity(lilliput);
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When
         game.nextPhase();
@@ -91,9 +89,8 @@ public class IntegrationTests {
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
-        player.setBuilder(new FakeCityBuilder());
         //Given
-        player.buildCity(lilliput);
+        (new FakeCityBuilder(player)).buildCity(lilliput);
         lilliput.add(Biomes.Farm);
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When
@@ -109,12 +106,9 @@ public class IntegrationTests {
         Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
         CivPocketGame game = new CivPocketGame(player,scenario);
-        player.setBuilder(new FakeCityBuilder());
         //Given
-        player.sendSettlerTo(lilliput);
-        player.sendSettlerTo(lilliput);
-        player.sendSettlerTo(lilliput);
-        player.buildCity(lilliput);
+        player.sendSettlerTo(lilliput,3);
+        (new FakeCityBuilder(player)).buildCity(lilliput);
         lilliput.add(Biomes.Mountain);
         game.setPhase(CivPocketGame.GamePhase.Advances);
         //When

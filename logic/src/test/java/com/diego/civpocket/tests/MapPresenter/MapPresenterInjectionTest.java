@@ -1,7 +1,8 @@
 package com.diego.civpocket.tests.MapPresenter;
 
-import com.diego.civpocket.logic.CivPocketGame;
+import com.diego.civpocket.logic.CityBuilder;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.tests.FakeCityBuilder;
 import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
 import com.diego.civpocket.logic.Region;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.mock;
 
 /**
  * Created by diego on 20/06/2015.
+ * TDD for refactoring the dependency injection with the Guice framework
  */
 public class MapPresenterInjectionTest {
 
@@ -29,16 +31,26 @@ public class MapPresenterInjectionTest {
                     @Override
                     public void configure() {
                         bind(MapUpdater.class).toInstance(mock(MapUpdater.class));
+                        //bind(CityBuilder.class).to(FakeCityBuilder.class);
                     }
+                    @Provides CityBuilder provideFakeBuilder(Empire empire){
+                        return new FakeCityBuilder(empire);
+                    }
+
                     @Provides Scenario provideTestScenario()
                     {
                         return new Scenario(
                                 new Region[]{
-                                        new Region("testTegion")});
+                                        new Region("testRegion")});
                     }
                 });
-
-       assertThat(sut.getInstance(MapPresenter.class), notNullValue());
+        MapPresenter presenter = sut.getInstance(MapPresenter.class);
+        assertThat(presenter, notNullValue());
+        presenter.actionSelectRegion("testRegion");
+        presenter.accionPasarSiguienteFase();
+        presenter.accionPasarSiguienteFase();
+        presenter.accionPasarSiguienteFase();
+        assertThat(presenter.isConstruirCiudaPossible(),is(true));
     }
 
 }

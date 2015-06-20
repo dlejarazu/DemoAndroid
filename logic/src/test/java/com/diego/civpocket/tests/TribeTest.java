@@ -4,8 +4,6 @@ import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Tribe;
 
 import org.junit.Test;
-import org.junit.Before; 
-import org.junit.After;
 import org.mockito.Mock;
 import static org.junit.Assert.*;
 
