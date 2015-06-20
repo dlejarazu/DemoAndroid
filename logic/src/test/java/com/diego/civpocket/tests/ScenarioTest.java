@@ -45,7 +45,7 @@ public class ScenarioTest {
         //When
         sut.setUp(player);
         //Then       
-        then(player).should(times(1)).sendSettler(startRegion);
+        then(player).should(times(1)).sendSettlerTo(startRegion);
     }
 
 }

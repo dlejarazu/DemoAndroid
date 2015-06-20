@@ -20,7 +20,7 @@ public class EmpirePopulationTest {
     @Test
     public void testCreateAndDestriyTribes() throws IllegalActionException {
         assertPopulation(0,testRegion);
-        sut.sendSettler(testRegion);
+        sut.sendSettlerTo(testRegion);
         assertPopulation(1,testRegion);
         assertEquals(1, sut.tribesAt(testRegion).size());
         sut.reduceSettler(testRegion);
@@ -42,7 +42,7 @@ public class EmpirePopulationTest {
     public void testAdjustPopulationNoSupport() throws IllegalActionException {
         //Given
         //empty region
-        sut.sendSettler(testRegion);
+        sut.sendSettlerTo(testRegion);
         //When
         sut.adjustPopulation();
         //Then
@@ -68,7 +68,7 @@ public class EmpirePopulationTest {
         //Given
         int support = 1;
         Mockito.doReturn(support).when(testRegion).support();
-        for (int i = 0; i < support; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < support; i++) sut.sendSettlerTo(testRegion);
         //When
         sut.adjustPopulation();
         //Then
@@ -81,7 +81,7 @@ public class EmpirePopulationTest {
         int support = 2;
         int population = 5;
         Mockito.doReturn(support).when(testRegion).support();
-        for (int i = 0; i < population; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < population; i++) sut.sendSettlerTo(testRegion);
         //When
         sut.adjustPopulation();
         //Then

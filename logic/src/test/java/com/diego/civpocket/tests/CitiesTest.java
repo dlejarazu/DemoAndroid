@@ -32,7 +32,7 @@ public class CitiesTest {
     {
         //Given
         int popReg = 4;
-        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < popReg; i++) sut.sendSettlerTo(testRegion);
         //When
         sut.buildCity(testRegion);
         //Then
@@ -43,7 +43,7 @@ public class CitiesTest {
     public void testBuildCity()throws IllegalActionException {
         //Given
         int popReg = 4;
-        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < popReg; i++) sut.sendSettlerTo(testRegion);
         //When
         sut.buildCity(testRegion);
         //Then
@@ -56,7 +56,7 @@ public class CitiesTest {
     public void testNoCitySupport() throws IllegalActionException {
         //Given
         int popReg = 4;
-        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < popReg; i++) sut.sendSettlerTo(testRegion);
         given(testRegion.has(Biomes.Farm)).willReturn(false);
         sut.buildCity(testRegion);
         //When
@@ -69,7 +69,7 @@ public class CitiesTest {
     public void testCitySupport() throws IllegalActionException {
         //Given
         int popReg = 4;
-        for (int i = 0; i < popReg; i++) sut.sendSettler(testRegion);
+        for (int i = 0; i < popReg; i++) sut.sendSettlerTo(testRegion);
         sut.buildCity(testRegion);
         given(testRegion.has(Biomes.Farm)).willReturn(true);
         //When

@@ -1,5 +1,7 @@
 package com.diego.civpocket.logic;
 
+import com.google.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class CivPocketGame {
             upkeepduties.carryOutUpkeep();
     }
 
+    @Inject
     public CivPocketGame(Empire newEmpire,Scenario scenario)
     {
         _player = newEmpire;

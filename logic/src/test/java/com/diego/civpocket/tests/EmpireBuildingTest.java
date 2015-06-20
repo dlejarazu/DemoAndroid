@@ -25,8 +25,8 @@ public class EmpireBuildingTest {
 		given(testRegion.has(Biomes.Farm)).willReturn(false);
 		given(testRegion.has(Biomes.Forest)).willReturn(true);
 
-		sut.sendSettler(testRegion);
-		sut.sendSettler(testRegion);
+		sut.sendSettlerTo(testRegion);
+		sut.sendSettlerTo(testRegion);
 
 		//When
 		boolean success = sut.buildFarm(testRegion);

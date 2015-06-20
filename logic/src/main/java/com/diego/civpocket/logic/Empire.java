@@ -1,7 +1,6 @@
 package com.diego.civpocket.logic;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,7 @@ public class Empire implements CivPocketGame.UpkeepDuties{
     private Map<Region,City> _cities = new HashMap<>();
     private CityBuilder _builder = new DefaultCityBuilder(this);
 
-    public void sendSettler(Region destination)
+    public void sendSettlerTo(Region destination)
     {
         Tribe settler = new Tribe();
         _population.add(settler);
@@ -87,7 +86,7 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         Map<Region, Integer> census = getEmpireCensus();
 
         for (Region populated : census.keySet()) {
-            this.sendSettler(populated);
+            this.sendSettlerTo(populated);
         }
         enforceMinimumPop();
     }
@@ -168,5 +167,9 @@ public class Empire implements CivPocketGame.UpkeepDuties{
 
     public void addAdvance(String advance) {
 
+    }
+
+    public void sendSettlerTo(Region destination, int number) {
+        for(int i=0; i < number; i++) sendSettlerTo(destination);
     }
 }

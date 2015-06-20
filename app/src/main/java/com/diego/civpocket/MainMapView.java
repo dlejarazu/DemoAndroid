@@ -24,7 +24,7 @@ public class MainMapView extends Activity implements MapUpdater {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_map);
 
-        presenter = new MapPresenter( new CivPocketGame( new Empire()), new Scenario("A New World"), this);
+        presenter = new MapPresenter( new CivPocketGame( new Empire(), new Scenario("A New World")), this);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getNombresRegiones());
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -66,8 +66,8 @@ public class MainMapView extends Activity implements MapUpdater {
     public void BotonSubPoblacion(View view) {
         presenter.actionMoveTribe();
     }
-    public void BotonConstruyeCiudad(View view) {
-        presenter.accionConstruirCiudad();
+    public void BotonConstruyeCiudad(View view) throws IllegalActionException {
+        presenter.actionBuildCity();
     }
     public void BotonSiguienteFase(View view) {
         presenter.accionPasarSiguienteFase();

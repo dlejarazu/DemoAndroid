@@ -1,6 +1,5 @@
 package com.diego.civpocket.specs;
 
-import com.diego.civpocket.logic.City;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
@@ -24,7 +23,7 @@ public class GrowthPopulationTest {
     public void testEmpireGrowthInOneRegion(){
         //Given
         int initialPop = 3;
-        for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
+        for(int i = 0; i < initialPop; i++) sut.sendSettlerTo(testRegion);
         //When
         sut.populationGrowth();
         //Then
@@ -36,8 +35,8 @@ public class GrowthPopulationTest {
         //Given
         int initialPopReg1 = 1;
         int initialPopReg2 = 4;
-        for (int i = 0; i < initialPopReg1; i++) sut.sendSettler(testRegion);
-        for (int i = 0; i < initialPopReg2; i++) sut.sendSettler(testRegion2);
+        for (int i = 0; i < initialPopReg1; i++) sut.sendSettlerTo(testRegion);
+        for (int i = 0; i < initialPopReg2; i++) sut.sendSettlerTo(testRegion2);
         //When
         sut.populationGrowth();
         //Then
@@ -51,7 +50,7 @@ public class GrowthPopulationTest {
     public void testEnforceMinimumPopWhenGrowth() {
         //Given
         int initialPop = 1;
-        for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
+        for(int i = 0; i < initialPop; i++) sut.sendSettlerTo(testRegion);
         //When
         sut.populationGrowth();
         //Then
@@ -64,7 +63,7 @@ public class GrowthPopulationTest {
     public void testMinimumPopulationGrowthWithCity() throws IllegalActionException {
         //Given
         int initialPop = 4;
-        for(int i = 0; i < initialPop; i++) sut.sendSettler(testRegion);
+        for(int i = 0; i < initialPop; i++) sut.sendSettlerTo(testRegion);
         sut.buildCity(testRegion);
         //When
         sut.populationGrowth();

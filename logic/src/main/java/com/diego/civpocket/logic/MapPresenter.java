@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diego.civpocket.logic.CivPocketGame.GamePhase;
+import com.google.inject.Inject;
 
 /**
  * Model Presenter View for CivPocket
@@ -20,6 +21,7 @@ public class MapPresenter {
     //private String _nameDestination;
     private Region _destination = null;
 
+    @Inject
     public MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater)
     {
         _game = newGame;
@@ -76,7 +78,7 @@ public class MapPresenter {
         synchView();
     }
 
-    public void accionConstruirCiudad() throws IllegalActionException {
+    public void actionBuildCity() throws IllegalActionException {
         if (_selectedRegion!= null) {
             _player.buildCity(_selectedRegion);
             synchView();
