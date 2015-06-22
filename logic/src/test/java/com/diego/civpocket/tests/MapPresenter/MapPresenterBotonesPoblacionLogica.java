@@ -1,8 +1,6 @@
 package com.diego.civpocket.tests.MapPresenter;
 
 import com.diego.civpocket.logic.CivPocketGame;
-import com.diego.civpocket.logic.MapPresenter;
-import com.google.inject.Guice;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
