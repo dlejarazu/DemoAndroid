@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Empire implements CivPocketGame.UpkeepDuties{
+public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthDuties{
 
     List<Tribe> _population = new ArrayList<>();
     private Map<Region,City> _cities = new HashMap<>();
@@ -37,36 +37,6 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         }
         return localPopulation;
     }
-
-    public void add(City newCity)
-    {
-        //TODO: remove duplication. getLocation y Map to cities. Same info in different places
-        _cities.put(newCity.getLocation(),newCity);
-    }
-
-    public City cityAt(Region region) {
-        return _cities.get(region);
-    }
-
-    public boolean canBuildFarmAt(Region region) {
-
-		return !region.has(Biomes.Farm) &&
-                region.has(Biomes.Forest) &&
-                tribesAt(region).size() >= 2;
-	}
-
-
-	public boolean buildFarm(Region selected){
-        if(canBuildFarmAt(selected)) {
-            selected.add(Biomes.Farm);
-            selected.decimate(Biomes.Forest);
-            reduceSettler(selected);
-            reduceSettler(selected);
-            return true;
-        }
-        else
-            return false;
-	}
 
     public int totalPopulation() {
         return _population.size();
@@ -128,20 +98,37 @@ public class Empire implements CivPocketGame.UpkeepDuties{
         }
     }
 
-    @Override
-    public void carryOutUpkeep() {
-        try {
-            adjustPopulation();
-            supportCities();
-        } catch (IllegalActionException ex) {
-            throw new RuntimeException(ex);
+    public boolean canBuildFarmAt(Region region) {
+        return !region.has(Biomes.Farm) &&
+                region.has(Biomes.Forest) &&
+                tribesAt(region).size() >= 2;
+    }
+
+    public boolean buildFarm(Region selected){
+        if(canBuildFarmAt(selected)) {
+            selected.add(Biomes.Farm);
+            selected.decimate(Biomes.Forest);
+            reduceSettler(selected);
+            reduceSettler(selected);
+            return true;
         }
+        else
+            return false;
     }
 
     public int getNumCities(){
         return _cities.size();
     }
 
+    public void add(City newCity)
+    {
+        //TODO: remove duplication. getLocation y Map to cities. Same info in different places
+        _cities.put(newCity.getLocation(),newCity);
+    }
+
+    public City cityAt(Region region) {
+        return _cities.get(region);
+    }
 
     public void supportCities() {
         for(Region cityLocation : _cities.keySet()){
@@ -153,5 +140,16 @@ public class Empire implements CivPocketGame.UpkeepDuties{
 
     public void sendSettlerTo(Region destination, int number) {
         for(int i=0; i < number; i++) sendSettlerTo(destination);
+    }
+
+    @Override
+    public void carryOutGrowth() {
+        populationGrowth();
+    }
+
+    @Override
+    public void carryOutUpkeep() {
+        adjustPopulation();
+        supportCities();
     }
 }

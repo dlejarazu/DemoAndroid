@@ -10,33 +10,33 @@ import java.util.List;
  * Controls the flow of the game
  */
 
-
 public class CivPocketGame {
 
-    final Scenario _scenario;
-    final Empire _empire;
+
     GamePhase _gamePhase = GamePhase.StartGame;
 
     public interface UpkeepDuties {
         void carryOutUpkeep();
     }
 
+    public interface GrowthDuties {
+        void carryOutGrowth();
+    }
+
     private List<UpkeepDuties> listeners = new ArrayList<UpkeepDuties>();
-    public void addListener(UpkeepDuties listener) { listeners.add(listener);}
+    public void addUpkeepTask(UpkeepDuties listener) { listeners.add(listener);}
     public void triggerUpkeep()
     {
         for (UpkeepDuties upkeepduties : listeners)
             upkeepduties.carryOutUpkeep();
     }
 
-    @Inject
-    public CivPocketGame(Empire newEmpire,Scenario scenario)
+    private List<GrowthDuties> listenersGrowth = new ArrayList<GrowthDuties>();
+    public void addGrowthTask(GrowthDuties listener) { listenersGrowth.add(listener);}
+    public void triggerGrowth()
     {
-        _empire = newEmpire;
-        _scenario = scenario;
-        _scenario.setUp(_empire);
-
-        addListener(_empire);
+        for (GrowthDuties growthDuties : listenersGrowth)
+            growthDuties.carryOutGrowth();
     }
 
     public EventCard drawEventCard() {
@@ -49,14 +49,10 @@ public class CivPocketGame {
 
     public void nextPhase() throws IllegalActionException {
         _gamePhase = _gamePhase.getNext();
-        if ( _gamePhase == GamePhase.Growth) _empire.populationGrowth();
+        if ( _gamePhase == GamePhase.Growth) triggerGrowth();
         else  if (_gamePhase == GamePhase.Upkeep) {
             triggerUpkeep();
         }
-    }
-    public Scenario getScenario() { return _scenario; }
-    public Empire getEmpire() {
-        return _empire;
     }
 
     public void setPhase(GamePhase newPhase) {

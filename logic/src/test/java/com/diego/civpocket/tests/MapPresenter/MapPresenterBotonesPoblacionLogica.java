@@ -1,42 +1,38 @@
 package com.diego.civpocket.tests.MapPresenter;
 
+import com.diego.civpocket.logic.MapPresenter;
+import com.google.inject.Guice;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import com.diego.civpocket.logic.CivPocketGame.GamePhase;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-@RunWith(Parameterized.class)
 public class MapPresenterBotonesPoblacionLogica extends MapPresenterTester {
-
-
-	@Parameterized.Parameters (name = "{index}: button during phase {0} active - {1}")
-	public static Collection<Object[]> StatusButtons() {
-		return Arrays.asList(new Object[][]{
-						{GamePhase.StartGame, false},
-						{GamePhase.Events, false},
-						{GamePhase.Advances, false},
-						{GamePhase.Upkeep, false},
-						{GamePhase.Growth, false}
-				}
-		);
-	}
-	@Parameterized.Parameter public GamePhase phase;
-	@Parameterized.Parameter(value = 1) public boolean shouldPopButtonsBeActive;
 
 	@Test
 	public void testCheckButtonsStatusDuringPhases() {
-		//Given
-		faseActual(phase);
-		//Then
-		boolean isBtnAddPopActivo = sut.isAddTribeActive();
-		assertEquals(shouldPopButtonsBeActive, isBtnAddPopActivo);
-		boolean isBtnRemPopActivo = sut.isMoveTribeActive();
-		assertEquals(shouldPopButtonsBeActive, isBtnRemPopActivo);
+		MapPresenter sut = Guice.createInjector(new TestPresenterModule())
+				.getInstance(MapPresenter.class);
+		//StartGame
+		assertThat(sut.isAddTribeActive(), is(false));
+		assertThat(sut.isMoveTribeActive(), is(false));
+		sut.accionPasarSiguienteFase();
+		//Growth
+		assertThat(sut.isAddTribeActive(), is(true));
+		assertThat(sut.isMoveTribeActive(), is(true));
+		sut.accionPasarSiguienteFase();
+		//Events
+		assertThat(sut.isAddTribeActive(), is(false));
+		assertThat(sut.isMoveTribeActive(), is(false));
+		sut.accionPasarSiguienteFase();
+		//Advances
+		assertThat(sut.isAddTribeActive(), is(false));
+		assertThat(sut.isMoveTribeActive(), is(false));
+		sut.accionPasarSiguienteFase();
+		//Upkeep
+		assertThat(sut.isAddTribeActive(), is(false));
+		assertThat(sut.isMoveTribeActive(), is(false));
+
 	}
 }

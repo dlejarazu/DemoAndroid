@@ -1,34 +1,26 @@
 package com.diego.civpocket.tests.MapPresenter;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import com.diego.civpocket.logic.*;
 
 public class MapPresenterInformersTest extends MapPresenterTester {
 
 	@Test
 	public void testIsSelectedCorrectoDevuelveTrue() {
-		//Given
-		Region testRegion = new Region("test");
-		Mockito.doReturn(testRegion).when(testEscenario).getRegionByName("test");
-		sut.actionSelectRegion("test");
 		//When
-		boolean resultado = sut.isSelected("test");
-		assertTrue(resultado);
+		sut.actionSelectRegion("testRegion");
+		//Then
+		assertThat(sut.isSelected("testRegion"), is(true));
 	}
 	
 	@Test
 	public void testIsSelectedConRegionIncorrectaDevuelveFalse() {
-		//Given
-		Region testRegion = new Region("test");
-		Mockito.doReturn(testRegion).when(testEscenario).getRegionByName("test");
-		sut.actionSelectRegion("test");
 		//When
-		boolean resultado = sut.isSelected("other");
-		assertFalse(resultado);
+		sut.actionSelectRegion("testRegion");
+		//When
+		assertThat(sut.isSelected("other"), is(false));
 	}
 
 }

@@ -10,13 +10,15 @@ import android.widget.TextView;
 
 import com.diego.civpocket.logic.*;
 import com.diego.civpocket.logic.IllegalActionException;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
 
 //prueba
 //TODO: Crear mapa dibujable con canvas extendiendo clase View
 
 public class MainMapView extends Activity implements MapUpdater {
 
-    MapPresenter presenter;
+    @Inject MapPresenter presenter;
     MapDrawView mapa;
 
     @Override
@@ -24,7 +26,7 @@ public class MainMapView extends Activity implements MapUpdater {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_map);
 
-        presenter = new MapPresenter( new CivPocketGame( new Empire(), new Scenario("A New World")), this);
+        Guice.createInjector(new CivPocketModule()).injectMembers(this);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presenter.getNombresRegiones());
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -32,13 +34,13 @@ public class MainMapView extends Activity implements MapUpdater {
         //TODO: Duplication. There is no connection between how the view draws the scenario and the scenario itself
         mapa = (MapDrawView) findViewById(R.id.mapScenarioView);
         mapa.mapPModel = presenter;
-        mapa.AddRegion("1",235,309);
-        mapa.AddRegion("2",432,672);
-        mapa.AddRegion("3",420,435);
-        mapa.AddRegion("4",485,289);
-        mapa.AddRegion("5",180,817);
-        mapa.AddRegion("7",73,657);
-        mapa.AddRegion("8",263,477);
+        mapa.AddRegion("1", 235, 309);
+        mapa.AddRegion("2", 432, 672);
+        mapa.AddRegion("3", 420, 435);
+        mapa.AddRegion("4", 485, 289);
+        mapa.AddRegion("5", 180, 817);
+        mapa.AddRegion("7", 73, 657);
+        mapa.AddRegion("8", 263, 477);
 
         //TODO:forma elegante de mapear las regiones a sus statusTxtViews
         UpdateControls();

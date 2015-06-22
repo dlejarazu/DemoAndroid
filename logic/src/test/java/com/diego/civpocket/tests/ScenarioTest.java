@@ -2,6 +2,7 @@ package com.diego.civpocket.tests;
 
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.FirstScenario;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Scenario;
 import static org.mockito.BDDMockito.*;
@@ -22,7 +23,7 @@ public class ScenarioTest {
     public void testFirstScenarioMap()
     {
         //Given
-        Scenario sut = new Scenario("A New World");
+        Scenario sut = new FirstScenario();
         //When
         Region[] scenarioMap = sut.getMap();
         //Then
@@ -40,7 +41,7 @@ public class ScenarioTest {
     @Test
     public void testFirstScenarioPopulation() {
         //Given
-        Scenario sut = new Scenario("A New World");
+        Scenario sut = new FirstScenario();
         Region startRegion = sut.getRegionByName("5");
         //When
         sut.setUp(player);

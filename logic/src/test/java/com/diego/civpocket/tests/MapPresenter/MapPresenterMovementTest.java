@@ -21,8 +21,9 @@ public class MapPresenterMovementTest extends MapPresenterTester{
     @Before
     public void setup(){
         //Given
-        origin = addMockRegionToScenario("origin");
-        faseActual(CivPocketGame.GamePhase.Growth);
+        super.setup();
+        origin = addRegionToScenario("origin");
+        setGamePhase(CivPocketGame.GamePhase.Growth);
     }
 
     @Test
@@ -33,7 +34,7 @@ public class MapPresenterMovementTest extends MapPresenterTester{
         sut.actionSelectRegion(origin.getName());
         sut.actionMoveTribe();
         //When
-        Region destination = addMockRegionToScenario("destination");
+        Region destination = addRegionToScenario("destination");
         sut.actionSelectRegion(destination.getName());
         //Then
         Assert.assertTrue(sut.isSelected(origin.getName()));
@@ -58,7 +59,7 @@ public class MapPresenterMovementTest extends MapPresenterTester{
         Assert.assertTrue(sut.isSelected(origin.getName()));
         then(testEmpire).should(never()).reduceSettler(origin);
 
-        Region another = addMockRegionToScenario("another");
+        Region another = addRegionToScenario("another");
         sut.actionSelectRegion(another.getName());
         Assert.assertTrue(sut.isSelected(another.getName()));
     }

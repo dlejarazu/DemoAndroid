@@ -14,17 +14,10 @@ import com.diego.civpocket.logic.CivPocketGame.GamePhase;
 
 public class MapPresenterGranjasTester extends MapPresenterTester {
 
-	Region testRegion;
-	@Before
-	public void setup()
-	{
-		testRegion = addMockRegionToScenario("testRegion");
-	}
-
 	@Test
 	public void testBuildFarmDuringAdvancePhase() throws IllegalActionException {
 		//Given
-		faseActual(GamePhase.Advances);
+		setGamePhase(GamePhase.Advances);
 		allowBuldingFarms();
 		sut.actionSelectRegion(testRegion.getName());
 		//When
@@ -40,7 +33,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	@Test
 	public void testStatusRegionCambiaAlConstruirGranja() throws IllegalActionException {
 		//Given
-		faseActual(GamePhase.Advances);
+		setGamePhase(GamePhase.Advances);
 		String statusPrevio = sut.regionStatusToString(testRegion.getName());
 		testRegion.add(Biomes.Farm);
 		//When
@@ -52,7 +45,7 @@ public class MapPresenterGranjasTester extends MapPresenterTester {
 	@Test
 	public void testBtnPlantarActivoEnLaFaseAvances(){
 		//Given
-		faseActual(GamePhase.Advances);
+		setGamePhase(GamePhase.Advances);
 		allowBuldingFarms();
 		sut.actionSelectRegion(testRegion.getName());
 		//Then

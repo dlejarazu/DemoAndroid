@@ -8,14 +8,6 @@ import org.mockito.Mockito;
 
 public class MapPresenterViewUpdatesTest extends MapPresenterTester {
 
-	Region testRegion;
-
-	@Before
-	public void setup()
-	{
-		testRegion = addMockRegionToScenario("testRegion");
-	}
-
 	private void verifyUpdatesEnLaVista()
 	{
 		Mockito.verify(testView,Mockito.atLeastOnce()).UpdateControls();

@@ -3,12 +3,15 @@ package com.diego.civpocket.specs;
 import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.FirstScenario;
 import com.diego.civpocket.tests.FakeCityBuilder;
 import com.diego.civpocket.logic.IllegalActionException;
 import com.diego.civpocket.logic.Region;
 import com.diego.civpocket.logic.Scenario;
 import com.diego.civpocket.logic.MapPresenter;
 import com.diego.civpocket.logic.MapUpdater;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
 
 import org.junit.Test;
 
@@ -18,7 +21,13 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 public class IntegrationTests {
-    MapUpdater mockUpdater = Mockito.mock(MapUpdater.class) ;
+
+    class simpleTestModule extends AbstractModule {
+        @Override
+        protected void configure() {
+            bind(MapUpdater.class).toInstance( Mockito.mock(MapUpdater.class));
+        }
+    }
 
     private void goToPhase(CivPocketGame game, CivPocketGame.GamePhase phase) throws IllegalActionException {
         while(game.getActualPhase() != phase) game.nextPhase();
@@ -27,13 +36,11 @@ public class IntegrationTests {
     @Test
     public void testAdvanceSeveralTurnsEmptyEmpire() throws IllegalActionException {
         Region lilliput = new Region("Lilliput");
-        Region[] tinyEmpire = new Region[]{ lilliput };
-        Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player,scenario);
+        CivPocketGame game = new CivPocketGame();
 
-        MapPresenter sut =
-                new MapPresenter(game, mockUpdater);
+        MapPresenter sut = Guice.createInjector(new simpleTestModule())
+                .getInstance(MapPresenter.class);
 
         assertEquals("StartGame", sut.getFaseActual());
         player.sendSettlerTo(lilliput);
@@ -48,12 +55,12 @@ public class IntegrationTests {
     @Test
     public void testFirstScenario()
     {
-        Scenario scenario =  new Scenario("A New World");
+        Scenario scenario =  new FirstScenario();
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player,scenario);
+        CivPocketGame game = new CivPocketGame();
 
-        MapPresenter sut =
-                new MapPresenter(game, mockUpdater);
+        MapPresenter sut = Guice.createInjector(new simpleTestModule())
+                .getInstance(MapPresenter.class);
 
         Region startRegion = scenario.getRegionByName("5");
         assertEquals(1, player.tribesAt(startRegion).size());
@@ -69,10 +76,8 @@ public class IntegrationTests {
     @Test
     public void testEnforceSupportDuringUpkeepWithoutFarmNoCity() throws IllegalActionException {
         Region lilliput = new Region("Lilliput");
-        Region[] tinyEmpire = new Region[]{ lilliput };
-        Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player,scenario);
+        CivPocketGame game = new CivPocketGame();
         //Given
         (new FakeCityBuilder(player)).buildCity(lilliput);
         game.setPhase(CivPocketGame.GamePhase.Advances);
@@ -85,10 +90,8 @@ public class IntegrationTests {
     @Test
     public void testEnforceSupportDuringUpkeepWithFarm() throws IllegalActionException {
         Region lilliput = new Region("Lilliput");
-        Region[] tinyEmpire = new Region[]{ lilliput };
-        Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player,scenario);
+        CivPocketGame game = new CivPocketGame();
         //Given
         (new FakeCityBuilder(player)).buildCity(lilliput);
         lilliput.add(Biomes.Farm);
@@ -102,10 +105,8 @@ public class IntegrationTests {
     @Test
     public void test_Order_for_Upkeep_first_population_then_city_support() throws IllegalActionException {
         Region lilliput = new Region("Lilliput");
-        Region[] tinyEmpire = new Region[]{ lilliput };
-        Scenario scenario =  new Scenario(tinyEmpire);
         Empire player = new Empire();
-        CivPocketGame game = new CivPocketGame(player,scenario);
+        CivPocketGame game = new CivPocketGame();
         //Given
         player.sendSettlerTo(lilliput,3);
         (new FakeCityBuilder(player)).buildCity(lilliput);
