@@ -3,6 +3,7 @@ package com.diego.civpocket.specs;
 import com.diego.civpocket.logic.CityBuilder;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
+import com.diego.civpocket.logic.Library;
 import com.diego.civpocket.logic.MapUpdater;
 import com.diego.civpocket.tests.FakeCityBuilder;
 import com.diego.civpocket.logic.IllegalActionException;
@@ -16,6 +17,7 @@ import com.google.inject.testing.fieldbinder.BoundFieldModule;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -29,6 +31,7 @@ public class IntegrationTests {
     @Bind Empire testEmpire = Mockito.spy(new Empire());
     @Bind CivPocketGame testGame = Mockito.spy(new CivPocketGame());
     @Bind CityBuilder fakeBuilder = Mockito.spy(new FakeCityBuilder(testEmpire));
+    @Bind Library testLibrary = Mockito.spy(new Library());
     @Bind MapUpdater updater = mock(MapUpdater.class);
 
     @Inject MapPresenter sut;
@@ -62,6 +65,14 @@ public class IntegrationTests {
                 is(notNullValue()));
     }
 
+    @Test
+    public void testPurchaseAdvanceCartageFromCity()
+    {
+        assertThat(testLibrary.has("Cartage"),is(false));
 
+        sut.actionSelectRegion("Lilliput");
+        sut.actionPurchaseAdvance("Cartage");
 
+        assertThat(testLibrary.has("Cartage"),is(true));
+    }
 }

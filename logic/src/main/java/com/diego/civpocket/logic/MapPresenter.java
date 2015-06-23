@@ -14,19 +14,22 @@ public class MapPresenter {
     private final MapUpdater _updater;
     private final Empire _empire;
     private final Scenario _scenario;
+    private final Library _library;
     CityBuilder _cityBuilder;
 
     private Region _selectedRegion = null;
     private boolean _moveMode =false;
     private Region _destination = null;
 
-    @Inject MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater, CityBuilder newCityBuilder,Empire newEmpire, Scenario newScenario)
+
+    @Inject MapPresenter(CivPocketGame newGame, MapUpdater newUpdater, CityBuilder newCityBuilder, Empire newEmpire, Scenario newScenario, Library library)
     {
         _game = newGame;
         _empire = newEmpire;
         _scenario = newScenario;
         _updater = newUpdater;
         _cityBuilder = newCityBuilder;
+        _library = library;
 
         _scenario.setUp(_empire);
         _game.addUpkeepTask(_empire);
@@ -183,5 +186,9 @@ public class MapPresenter {
     public boolean isSelected(String nameCheck) {
         return _selectedRegion != null &&
                 nameCheck.equals(_selectedRegion.getName());
+    }
+
+    public void actionPurchaseAdvance(String nameAdvance) {
+        _library.addCartage();
     }
 }
