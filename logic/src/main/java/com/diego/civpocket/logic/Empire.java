@@ -1,12 +1,13 @@
 package com.diego.civpocket.logic;
 
-import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Singleton
 public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthDuties{
 
     List<Tribe> _population = new ArrayList<>();

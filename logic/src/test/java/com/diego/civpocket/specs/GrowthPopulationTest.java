@@ -15,8 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class GrowthPopulationTest {
 
-    @InjectMocks
-    Empire sut;
+    Empire sut = new Empire();
     @Mock Region testRegion;
     @Mock Region testRegion2;
 

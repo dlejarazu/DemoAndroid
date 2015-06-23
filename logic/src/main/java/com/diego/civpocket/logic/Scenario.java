@@ -1,9 +1,12 @@
 package com.diego.civpocket.logic;
 
+import com.google.inject.Singleton;
+
 /**
  * Created by diego on 13/10/2014.
  * several info related with the scenario
  */
+@Singleton
 public class Scenario {
 
     protected Region[] _map = null;

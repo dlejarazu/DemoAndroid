@@ -1,6 +1,7 @@
 package com.diego.civpocket.logic;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by diego on 13/10/2014.
  * Controls the flow of the game
  */
-
+@Singleton
 public class CivPocketGame {
 
 

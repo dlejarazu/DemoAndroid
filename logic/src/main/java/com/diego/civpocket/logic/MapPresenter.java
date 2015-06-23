@@ -19,16 +19,7 @@ public class MapPresenter {
     private Region _selectedRegion = null;
     private boolean _moveMode =false;
     private Region _destination = null;
-/*
-    public MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater)
-    {
-        _game = newGame;
-        _updater = newUpdater;
-        _empire = new Empire();
-        _scenario = new Scenario(new Region[]{});
-        _cityBuilder = new DefaultCityBuilder(_empire);
-    }
-*/
+
     @Inject MapPresenter( CivPocketGame newGame,  MapUpdater newUpdater, CityBuilder newCityBuilder,Empire newEmpire, Scenario newScenario)
     {
         _game = newGame;
