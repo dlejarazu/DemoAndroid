@@ -17,7 +17,6 @@ import com.google.inject.testing.fieldbinder.BoundFieldModule;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -31,7 +30,7 @@ public class IntegrationTests {
     @Bind Empire testEmpire = Mockito.spy(new Empire());
     @Bind CivPocketGame testGame = Mockito.spy(new CivPocketGame());
     @Bind CityBuilder fakeBuilder = Mockito.spy(new FakeCityBuilder(testEmpire));
-    @Bind Library testLibrary = Mockito.spy(new Library());
+    @Bind Library testLibrary = Mockito.spy(new Library(testEmpire));
     @Bind MapUpdater updater = mock(MapUpdater.class);
 
     @Inject MapPresenter sut;
@@ -68,11 +67,12 @@ public class IntegrationTests {
     @Test
     public void testPurchaseAdvanceCartageFromCity()
     {
-        assertThat(testLibrary.has("Cartage"),is(false));
+        assertThat(testLibrary.hasCartage(),is(false));
 
         sut.actionSelectRegion("Lilliput");
+        sut.actionBuildCity();
         sut.actionPurchaseAdvance("Cartage");
 
-        assertThat(testLibrary.has("Cartage"),is(true));
+        assertThat(testLibrary.hasCartage(),is(true));
     }
 }
