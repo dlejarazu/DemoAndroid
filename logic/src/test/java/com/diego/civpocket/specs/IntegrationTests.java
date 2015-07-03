@@ -1,5 +1,6 @@
 package com.diego.civpocket.specs;
 
+import com.diego.civpocket.logic.Biomes;
 import com.diego.civpocket.logic.CityBuilder;
 import com.diego.civpocket.logic.CivPocketGame;
 import com.diego.civpocket.logic.Empire;
@@ -19,14 +20,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.hamcrest.CoreMatchers.*;
+import java.util.Collection;
+
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class IntegrationTests {
 
-    @Bind Scenario testScenario = Mockito.spy(new Scenario(
-            new Region[]{(new  Region("Lilliput"))}));
+    protected Region lilliput  = Mockito.spy(new  Region("Lilliput"));
+    @Bind Scenario testScenario =
+            Mockito.spy(new Scenario(
+                    new Region[]{lilliput}));
     @Bind Empire testEmpire = Mockito.spy(new Empire());
     @Bind CivPocketGame testGame = Mockito.spy(new CivPocketGame());
     @Bind CityBuilder fakeBuilder = Mockito.spy(new FakeCityBuilder(testEmpire));
@@ -44,7 +49,7 @@ public class IntegrationTests {
     public void testAdvanceSeveralTurnsEmptyEmpire() throws IllegalActionException
     {
         assertThat(sut.getFaseActual(), is("StartGame"));
-        testEmpire.sendSettlerTo(testScenario.getRegionByName("Lilliput"));
+        testEmpire.sendSettlerTo(lilliput);
         int numPhasesToAdvance = 5;
         for(int i = 0; i < numPhasesToAdvance; i++) {
             sut.accionPasarSiguienteFase();
@@ -60,19 +65,26 @@ public class IntegrationTests {
         sut.actionBuildCity();
 
         assertThat(
-                testEmpire.cityAt(testScenario.getRegionByName("Lilliput")),
+                testEmpire.cityAt(lilliput),
                 is(notNullValue()));
     }
 
     @Test
-    public void testPurchaseAdvanceCartageFromCity()
+    public void testPurchaseAdvanceCartageFromCityAndMountain()
     {
-        assertThat(testLibrary.hasCartage(),is(false));
-
+        assertThat(sut.getTechnologies(), is(empty()));
+        //Given
         sut.actionSelectRegion("Lilliput");
+        assertThat(sut.canPurchaseCartage(), is(false));
+        lilliput.add(Biomes.Mountain);
+        assertThat(sut.canPurchaseCartage(), is(false));
+        testEmpire.sendSettlerTo(lilliput,2);
+        assertThat(sut.canPurchaseCartage(), is(false));
         sut.actionBuildCity();
+        assertThat(sut.canPurchaseCartage(), is(true));
+        //When
         sut.actionPurchaseAdvance("Cartage");
-
-        assertThat(testLibrary.hasCartage(),is(true));
+        //Then
+        assertThat(sut.getTechnologies().get(0),is("Cartage"));
     }
 }

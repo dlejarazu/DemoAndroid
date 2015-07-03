@@ -1,6 +1,7 @@
 package com.diego.civpocket.logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.diego.civpocket.logic.CivPocketGame.GamePhase;
@@ -189,6 +190,17 @@ public class MapPresenter {
     }
 
     public void actionPurchaseAdvance(String nameAdvance) {
-        _library.addCartage();
+        _library.acquireCartage(_selectedRegion);
+    }
+
+    public boolean canPurchaseCartage() {
+        return  _selectedRegion != null &&
+                _library.canResearchCartageFrom(_selectedRegion);
+    }
+
+    public List<String> getTechnologies() {
+        List<String> stringTechs = new ArrayList<>();
+        if(_library.hasCartage()) stringTechs.add("Cartage");
+        return stringTechs;
     }
 }

@@ -144,12 +144,14 @@ public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthD
     }
 
     @Override
-    public void carryOutGrowth() {
+    public void carryOutGrowth()
+    {
         populationGrowth();
     }
 
     @Override
-    public void carryOutUpkeep() {
+    public void carryOutUpkeep()
+    {
         adjustPopulation();
         supportCities();
     }

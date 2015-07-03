@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import com.diego.civpocket.logic.City;
 import com.diego.civpocket.logic.CityBuilder;
 import com.diego.civpocket.logic.CivPocketGame;
+import com.diego.civpocket.logic.Library;
 import com.diego.civpocket.logic.Scenario;
 import com.diego.civpocket.logic.Empire;
 import com.diego.civpocket.logic.MapPresenter;
@@ -27,6 +28,7 @@ public class MapPresenterTester {
     @Bind protected Empire testEmpire = mock(Empire.class);
     @Bind protected MapUpdater testView = mock(MapUpdater.class);
     @Bind protected CityBuilder testBuilder= mock(CityBuilder.class);
+    @Bind protected Library testLibrary = mock(Library.class);
     protected Region testRegion;
 
     @Inject protected MapPresenter sut;
