@@ -30,7 +30,8 @@ public class MapPresenterMovementTest extends MapPresenterTester{
     public void testMoveTribe() throws IllegalActionException {
         //Given
         Tribe nomad = new Tribe();
-        given(testEmpire.tribesAt(origin)).willReturn(Collections.singletonList(nomad));
+        given(testEmpire.getTribeFrom(origin)).willReturn(nomad);
+
         sut.actionSelectRegion(origin.getName());
         sut.actionMoveTribe();
         //When
