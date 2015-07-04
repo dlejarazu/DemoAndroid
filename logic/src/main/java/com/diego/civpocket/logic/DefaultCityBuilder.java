@@ -29,7 +29,7 @@ public class DefaultCityBuilder implements CityBuilder {
 
     @Override
     public boolean canBuildCityAt(Region region) {
-        return _owner.tribesAt(region).size() >= 4 &&
+        return _owner.populationAt(region) >= 4 &&
                 _owner.cityAt(region)==null;
     }
 }

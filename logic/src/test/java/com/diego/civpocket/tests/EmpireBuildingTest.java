@@ -34,7 +34,7 @@ public class EmpireBuildingTest {
         assertTrue(success);
 		then(testRegion).should(times(1)).add(Biomes.Farm);
 		then(testRegion).should(times(1)).decimate(Biomes.Forest);
-        assertEquals(0, sut.tribesAt(testRegion).size());
+        assertEquals(0,  sut.populationAt(testRegion));
 	}
 
     @Test

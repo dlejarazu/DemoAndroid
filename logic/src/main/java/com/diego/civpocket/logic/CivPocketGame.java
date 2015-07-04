@@ -16,6 +16,8 @@ public class CivPocketGame {
 
     GamePhase _gamePhase = GamePhase.StartGame;
 
+    //TODO: How to improve the observers management. A different class?
+    //TODO: reduce duplicity for triggering tasks
     public interface UpkeepDuties {
         void carryOutUpkeep();
     }
@@ -49,15 +51,18 @@ public class CivPocketGame {
     }
 
     public void nextPhase() throws IllegalActionException {
-        _gamePhase = _gamePhase.getNext();
-        if ( _gamePhase == GamePhase.Growth) triggerGrowth();
-        else  if (_gamePhase == GamePhase.Upkeep) {
-            triggerUpkeep();
-        }
+        this.setPhase( _gamePhase.getNext());
+
     }
 
     public void setPhase(GamePhase newPhase) {
         _gamePhase = newPhase;
+        if ( _gamePhase == GamePhase.Growth) {
+            triggerGrowth();
+        }
+        else  if (_gamePhase == GamePhase.Upkeep) {
+            triggerUpkeep();
+        }
     }
 
 
@@ -66,9 +71,7 @@ public class CivPocketGame {
         StartGame,Growth, Events, Advances, Upkeep;
         public GamePhase getNext() {
             GamePhase nextPhase = values()[(ordinal() + 1) % values().length];
-
             if (nextPhase == StartGame) nextPhase = Growth;
-
             return nextPhase;
         }
     }

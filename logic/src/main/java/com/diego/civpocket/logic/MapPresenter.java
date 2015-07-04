@@ -61,8 +61,8 @@ public class MapPresenter {
     {
         if(_moveMode){
             _destination = _scenario.getRegionByName(name);
-            List<Tribe> group = _empire.tribesAt(_selectedRegion);
-            if(group.size() > 0) group.get(0).moveTo(_destination);
+            Tribe nomad = _empire.getTribeFrom(_selectedRegion);
+            if(nomad != null) nomad.moveTo(_destination);
             actionCancelMove();
         }
         else {
@@ -150,7 +150,7 @@ public class MapPresenter {
 
     public String regionStatusToString(String nombreRegion){
         Region region = _scenario.getRegionByName(nombreRegion);
-        int localPop = _empire.tribesAt(region).size();
+        int localPop = _empire.populationAt(region);
         String status = emoji(0x1F603) + Integer.toString(localPop);
         if (_empire.cityAt(region) !=null ) {
             status = status + "\n" + emoji(0x1F3F0) + Integer.toString(_empire.cityAt(region).level());

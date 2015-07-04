@@ -30,7 +30,6 @@ public class Library {
     public boolean canResearchCartageFrom(Region researchFrom) {
         return researchFrom.has(Biomes.Mountain) &&
                 _empire.cityAt(researchFrom)!=null &&
-                _empire.tribesAt(researchFrom) != null &&
-                _empire.tribesAt(researchFrom).size()>=2;
+                _empire.populationAt(researchFrom) >= 2;
     }
 }

@@ -27,6 +27,7 @@ import static org.mockito.BDDMockito.*;
 
 /**
  * Created by diego on 23/06/2015.
+ * Tests for library class
  */
 @RunWith(MockitoJUnitRunner.class)
 public class LibraryTest {
@@ -62,8 +63,7 @@ public class LibraryTest {
         Region mountainsRegion = mock(Region.class);
         given(mountainsRegion.has(Biomes.Mountain)).willReturn(true);
         given(mockEmpire.cityAt(mountainsRegion)).willReturn(mock(City.class));
-        given(mockEmpire.tribesAt(mountainsRegion))
-                .willReturn(Arrays.asList(mock(Tribe.class), mock(Tribe.class)));
+        given(mockEmpire.populationAt(mountainsRegion)).willReturn(2);
 
         assertThat(sut.canResearchCartageFrom(mountainsRegion), is(true));
     }
@@ -84,8 +84,7 @@ public class LibraryTest {
         Region mountainsRegion = mock(Region.class);
         given(mountainsRegion.has(Biomes.Mountain)).willReturn(true);
         given(mockEmpire.cityAt(mountainsRegion)).willReturn(null);
-        given(mockEmpire.tribesAt(mountainsRegion))
-                .willReturn(Arrays.asList(mock(Tribe.class), mock(Tribe.class)));
+        given(mockEmpire.populationAt(mountainsRegion)).willReturn(2);
 
         assertThat(sut.canResearchCartageFrom(mountainsRegion), is(false));
     }

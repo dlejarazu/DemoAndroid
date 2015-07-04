@@ -22,10 +22,10 @@ public class EmpirePopulationTest {
         assertPopulation(0,testRegion);
         sut.sendSettlerTo(testRegion);
         assertPopulation(1,testRegion);
-        assertEquals(1, sut.tribesAt(testRegion).size());
+        assertEquals(1, sut.populationAt(testRegion));
         sut.reduceSettler(testRegion);
         assertPopulation(0, testRegion);
-        assertEquals(0, sut.tribesAt(testRegion).size());
+        assertEquals(0,  sut.populationAt(testRegion));
     }
 
 
@@ -59,7 +59,7 @@ public class EmpirePopulationTest {
     }
 
     private void assertPopulation(int expectedPop,Region asserted) {
-        int newPop = sut.tribesAt(asserted).size();
+        int newPop =  sut.populationAt(testRegion);
         assertEquals(expectedPop, newPop);
     }
 

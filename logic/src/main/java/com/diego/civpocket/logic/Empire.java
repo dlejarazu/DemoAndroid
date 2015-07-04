@@ -10,6 +10,7 @@ import java.util.Map;
 @Singleton
 public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthDuties{
 
+    //TODO: divide responsabilities for population growth, city support and empire track
     List<Tribe> _population = new ArrayList<>();
     private Map<Region,City> _cities = new HashMap<>();
 
@@ -20,23 +21,40 @@ public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthD
         settler.moveTo(destination);
     }
 
-    public void reduceSettler(Region destination){
-        List<Tribe> localPopulation = this.tribesAt(destination);
-        if (localPopulation.isEmpty())
+    public void sendSettlerTo(Region destination, int number) {
+        for(int i=0; i < number; i++) sendSettlerTo(destination);
+    }
+
+    public void reduceSettler(Region destination)
+    {
+       Tribe tribeToReduce = this.getTribeFrom(destination);
+        if (tribeToReduce == null) {
             throw new IllegalActionException("No tribes to decimate at destination");
+        }
         else {
-            _population.remove(localPopulation.get(0));
+            _population.remove(tribeToReduce);
         }
     }
 
-    public List<Tribe> tribesAt(Region local) {
+    public int populationAt(Region local)
+    {
         List<Tribe> localPopulation = new ArrayList<>();
         for (Tribe tribe: _population) {
             if (tribe.getLocation() == local) {
                 localPopulation.add(tribe);
             }
         }
-        return localPopulation;
+        return localPopulation.size();
+    }
+
+    public Tribe getTribeFrom(Region region)
+    {
+        for (Tribe tribe: _population) {
+            if (tribe.getLocation() == region) {
+                return tribe;
+            }
+        }
+        return null;
     }
 
     public int totalPopulation() {
@@ -102,7 +120,7 @@ public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthD
     public boolean canBuildFarmAt(Region region) {
         return !region.has(Biomes.Farm) &&
                 region.has(Biomes.Forest) &&
-                tribesAt(region).size() >= 2;
+                populationAt(region) >= 2;
     }
 
     public boolean buildFarm(Region selected){
@@ -139,9 +157,6 @@ public class Empire implements CivPocketGame.UpkeepDuties, CivPocketGame.GrowthD
         }
     }
 
-    public void sendSettlerTo(Region destination, int number) {
-        for(int i=0; i < number; i++) sendSettlerTo(destination);
-    }
 
     @Override
     public void carryOutGrowth()

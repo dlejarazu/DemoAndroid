@@ -27,7 +27,7 @@ public class GrowthPopulationTest {
         //When
         sut.populationGrowth();
         //Then
-        int newPopulation = sut.tribesAt(testRegion).size();
+        int newPopulation = sut.populationAt(testRegion);
         assertEquals(initialPop+1,newPopulation);
     }
     @Test
@@ -40,8 +40,8 @@ public class GrowthPopulationTest {
         //When
         sut.populationGrowth();
         //Then
-        int newPopulationReg1 = sut.tribesAt(testRegion).size();
-        int newPopulationReg2 = sut.tribesAt(testRegion2).size();
+        int newPopulationReg1 = sut.populationAt(testRegion);
+        int newPopulationReg2 =  sut.populationAt(testRegion2);
         assertEquals(initialPopReg1 + 1, newPopulationReg1);
         assertEquals(initialPopReg2 + 1, newPopulationReg2);
     }
@@ -54,7 +54,7 @@ public class GrowthPopulationTest {
         //When
         sut.populationGrowth();
         //Then
-        int newPopulation = sut.tribesAt(testRegion).size();
+        int newPopulation =  sut.populationAt(testRegion);
         assertEquals(initialPop+1,newPopulation);
         assertEquals(initialPop+1,sut.totalPopulation());
     }
