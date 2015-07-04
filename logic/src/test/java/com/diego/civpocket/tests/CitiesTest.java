@@ -45,7 +45,7 @@ public class CitiesTest {
         //When
         builder.buildCity(testRegion);
         //Then
-        assertEquals(0, empire.tribesAt(testRegion).size());
+        assertEquals(0, empire.populationAt(testRegion));
         assertThat(empire.cityAt(testRegion),notNullValue());
     }
 
